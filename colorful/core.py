@@ -16,8 +16,8 @@
 #: Holds the color names in the correct order
 COLOR_NAMES = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
 #: Holds the modifier names in the correct order
-MODIFIER_NAMES = ['reset', 'bold', 'faint', 'italic', 'underlined',
-                  'blinkslow', 'blinkrapid', 'inversed', 'concealed', 'strikethroughed']
+MODIFIER_NAMES = ['reset', 'bold', 'dimmed', 'italic', 'underlined',
+                  'blinkslow', 'blinkrapid', 'inversed', 'concealed', 'struckthrough']
 
 #: Holds the start index for the fore- and background colors
 BACKGROUND_COLOR_OFFSET = 40
