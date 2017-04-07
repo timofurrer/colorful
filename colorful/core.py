@@ -24,7 +24,7 @@ BACKGROUND_COLOR_OFFSET = 40
 FOREGROUND_COLOR_OFFSET = 30
 
 #: Holds the base ANSI escape code
-ANSI_ESCAPE_CODE = r'\033[{code}m'
+ANSI_ESCAPE_CODE = '\033[{code}m'
 
 
 class ColorfulError(Exception):
@@ -125,11 +125,40 @@ def translate_style(style):
     return ''.join(ansi_sequence)
 
 
+def style_string(string, ansi_style):
+    """
+    Style the given string according to the given
+    ANSI style string.
+
+    :param str string: the string to style
+    :param str ansi_style: the styling string returned by ``translate_style``
+
+    :returns: a string containing proper ANSI sequence
+    """
+    return '{style}{string}{reset}'.format(
+        style=ansi_style,
+        string=string,
+        reset=resolve_modifier_to_ansi_code('reset'))
+
+
 class Colorful(object):
     """
     Provides methods to style strings for terminal
     output.
     """
     def __getattr__(self, name):
-        print('In Colorful.__getattr__ {0}'.format(name))
-        return name
+
+        # translate the given name into an ANSI escape code sequence
+        style = translate_style(name)
+
+        def __style_wrapper(string):
+            """
+            Style the given string according to the methods
+            style string which happens to be the name of the
+            method.
+
+            :param str string: the string to style
+            """
+            return style_string(string, style)
+
+        return __style_wrapper

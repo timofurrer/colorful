@@ -1,0 +1,32 @@
+language: python
+python:
+    - '2.7'
+    - '3.3'
+    - '3.4'
+    - '3.5'
+    - '3.6'
+    - '3.7-dev'
+
+matrix:
+    allow_failures:
+        - python: 3.7-dev
+
+before_install:
+    - pip install codecov
+
+install:
+    - pip install -r requirements-dev.txt
+
+script:
+    - py.test -vs tests/
+    - flake8 --show-source colorful/ tests/
+
+deploy:
+    provider: pypi
+    user: tuxtimo
+    password:
+        secure: g5RJCfDN7ApDkp4qLYdzLMvmYMNlu5oUoEQ3BFrujTKQWuGspJKfyT9rlY9wLspcxZVVSzcy3PQ4bEDrqCG55ms5lFTtFOyAseJgYDpX5BojqVKtp8XJpshnbZn4GT9/eEMLfRdz6uCWpNbsdFtnW+Bk+jFYeYf3Qvujub6aOLllQ064riveKL++OrJDdu+kM7xWeBey5j7g4givtId3XNFWG2lMveCyu3rHNFvz7TEPVvUIUceP1gXVylCUQutbp99uZRHSn6xZEOwGVtXPurHEEB8X+2UkRZPms9eVspcKvneGnjMW1CRW0+RT0quLS6QTptjjhuQgw1M9CEzzQX4eAb7srywIVxtADCmciwjAMi01C6P0oQBufY/+H/VtJCwIu43zLQLT7uyftIIDuEYj2ezCv+XltPbEKWfKMR46hfb5NayHRlchEgZus95VFuXHgAlVzA6PEQs3zazAu322DHD6EIo0elr0CgLixSDX/w2HDFysMpa+JJ32/0BHPT1+hktdqEytH3umiCU29yhWp3k4neEobJ+9UWlK1Hvu64UZ+aSTipE3AL2G1Xi3AL5N7avBdpexE/t952MlnpE07z0hMiFbPMgzBqMRuPc0Ny153zb1AIM5XkzKDAzMUCoRtuv9Ft2eCSfF70gM/5CkQuqEdzVnw9wMNQIB/jc=
+    on:
+        branch: master
+        tags: true
+    distributions: "sdist bdist_wheel"

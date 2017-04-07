@@ -1,0 +1,3 @@
+# only require colorama if we are on windows
+
+colorama;platform_system=="Windows"

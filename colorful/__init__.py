@@ -30,7 +30,6 @@ class ColorfulModule(types.ModuleType):
         """
         Dynamically get methods from Colorful object.
         """
-        print('In ColorfulModule.__getattr__ {0}'.format(name))
         return getattr(self.colorful, name)
 
 

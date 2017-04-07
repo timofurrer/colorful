@@ -22,37 +22,77 @@ import colorful.core as core  # noqa
 
 @pytest.mark.parametrize('style_string,expected', [
     # modifiers
-    ('bold', r'\033[1m'),
-    ('strikethroughed', r'\033[9m'),
+    ('bold', '\033[1m'),
+    ('strikethroughed', '\033[9m'),
     # foreground colors
-    ('black', r'\033[30m'),
-    ('blue', r'\033[34m'),
-    ('white', r'\033[37m'),
+    ('black', '\033[30m'),
+    ('blue', '\033[34m'),
+    ('white', '\033[37m'),
     # background colors
-    ('on_black', r'\033[40m'),
-    ('on_blue', r'\033[44m'),
-    ('on_white', r'\033[47m'),
+    ('on_black', '\033[40m'),
+    ('on_blue', '\033[44m'),
+    ('on_white', '\033[47m'),
     # modifiers with foreground colors
-    ('bold_black', r'\033[1m\033[30m'),
-    ('italic_blue', r'\033[3m\033[34m'),
-    ('strikethroughed_white', r'\033[9m\033[37m'),
+    ('bold_black', '\033[1m\033[30m'),
+    ('italic_blue', '\033[3m\033[34m'),
+    ('strikethroughed_white', '\033[9m\033[37m'),
     # modifiers with background colors
-    ('bold_on_black', r'\033[1m\033[40m'),
-    ('italic_on_blue', r'\033[3m\033[44m'),
-    ('strikethroughed_on_white', r'\033[9m\033[47m'),
+    ('bold_on_black', '\033[1m\033[40m'),
+    ('italic_on_blue', '\033[3m\033[44m'),
+    ('strikethroughed_on_white', '\033[9m\033[47m'),
     # modifiers with foreground and background colors
-    ('bold_green_on_black', r'\033[1m\033[32m\033[40m'),
-    ('italic_cyan_on_blue', r'\033[3m\033[36m\033[44m'),
-    ('strikethroughed_yellow_on_white', r'\033[9m\033[33m\033[47m'),
+    ('bold_green_on_black', '\033[1m\033[32m\033[40m'),
+    ('italic_cyan_on_blue', '\033[3m\033[36m\033[44m'),
+    ('strikethroughed_yellow_on_white', '\033[9m\033[33m\033[47m'),
     # multiple modifiers
-    ('bold_italic', r'\033[1m\033[3m'),
-    ('underlined_strikethroughed', r'\033[4m\033[9m'),
+    ('bold_italic', '\033[1m\033[3m'),
+    ('underlined_strikethroughed', '\033[4m\033[9m'),
     # multiple modifiers with foreground colors
-    ('bold_italic_green', r'\033[1m\033[3m\033[32m'),
-    ('underlined_strikethroughed_cyan', r'\033[4m\033[9m\033[36m')
+    ('bold_italic_green', '\033[1m\033[3m\033[32m'),
+    ('underlined_strikethroughed_cyan', '\033[4m\033[9m\033[36m')
 ])
 def test_translate_style(style_string, expected):
     """
     Test translating style strings
     """
     assert core.translate_style(style_string) == expected
+
+
+@pytest.mark.parametrize('method_name,expected', [
+    ('bold', '\033[1mNo, I am your father\033[0m'),
+    ('strikethroughed', '\033[9mNo, I am your father\033[0m'),
+    # foreground colors
+    ('black', '\033[30mNo, I am your father\033[0m'),
+    ('blue', '\033[34mNo, I am your father\033[0m'),
+    ('white', '\033[37mNo, I am your father\033[0m'),
+    # background colors
+    ('on_black', '\033[40mNo, I am your father\033[0m'),
+    ('on_blue', '\033[44mNo, I am your father\033[0m'),
+    ('on_white', '\033[47mNo, I am your father\033[0m'),
+    # modifiers with foreground colors
+    ('bold_black', '\033[1m\033[30mNo, I am your father\033[0m'),
+    ('italic_blue', '\033[3m\033[34mNo, I am your father\033[0m'),
+    ('strikethroughed_white', '\033[9m\033[37mNo, I am your father\033[0m'),
+    # modifiers with background colors
+    ('bold_on_black', '\033[1m\033[40mNo, I am your father\033[0m'),
+    ('italic_on_blue', '\033[3m\033[44mNo, I am your father\033[0m'),
+    ('strikethroughed_on_white', '\033[9m\033[47mNo, I am your father\033[0m'),
+    # modifiers with foreground and background colors
+    ('bold_green_on_black', '\033[1m\033[32m\033[40mNo, I am your father\033[0m'),
+    ('italic_cyan_on_blue', '\033[3m\033[36m\033[44mNo, I am your father\033[0m'),
+    ('strikethroughed_yellow_on_white', '\033[9m\033[33m\033[47mNo, I am your father\033[0m'),
+    # multiple modifiers
+    ('bold_italic', '\033[1m\033[3mNo, I am your father\033[0m'),
+    ('underlined_strikethroughed', '\033[4m\033[9mNo, I am your father\033[0m'),
+    # multiple modifiers with foreground colors
+    ('bold_italic_green', '\033[1m\033[3m\033[32mNo, I am your father\033[0m'),
+    ('underlined_strikethroughed_cyan', '\033[4m\033[9m\033[36mNo, I am your father\033[0m')
+])
+def test_method_to_style_conversion(method_name, expected):
+    """
+    Test converting the method to an actual style
+    """
+    colorful = core.Colorful()
+    method = getattr(colorful, method_name)
+
+    assert method('No, I am your father') == expected
