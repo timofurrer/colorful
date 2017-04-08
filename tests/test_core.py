@@ -55,7 +55,7 @@ def test_translate_style(style_string, expected):
     """
     Test translating style strings
     """
-    assert core.translate_style(style_string) == expected
+    assert core.translate_style(style_string, colormode=8) == expected
 
 
 @pytest.mark.parametrize('method_name,expected', [
@@ -92,7 +92,7 @@ def test_method_to_style_conversion(method_name, expected):
     """
     Test converting the method to an actual style
     """
-    colorful = core.Colorful()
+    colorful = core.Colorful(colormode=8)
     method = getattr(colorful, method_name)
 
     assert method('No, I am your father') == expected

@@ -96,6 +96,7 @@ if __name__ == '__main__':
         maintainer='Timo Furrer',
         maintainer_email='tuxtimo@gmail.com',
         include_package_data=True,
+        package_data={'': ['colorful/data/*.txt']},
         packages=find_packages(exclude=['*tests*']),
         install_requires=requirements,
         classifiers=[
