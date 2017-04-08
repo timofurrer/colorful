@@ -69,7 +69,7 @@ def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
         color_code = ansi.rgb_to_ansi16(red, green, blue)
         return ANSI_ESCAPE_CODE.format(code=color_code + offset - FOREGROUND_COLOR_OFFSET)
 
-    if colormode == terminal.ANSI_256BIT_COLORS:
+    if colormode == terminal.ANSI_256_COLORS:
         color_code = ansi.rgb_to_ansi265(red, green, blue)
         return ANSI_ESCAPE_CODE.format(code='{base};5;{code}'.format(
             base=8 + offset, code=color_code))
@@ -118,17 +118,21 @@ def translate_hex_to_ansi_code(value, offset, colormode):
     return translate_rgb_to_ansi_code(red, green, blue, offset, colormode)
 
 
-def resolve_modifier_to_ansi_code(modifiername):
+def resolve_modifier_to_ansi_code(modifiername, colormode):
     """
     Resolve the given modifier name to a valid
     ANSI escape code.
 
     :param str modifiername: the name of the modifier to resolve
+    :param int colormode: the color mode to use. See ``translate_rgb_to_ansi_code``
 
     :returns str: the ANSI escape code for the modifier
 
     :raises ColorfulError: if the given modifier name is invalid
     """
+    if colormode == terminal.NO_COLORS:  # return empty string if colors are disabled
+        return ''
+
     try:
         code = MODIFIER_NAMES.index(modifiername)
     except ValueError:
@@ -166,7 +170,7 @@ def translate_style(style, colormode):
             if part not in MODIFIER_NAMES:
                 break  # all modifiers have been consumed
 
-            ansi_sequence.append(resolve_modifier_to_ansi_code(part))
+            ansi_sequence.append(resolve_modifier_to_ansi_code(part, colormode))
         else:  # we've consumed all parts, thus we can exit
             raise StopIteration()
 
@@ -189,20 +193,21 @@ def translate_style(style, colormode):
     return ''.join(ansi_sequence)
 
 
-def style_string(string, ansi_style):
+def style_string(string, ansi_style, colormode):
     """
     Style the given string according to the given
     ANSI style string.
 
     :param str string: the string to style
     :param str ansi_style: the styling string returned by ``translate_style``
+    :param int colormode: the color mode to use. See ``translate_rgb_to_ansi_code``
 
     :returns: a string containing proper ANSI sequence
     """
     return '{style}{string}{reset}'.format(
         style=ansi_style,
         string=string,
-        reset=resolve_modifier_to_ansi_code('reset'))
+        reset=resolve_modifier_to_ansi_code('reset', colormode))
 
 
 class Colorful(object):
@@ -223,17 +228,18 @@ class Colorful(object):
         """
         Represents a colorful style
         """
-        def __init__(self, style):
+        def __init__(self, style, colormode):
             self.style = style
+            self.colormode = colormode
 
         def __str__(self):
             return self.style
 
         def __call__(self, string):
-            return style_string(string, self.style)
+            return style_string(string, self.style, self.colormode)
 
     def __getattr__(self, name):
         # translate the given name into an ANSI escape code sequence
         style = translate_style(name, self.colormode)
-        style_wrapper = self.ColorfulStyle(style)
+        style_wrapper = self.ColorfulStyle(style, self.colormode)
         return style_wrapper
