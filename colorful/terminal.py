@@ -72,7 +72,6 @@ def detect_color_support(env):  # noqa
         if term_env in {'screen', 'xterm', 'vt100', 'color', 'ansi', 'cygwin', 'linux'}:
             return ANSI_16BIT_COLORS
 
-
     if colorterm_env:
         # if there was no match with $TERM either but we
         # had one with $COLORTERM, we use it!
