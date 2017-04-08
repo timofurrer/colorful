@@ -176,3 +176,43 @@ def test_method_in_format_to_style_conversion_8bit(method_name, expected):
     method = getattr(colorful, method_name)
 
     assert '{method}No, I am your father{c.reset}'.format(method=method, c=colorful) == expected
+
+
+# @pytest.mark.parametrize('method_name,expected', [
+    # ('bold', 'No, I am your father'),
+    # ('struckthrough', 'No, I am your father'),
+    # # foreground colors
+    # ('black', 'No, I am your father'),
+    # ('blue', 'No, I am your father'),
+    # ('white', 'No, I am your father'),
+    # # background colors
+    # ('on_black', 'No, I am your father'),
+    # ('on_blue', 'No, I am your father'),
+    # ('on_white', 'No, I am your father'),
+    # # modifiers with foreground colors
+    # ('bold_black', 'No, I am your father'),
+    # ('italic_blue', 'No, I am your father'),
+    # ('struckthrough_white', 'No, I am your father'),
+    # # modifiers with background colors
+    # ('bold_on_black', 'No, I am your father'),
+    # ('italic_on_blue', 'No, I am your father'),
+    # ('struckthrough_on_white', 'No, I am your father'),
+    # # modifiers with foreground and background colors
+    # ('bold_green_on_black', 'No, I am your father'),
+    # ('italic_cyan_on_blue', 'No, I am your father'),
+    # ('struckthrough_yellow_on_white', 'No, I am your father'),
+    # # multiple modifiers
+    # ('bold_italic', 'No, I am your father'),
+    # ('underlined_struckthrough', 'No, I am your father'),
+    # # multiple modifiers with foreground colors
+    # ('bold_italic_green', 'No, I am your father'),
+    # ('underlined_struckthrough_cyan', 'No, I am your father')
+# ])
+# def test_length_of_styled_string(method_name, expected):
+    # """
+    # Test the length of a styled string
+    # """
+    # colorful = core.Colorful(colormode=8)
+    # method = getattr(colorful, method_name)
+
+    # assert len(method(expected)) == len(expected)
