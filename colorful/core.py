@@ -219,18 +219,21 @@ class Colorful(object):
         #: Holds the color mode to use for this Colorful object.
         self.colormode = colormode
 
+    class ColorfulStyle(object):
+        """
+        Represents a colorful style
+        """
+        def __init__(self, style):
+            self.style = style
+
+        def __str__(self):
+            return self.style
+
+        def __call__(self, string):
+            return style_string(string, self.style)
+
     def __getattr__(self, name):
         # translate the given name into an ANSI escape code sequence
         style = translate_style(name, self.colormode)
-
-        def __style_wrapper(string):
-            """
-            Style the given string according to the methods
-            style string which happens to be the name of the
-            method.
-
-            :param str string: the string to style
-            """
-            return style_string(string, style)
-
-        return __style_wrapper
+        style_wrapper = self.ColorfulStyle(style)
+        return style_wrapper
