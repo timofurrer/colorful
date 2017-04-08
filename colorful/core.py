@@ -10,9 +10,12 @@
     :license: MIT, see LICENSE for more details.
 """
 
+import os
+
 from . import ansi
 from . import rgb
 from . import utils
+from . import terminal
 
 # For the ANSI escape code sequences please consult
 # https://en.wikipedia.org/wiki/ANSI_escape_code
@@ -59,19 +62,19 @@ def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
     :param int offset: the offset to use for the base color
     :param int colormode: the color mode to use. See explanation above
     """
-    if colormode == 0:  # colors are disabled, thus return empty string
+    if colormode == terminal.NO_COLORS:  # colors are disabled, thus return empty string
         return ''
 
-    if colormode == 8 or colormode == 16:
+    if colormode == terminal.ANSI_8BIT_COLORS or colormode == terminal.ANSI_16BIT_COLORS:
         color_code = ansi.rgb_to_ansi16(red, green, blue)
         return ANSI_ESCAPE_CODE.format(code=color_code + offset - FOREGROUND_COLOR_OFFSET)
 
-    if colormode == 256:
+    if colormode == terminal.ANSI_256BIT_COLORS:
         color_code = ansi.rgb_to_ansi265(red, green, blue)
         return ANSI_ESCAPE_CODE.format(code='{base};5;{code}'.format(
             base=8 + offset, code=color_code))
 
-    if colormode == 0xFFFFFF:
+    if colormode == terminal.TRUE_COLORS:
         return ANSI_ESCAPE_CODE.format(code='{base};2;{red};{green};{blue}'.format(
             base=8 + offset, red=red, green=green, blue=blue))
 
@@ -211,7 +214,7 @@ class Colorful(object):
     """
     def __init__(self, colormode=None):
         if colormode is None:  # try to auto-detect color mode
-            colormode = 8
+            colormode = terminal.detect_color_support(env=os.environ)
 
         #: Holds the color mode to use for this Colorful object.
         self.colormode = colormode
