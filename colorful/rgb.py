@@ -39,7 +39,6 @@ def parse_rgb_txt_file(path=None):
 
         return name[0].lower() + ''.join(word.capitalize() for word in name[1:])
 
-
     with open(path, 'r') as rgb_txt:
         for line in rgb_txt:
             if line.startswith('!'):

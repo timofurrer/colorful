@@ -32,7 +32,10 @@ def rgb_to_ansi265(r, g, b):
 
         return round(((r - 8) / 247) * 24) + 232
 
-    ansi = 16 + (36 * round(r / 255.0 * 5.0)) + (6 * round(g / 255.0 * 5.0)) + round(b / 255.0 * 5.0)
+    ansi_r = 36 * round(r / 255.0 * 5.0)
+    ansi_g = 6 * round(g / 255.0 * 5.0)
+    ansi_b = round(b / 255.0 * 5.0)
+    ansi = 16 + ansi_r + ansi_g + ansi_b
     return ansi
 
 

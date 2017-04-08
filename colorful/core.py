@@ -170,15 +170,15 @@ def translate_style(style, colormode):
         # next part has to be a foreground color or the 'on' keyword
         # which means we have to consume background colors
         if part != 'on':
-            ansi_sequence.append(translate_colorname_to_ansi_code(part,
-                                                                  FOREGROUND_COLOR_OFFSET, colormode))
+            ansi_sequence.append(translate_colorname_to_ansi_code(
+                part, FOREGROUND_COLOR_OFFSET, colormode))
             # consume the required 'on' keyword after the foreground color
             next(style_parts)
 
         # next part has to be the background color
         part = next(style_parts)
-        ansi_sequence.append(translate_colorname_to_ansi_code(part, BACKGROUND_COLOR_OFFSET,
-                                                              colormode))
+        ansi_sequence.append(translate_colorname_to_ansi_code(
+            part, BACKGROUND_COLOR_OFFSET, colormode))
     except StopIteration:  # we've consumed all parts of the styling string
         pass
 
