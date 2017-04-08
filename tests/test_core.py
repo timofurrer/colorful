@@ -51,9 +51,9 @@ import colorful.core as core  # noqa
     ('bold_italic_green', '\033[1m\033[3m\033[32m'),
     ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36m')
 ])
-def test_translate_style(style_string, expected):
+def test_translate_style_8bit(style_string, expected):
     """
-    Test translating style strings
+    Test translating style strings with 8bit colors
     """
     assert core.translate_style(style_string, colormode=8) == expected
 
@@ -88,9 +88,9 @@ def test_translate_style(style_string, expected):
     ('bold_italic_green', '\033[1m\033[3m\033[32mNo, I am your father\033[0m'),
     ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36mNo, I am your father\033[0m')
 ])
-def test_method_to_style_conversion(method_name, expected):
+def test_method_to_style_conversion_8bit(method_name, expected):
     """
-    Test converting the method to an actual style
+    Test converting the method to an actual style with 8bit colors
     """
     colorful = core.Colorful(colormode=8)
     method = getattr(colorful, method_name)
