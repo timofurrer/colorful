@@ -209,11 +209,14 @@ class Colorful(object):
 
     :param int colormode: the color mode to use. See ``translate_rgb_to_ansi_code``
     """
-    def __init__(self, colormode):
+    def __init__(self, colormode=None):
+        if colormode is None:  # try to auto-detect color mode
+            colormode = 8
+
+        #: Holds the color mode to use for this Colorful object.
         self.colormode = colormode
 
     def __getattr__(self, name):
-
         # translate the given name into an ANSI escape code sequence
         style = translate_style(name, self.colormode)
 
