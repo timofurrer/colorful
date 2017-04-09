@@ -10,7 +10,6 @@
     :license: MIT, see LICENSE for more details.
 """
 
-
 import ast
 import os
 import sys
@@ -40,7 +39,7 @@ class VersionFinder(ast.NodeVisitor):
 
     def visit_Assign(self, node):
         try:
-            if node.targets[0].id == 'version':
+            if node.targets[0].id == '__version__':
                 self.version = node.value.s
         except:
             pass

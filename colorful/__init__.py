@@ -19,6 +19,9 @@ from contextlib import contextmanager
 from .core import Colorful
 from . import terminal
 
+#: Holds the current version
+__version__ = '0.3.0'
+
 
 class ColorfulModule(types.ModuleType):
     """
