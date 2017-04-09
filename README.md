@@ -167,10 +167,9 @@ print(colorful.yellow('yellow'), colorful.orange('orange'),
 
 The following styles are already supported:
 
-* solarized - [Website](http://ethanschoonover.com/solarized)
-
 <details>
- <summary>solarized - screenshot</summary>
+ <summary>solarized - <a href="http://ethanschoonover.com/solarized">Website</a></summary>
+ <br>
  <img src="https://github.com/timofurrer/colorful/blob/master/examples/solarized_base_colors.png" alt="solarized colors">
 </details>
 
