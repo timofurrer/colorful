@@ -345,7 +345,7 @@ def test_invalid_color_mode():
 
     with pytest.raises(core.ColorfulError) as exc:
         colorful.white('Invalid color mode')
-        assert exc.value.message == 'invalid color mode "42"'
+    assert str(exc.value) == 'invalid color mode "42"'
 
 
 def test_invalid_color_name():
@@ -358,7 +358,7 @@ def test_invalid_color_name():
                 'Use a color in your color palette (by default: X11 rgb.txt)')
     with pytest.raises(core.ColorfulError) as exc:
         colorful.bold_invalidColor('Invalid color name')
-    assert exc.value.message == expected
+    assert str(exc.value) == expected
 
 
 @pytest.mark.parametrize('env,expected', [
@@ -416,7 +416,7 @@ def test_colorful_obj_setup():
 
     expected = ('the color "black" is unknown. '
                 'Use a color in your color palette (by default: X11 rgb.txt)')
-    assert exc.value.message == expected
+    assert str(exc.value) == expected
 
 
 def test_colorful_obj_setup_with_extending_palette():
@@ -478,7 +478,7 @@ def test_change_color_palette():
 
     expected = ('the color "defaultColor" is unknown. '
                 'Use a color in your color palette (by default: X11 rgb.txt)')
-    assert exc.value.message == expected
+    assert str(exc.value) == expected
 
 
 def test_use_styles():
@@ -493,7 +493,7 @@ def test_use_styles():
     with pytest.raises(core.ColorfulError) as exc:
         colorful.lightCoral('The color lightCoral only exists in the X11 rgb.txt palette')
 
-    assert exc.value.message.startswith('the color "lightCoral" is unknown.')
+    assert str(exc.value).startswith('the color "lightCoral" is unknown.')
 
 
 # @pytest.mark.parametrize('method_name,expected', [

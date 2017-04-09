@@ -44,11 +44,11 @@ def test_setup_contextmanager():
 
         with pytest.raises(ColorfulError) as exc:
             c.black('Black does not exist anymore')
-        assert exc.value.message.startswith('the color "black" is unknown.')
+        assert str(exc.value).startswith('the color "black" is unknown.')
 
     with pytest.raises(ColorfulError) as exc:
         colorful.testColor('The testColor only existed in the with block above.')
-    assert exc.value.message.startswith('the color "testColor" is unknown.')
+    assert str(exc.value).startswith('the color "testColor" is unknown.')
 
 
 @pytest.mark.parametrize('ctxmgr_name, colorname, expected, expected_8bit', [
@@ -92,7 +92,7 @@ def test_change_color_palette():
 
         expected = ('the color "black" is unknown. '
                     'Use a color in your color palette (by default: X11 rgb.txt)')
-        assert exc.value.message == expected
+        assert str(exc.value) == expected
 
 
 def test_use_styles():
