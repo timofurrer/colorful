@@ -55,7 +55,8 @@ def test_translate_style_8bit(style_string, expected):
     """
     Test translating style strings with 8bit colors
     """
-    assert core.translate_style(style_string, colormode=8) == expected
+    assert core.translate_style(style_string, colormode=8,
+                                colorpalette=core.COLOR_PALETTE) == expected
 
 
 @pytest.mark.parametrize('method_name,expected', [

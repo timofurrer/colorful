@@ -21,7 +21,7 @@ from . import terminal
 # https://en.wikipedia.org/wiki/ANSI_escape_code
 
 #: Holds the color names mapped to RGB channels
-COLOR_NAMES = rgb.parse_rgb_txt_file()
+COLOR_PALETTE = rgb.parse_rgb_txt_file()
 
 #: Holds the modifier names in the correct order
 MODIFIER_NAMES = ['reset', 'bold', 'dimmed', 'italic', 'underlined',
@@ -81,7 +81,7 @@ def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
     raise ColorfulError('invalid color mode "{0}"'.format(colormode))
 
 
-def translate_colorname_to_ansi_code(colorname, offset, colormode):
+def translate_colorname_to_ansi_code(colorname, offset, colormode, colorpalette):
     """
     Translate the given color name to a valid
     ANSI escape code.
@@ -89,13 +89,14 @@ def translate_colorname_to_ansi_code(colorname, offset, colormode):
     :parma str colorname: the name of the color to resolve
     :parma str offset: the offset for the color code
     :param int colormode: the color mode to use. See ``translate_rgb_to_ansi_code``
+    :parma dict colorpalette: the color palette to use for the color name mapping
 
     :returns str: the color as ANSI escape code
 
     :raises ColorfulError: if the given color name is invalid
     """
     try:
-        red, green, blue = COLOR_NAMES[colorname]
+        red, green, blue = colorpalette[colorname]
     except KeyError:
         raise ColorfulError('the color "{0}" is unknown. Use X11 rgb.txt valid color name'.format(
             colorname))
@@ -142,7 +143,7 @@ def resolve_modifier_to_ansi_code(modifiername, colormode):
         return ANSI_ESCAPE_CODE.format(code=code)
 
 
-def translate_style(style, colormode):
+def translate_style(style, colormode, colorpalette):
     """
     Translate the given style to an ANSI escape code
     sequence.
@@ -157,6 +158,7 @@ def translate_style(style, colormode):
 
     :param str style: the style to translate
     :param int colormode: the color mode to use. See ``translate_rgb_to_ansi_code``
+    :parma dict colorpalette: the color palette to use for the color name mapping
     """
     style_parts = iter(style.split('_'))
 
@@ -178,14 +180,14 @@ def translate_style(style, colormode):
         # which means we have to consume background colors
         if part != 'on':
             ansi_sequence.append(translate_colorname_to_ansi_code(
-                part, FOREGROUND_COLOR_OFFSET, colormode))
+                part, FOREGROUND_COLOR_OFFSET, colormode, colorpalette))
             # consume the required 'on' keyword after the foreground color
             next(style_parts)
 
         # next part has to be the background color
         part = next(style_parts)
         ansi_sequence.append(translate_colorname_to_ansi_code(
-            part, BACKGROUND_COLOR_OFFSET, colormode))
+            part, BACKGROUND_COLOR_OFFSET, colormode, colorpalette))
     except StopIteration:  # we've consumed all parts of the styling string
         pass
 
@@ -217,12 +219,20 @@ class Colorful(object):
 
     :param int colormode: the color mode to use. See ``translate_rgb_to_ansi_code``
     """
-    def __init__(self, colormode=None):
+    def __init__(self, colormode=None, colorpalette=None):
         if colormode is None:  # try to auto-detect color mode
             colormode = terminal.detect_color_support(env=os.environ)
 
+        if colorpalette is None:  # load default color palette
+            colorpalette = COLOR_PALETTE
+        elif isinstance(colorpalette, str):  # we assume it's a path to a X11 rgb.txt
+            colorpalette = rgb.parse_rgb_txt_file(colorpalette)
+
         #: Holds the color mode to use for this Colorful object.
         self.colormode = colormode
+
+        #: Holds the color palette to use for this Colorful object.
+        self.colorpalette = colorpalette
 
     class ColorfulStyle(object):
         """
@@ -240,6 +250,6 @@ class Colorful(object):
 
     def __getattr__(self, name):
         # translate the given name into an ANSI escape code sequence
-        style = translate_style(name, self.colormode)
+        style = translate_style(name, self.colormode, self.colorpalette)
         style_wrapper = self.ColorfulStyle(style, self.colormode)
         return style_wrapper
