@@ -30,3 +30,13 @@ SOLARIZED = {
     'cyan': '#2aa198',
     'green': '#859900'
 }
+
+#: Holds the monokai style
+MONOKAI = {
+    'black': '#272822',
+    'magenta': '#F92672',
+    'blue': '#66D9EF',
+    'green': '#A6E22E',
+    'orange': '#FD971F',
+    'purple': '#AE81FF'
+}
