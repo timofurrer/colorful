@@ -169,6 +169,11 @@ The following styles are already supported:
 
 * solarized - [Website](http://ethanschoonover.com/solarized)
 
+<details>
+ <summary>solarized - screenshot</summary>
+ <img src="https://raw.githubusercontent.com/timofurrer/colorful/master/examples/solarized_base_colors.png" alt="solarized colors">
+</details>
+
 *Note: if you know some awesome color palettes which could be a new style in colorful, please contribute it!*
 
 ### Temporarily change colorful settings
