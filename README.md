@@ -172,6 +172,7 @@ The following styles are already supported:
  <br>
  <img src="https://github.com/timofurrer/colorful/blob/master/examples/solarized_base_colors.png" alt="solarized colors">
 </details>
+<br>
 
 *Note: if you know some awesome color palettes which could be a new style in colorful, please contribute it!*
 
