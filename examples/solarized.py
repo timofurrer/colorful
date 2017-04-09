@@ -30,7 +30,7 @@ def show():
     """
     Show the modifiers and colors
     """
-    with colorful.with_config({'colormode': colorful.TRUE_COLORS, 'colorpalette': SOLARIZED_COLOR_PALETTE}) as c:
+    with colorful.with_setup({'colormode': colorful.TRUE_COLORS, 'colorpalette': SOLARIZED_COLOR_PALETTE}) as c:
         # modifiers
         sys.stdout.write(c.bold('bold') + ' ')
         sys.stdout.write(c.dimmed('dimmed') + ' ')

@@ -12,6 +12,7 @@
 
 import os
 import sys
+import copy
 import types
 from contextlib import contextmanager
 
@@ -38,7 +39,7 @@ class ColorfulModule(types.ModuleType):
         self.colorful = colorful
 
     @contextmanager
-    def with_config(self, config):
+    def with_setup(self, config):
         """
         Return a new Colorful object with the given color config.
         """
@@ -48,20 +49,48 @@ class ColorfulModule(types.ModuleType):
         )
 
     @contextmanager
-    def use_8bit_ansi_colors(self):
-        yield Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    def with_8bit_ansi_colors(self):
+        yield Colorful(
+            colormode=terminal.ANSI_8BIT_COLORS,
+            colorpalette=copy.copy(self.colorful.colorpalette)
+        )
 
     @contextmanager
-    def use_16bit_ansi_colors(self):
-        yield Colorful(colormode=terminal.ANSI_16BIT_COLORS)
+    def with_16bit_ansi_colors(self):
+        yield Colorful(
+            colormode=terminal.ANSI_16BIT_COLORS,
+            colorpalette=copy.copy(self.colorful.colorpalette)
+        )
 
     @contextmanager
-    def use_256_ansi_colors(self):
-        yield Colorful(colormode=terminal.ANSI_256_COLORS)
+    def with_256_ansi_colors(self):
+        yield Colorful(
+            colormode=terminal.ANSI_256_COLORS,
+            colorpalette=copy.copy(self.colorful.colorpalette)
+        )
 
     @contextmanager
-    def use_true_colors(self):
-        yield Colorful(colormode=terminal.TRUE_COLORS)
+    def with_true_colors(self):
+        yield Colorful(
+            colormode=terminal.TRUE_COLORS,
+            colorpalette=copy.copy(self.colorful.colorpalette)
+        )
+
+    @contextmanager
+    def with_palette(self, colorpalette):
+        yield Colorful(
+            colormode=self.colorful.colormode,
+            colorpalette=colorpalette
+        )
+
+    @contextmanager
+    def with_updated_palette(self, colorpalette):
+        new_colorpalette = copy.copy(self.colorful.colorpalette)
+        new_colorpalette.update(colorpalette)
+        yield Colorful(
+            colormode=self.colorful.colormode,
+            colorpalette=new_colorpalette
+        )
 
     def __getattr__(self, name):
         """

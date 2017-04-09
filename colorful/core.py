@@ -234,6 +234,64 @@ class Colorful(object):
         #: Holds the color palette to use for this Colorful object.
         self.colorpalette = colorpalette
 
+    def setup(self, colormode=None, colorpalette=None, extend_colors=False):
+        """
+        Setup this colorful object by setting a ``colormode`` and
+        the ``colorpalette`. The ``extend_colors`` flag is used
+        to extend the currently active color palette instead of
+        replacing it.
+
+        :param int colormode: the color mode to use. See ``translate_rgb_to_ansi_code``
+        :parma dict colorpalette: the colorpalette to use. This ``dict`` should map
+                                  color names to it's corresponding RGB value
+        :param bool extend_colors: extend the active color palette instead of replacing it
+        """
+        if colormode:
+            self.colormode = colormode
+
+        if colorpalette:
+            if extend_colors:
+                self.colorpalette.update(colorpalette)
+            else:
+                self.colorpalette = colorpalette
+
+    def use_8bit_ansi_colors(self):
+        """
+        Use 8bit ANSI colors for this colorful object
+        """
+        self.colormode = terminal.ANSI_8BIT_COLORS
+
+    def use_16bit_ansi_colors(self):
+        """
+        Use 16bit ANSI colors for this colorful object
+        """
+        self.colormode = terminal.ANSI_16BIT_COLORS
+
+    def use_256_ansi_colors(self):
+        """
+        Use 256 ANSI colors for this colorful object
+        """
+        self.colormode = terminal.ANSI_256_COLORS
+
+    def use_true_colors(self):
+        """
+        Use true colors for this colorful object
+        """
+        self.colormode = terminal.TRUE_COLORS
+
+    def use_palette(self, colorpalette):
+        """
+        Use the given color palette
+        """
+        self.colorpalette = colorpalette
+
+    def update_palette(self, colorpalette):
+        """
+        Update the currently active color palette
+        with the given color palette
+        """
+        self.colorpalette.update(colorpalette)
+
     class ColorfulStyle(object):
         """
         Represents a colorful style
