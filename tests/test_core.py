@@ -216,6 +216,46 @@ def test_method_call_to_style_conversion(method_name, expected):
     assert method('No, I am your father') == expected
 
 
+@pytest.mark.parametrize('method_name', [
+    ('bold'),
+    ('struckthrough'),
+    # foreground colors
+    ('black'),
+    ('blue'),
+    ('white'),
+    # background colors
+    ('on_black'),
+    ('on_blue'),
+    ('on_white'),
+    # modifiers with foreground colors
+    ('bold_black'),
+    ('italic_blue'),
+    ('struckthrough_white'),
+    # modifiers with background colors
+    ('bold_on_black'),
+    ('italic_on_blue'),
+    ('struckthrough_on_white'),
+    # modifiers with foreground and background colors
+    ('bold_green_on_black'),
+    ('italic_cyan_on_blue'),
+    ('struckthrough_yellow_on_white'),
+    # multiple modifiers
+    ('bold_italic'),
+    ('underlined_struckthrough'),
+    # multiple modifiers with foreground colors
+    ('bold_italic_green'),
+    ('underlined_struckthrough_cyan'),
+])
+def test_method_call_to_style_conversion_disabled_colors(method_name):
+    """
+    Test converting the method call to an actual style with disabled colors
+    """
+    colorful = core.Colorful(colormode=0)
+    method = getattr(colorful, method_name)
+
+    assert method('No, I am your father') == 'No, I am your father'
+
+
 @pytest.mark.parametrize('method_name,expected', [
     ('bold', '\033[1m'),
     ('struckthrough', '\033[9m'),
