@@ -232,7 +232,22 @@ class Colorful(object):
         self.colormode = colormode
 
         #: Holds the color palette to use for this Colorful object.
+        self._colorpalette = None
         self.colorpalette = colorpalette
+
+    @property
+    def colorpalette(self):
+        """
+        Get the current used color palette
+        """
+        return self._colorpalette
+
+    @colorpalette.setter
+    def colorpalette(self, colorpalette):
+        """
+        Set the colorpalette which should be used
+        """
+        self._colorpalette = rgb.sanitize_color_palette(colorpalette)
 
     def setup(self, colormode=None, colorpalette=None, extend_colors=False):
         """
@@ -251,7 +266,7 @@ class Colorful(object):
 
         if colorpalette:
             if extend_colors:
-                self.colorpalette.update(colorpalette)
+                self.update_palette(colorpalette)
             else:
                 self.colorpalette = colorpalette
 
@@ -290,7 +305,7 @@ class Colorful(object):
         Update the currently active color palette
         with the given color palette
         """
-        self.colorpalette.update(colorpalette)
+        self.colorpalette.update(rgb.sanitize_color_palette(colorpalette))
 
     class ColorfulStyle(object):
         """

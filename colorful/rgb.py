@@ -15,6 +15,8 @@
 
 import os
 
+from . import utils
+
 
 def parse_rgb_txt_file(path=None):
     """
@@ -51,3 +53,21 @@ def parse_rgb_txt_file(path=None):
                                                               int(parts[2]))
 
     return color_dict
+
+
+def sanitize_color_palette(colorpalette):
+    """
+    Sanitze the given color palette so it can
+    be safely used by Colorful.
+
+    It will convert colors specified in hex RGB to
+    a RGB channel triplet.
+    """
+    new_palette = {}
+    for key, value in colorpalette.items():
+        if isinstance(value, str):
+            # we assume it's a hex RGB value
+            value = utils.hex_to_rgb(value)
+        new_palette[key] = value
+
+    return new_palette

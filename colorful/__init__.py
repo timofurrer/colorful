@@ -85,12 +85,12 @@ class ColorfulModule(types.ModuleType):
 
     @contextmanager
     def with_updated_palette(self, colorpalette):
-        new_colorpalette = copy.copy(self.colorful.colorpalette)
-        new_colorpalette.update(colorpalette)
-        yield Colorful(
+        colorful = Colorful(
             colormode=self.colorful.colormode,
-            colorpalette=new_colorpalette
+            colorpalette=copy.copy(self.colorful.colorpalette),
         )
+        colorful.update_palette(colorpalette)
+        yield colorful
 
     def __getattr__(self, name):
         """
