@@ -59,6 +59,123 @@ def test_translate_style_8bit(style_string, expected):
                                 colorpalette=core.COLOR_PALETTE) == expected
 
 
+@pytest.mark.parametrize('style_string,expected', [
+    # modifiers
+    ('bold', '\033[1m'),
+    ('struckthrough', '\033[9m'),
+    # foreground colors
+    ('black', '\033[30m'),
+    ('blue', '\033[34m'),
+    ('white', '\033[37m'),
+    # background colors
+    ('on_black', '\033[40m'),
+    ('on_blue', '\033[44m'),
+    ('on_white', '\033[47m'),
+    # modifiers with foreground colors
+    ('bold_black', '\033[1m\033[30m'),
+    ('italic_blue', '\033[3m\033[34m'),
+    ('struckthrough_white', '\033[9m\033[37m'),
+    # modifiers with background colors
+    ('bold_on_black', '\033[1m\033[40m'),
+    ('italic_on_blue', '\033[3m\033[44m'),
+    ('struckthrough_on_white', '\033[9m\033[47m'),
+    # modifiers with foreground and background colors
+    ('bold_green_on_black', '\033[1m\033[32m\033[40m'),
+    ('italic_cyan_on_blue', '\033[3m\033[36m\033[44m'),
+    ('struckthrough_yellow_on_white', '\033[9m\033[33m\033[47m'),
+    # multiple modifiers
+    ('bold_italic', '\033[1m\033[3m'),
+    ('underlined_struckthrough', '\033[4m\033[9m'),
+    # multiple modifiers with foreground colors
+    ('bold_italic_green', '\033[1m\033[3m\033[32m'),
+    ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36m')
+])
+def test_translate_style_16bit(style_string, expected):
+    """
+    Test translating style strings with 16bit colors
+    """
+    assert core.translate_style(style_string, colormode=16,
+                                colorpalette=core.COLOR_PALETTE) == expected
+
+
+@pytest.mark.parametrize('style_string,expected', [
+    # modifiers
+    ('bold', '\033[1m'),
+    ('struckthrough', '\033[9m'),
+    # foreground colors
+    ('black', '\033[38;5;16m'),
+    ('blue', '\033[38;5;21m'),
+    ('white', '\033[38;5;231m'),
+    # background colors
+    ('on_black', '\033[48;5;16m'),
+    ('on_blue', '\033[48;5;21m'),
+    ('on_white', '\033[48;5;231m'),
+    # modifiers with foreground colors
+    ('bold_black', '\033[1m\033[38;5;16m'),
+    ('italic_blue', '\033[3m\033[38;5;21m'),
+    ('struckthrough_white', '\033[9m\033[38;5;231m'),
+    # modifiers with background colors
+    ('bold_on_black', '\033[1m\033[48;5;16m'),
+    ('italic_on_blue', '\033[3m\033[48;5;21m'),
+    ('struckthrough_on_white', '\033[9m\033[48;5;231m'),
+    # modifiers with foreground and background colors
+    ('bold_green_on_black', '\033[1m\033[38;5;46m\033[48;5;16m'),
+    ('italic_cyan_on_blue', '\033[3m\033[38;5;51m\033[48;5;21m'),
+    ('struckthrough_yellow_on_white', '\033[9m\033[38;5;226m\033[48;5;231m'),
+    # multiple modifiers
+    ('bold_italic', '\033[1m\033[3m'),
+    ('underlined_struckthrough', '\033[4m\033[9m'),
+    # multiple modifiers with foreground colors
+    ('bold_italic_green', '\033[1m\033[3m\033[38;5;46m'),
+    ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[38;5;51m')
+])
+def test_translate_style_256(style_string, expected):
+    """
+    Test translating style strings with 256 colors
+    """
+    assert core.translate_style(style_string, colormode=256,
+                                colorpalette=core.COLOR_PALETTE) == expected
+
+
+@pytest.mark.parametrize('style_string,expected', [
+    # modifiers
+    ('bold', '\033[1m'),
+    ('struckthrough', '\033[9m'),
+    # foreground colors
+    ('black', '\033[38;2;0;0;0m'),
+    ('blue', '\033[38;2;0;0;255m'),
+    ('white', '\033[38;2;255;255;255m'),
+    # background colors
+    ('on_black', '\033[48;2;0;0;0m'),
+    ('on_blue', '\033[48;2;0;0;255m'),
+    ('on_white', '\033[48;2;255;255;255m'),
+    # modifiers with foreground colors
+    ('bold_black', '\033[1m\033[38;2;0;0;0m'),
+    ('italic_blue', '\033[3m\033[38;2;0;0;255m'),
+    ('struckthrough_white', '\033[9m\033[38;2;255;255;255m'),
+    # modifiers with background colors
+    ('bold_on_black', '\033[1m\033[48;2;0;0;0m'),
+    ('italic_on_blue', '\033[3m\033[48;2;0;0;255m'),
+    ('struckthrough_on_white', '\033[9m\033[48;2;255;255;255m'),
+    # modifiers with foreground and background colors
+    ('bold_green_on_black', '\033[1m\033[38;2;0;255;0m\033[48;2;0;0;0m'),
+    ('italic_cyan_on_blue', '\033[3m\033[38;2;0;255;255m\033[48;2;0;0;255m'),
+    ('struckthrough_yellow_on_white', '\033[9m\033[38;2;255;255;0m\033[48;2;255;255;255m'),
+    # multiple modifiers
+    ('bold_italic', '\033[1m\033[3m'),
+    ('underlined_struckthrough', '\033[4m\033[9m'),
+    # multiple modifiers with foreground colors
+    ('bold_italic_green', '\033[1m\033[3m\033[38;2;0;255;0m'),
+    ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[38;2;0;255;255m')
+])
+def test_translate_style_true_colors(style_string, expected):
+    """
+    Test translating style strings with true colors
+    """
+    assert core.translate_style(style_string, colormode=0xFFFFFF,
+                                colorpalette=core.COLOR_PALETTE) == expected
+
+
 @pytest.mark.parametrize('method_name,expected', [
     ('bold', '\033[1mNo, I am your father\033[0m'),
     ('struckthrough', '\033[9mNo, I am your father\033[0m'),
@@ -89,9 +206,9 @@ def test_translate_style_8bit(style_string, expected):
     ('bold_italic_green', '\033[1m\033[3m\033[32mNo, I am your father\033[0m'),
     ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36mNo, I am your father\033[0m')
 ])
-def test_method_call_to_style_conversion_8bit(method_name, expected):
+def test_method_call_to_style_conversion(method_name, expected):
     """
-    Test converting the method call to an actual style with 8bit colors
+    Test converting the method call to an actual style
     """
     colorful = core.Colorful(colormode=8)
     method = getattr(colorful, method_name)
@@ -129,9 +246,9 @@ def test_method_call_to_style_conversion_8bit(method_name, expected):
     ('bold_italic_green', '\033[1m\033[3m\033[32m'),
     ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36m')
 ])
-def test_method_str_to_style_conversion_8bit(method_name, expected):
+def test_method_str_to_style_conversion(method_name, expected):
     """
-    Test converting the method to an actual style with 8bit colors string
+    Test converting the method to an actual style
     """
     colorful = core.Colorful(colormode=8)
     method = getattr(colorful, method_name)
@@ -169,9 +286,9 @@ def test_method_str_to_style_conversion_8bit(method_name, expected):
     ('bold_italic_green', '\033[1m\033[3m\033[32mNo, I am your father\033[0m'),
     ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36mNo, I am your father\033[0m')
 ])
-def test_method_in_format_to_style_conversion_8bit(method_name, expected):
+def test_method_in_format_to_style_conversion(method_name, expected):
     """
-    Test converting the method in a format() call to an actual style with 8bit colors
+    Test converting the method in a format() call to an actual style
     """
     colorful = core.Colorful(colormode=8)
     method = getattr(colorful, method_name)
