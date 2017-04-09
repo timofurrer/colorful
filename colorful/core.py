@@ -98,7 +98,7 @@ def translate_colorname_to_ansi_code(colorname, offset, colormode, colorpalette)
     try:
         red, green, blue = colorpalette[colorname]
     except KeyError:
-        raise ColorfulError('the color "{0}" is unknown. Use a color in your color palette (by default: X11 rgb.txt)'.format(
+        raise ColorfulError('the color "{0}" is unknown. Use a color in your color palette (by default: X11 rgb.txt)'.format(  # noqa
             colorname))
     else:
         return translate_rgb_to_ansi_code(red, green, blue, offset, colormode)

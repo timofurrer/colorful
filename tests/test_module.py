@@ -22,7 +22,8 @@ import colorful.terminal as terminal  # noqa
 
 # replace colorful name with ColorfulModule instance
 ColorfulError = colorful.core.ColorfulError
-colorful = colorful.ColorfulModule(colorful.Colorful(colormode=terminal.ANSI_8BIT_COLORS), 'colorful')
+colorful = colorful.ColorfulModule(
+    colorful.Colorful(colormode=terminal.ANSI_8BIT_COLORS), 'colorful')
 
 
 def test_color_method_resolution():
@@ -103,4 +104,3 @@ def test_use_styles():
         assert str(c.red) == '\033[38;2;220;50;47m'
 
     assert str(colorful.red) == '\033[31m'
-
