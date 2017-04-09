@@ -18,7 +18,7 @@ install:
     - pip install -r requirements-dev.txt
 
 script:
-    - py.test -vs tests/
+    - py.test --cov colorful --cov-report term-miessing -vs tests/
     - flake8 --show-source colorful/ tests/
 
 deploy:
