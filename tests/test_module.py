@@ -92,3 +92,15 @@ def test_change_color_palette():
         expected = ('the color "black" is unknown. '
                     'Use a color in your color palette (by default: X11 rgb.txt)')
         assert exc.value.message == expected
+
+
+def test_use_styles():
+    """
+    Test using a predefined style in a with-block
+    """
+    with colorful.with_style('solarized') as c:
+        c.use_true_colors()
+        assert str(c.red) == '\033[38;2;220;50;47m'
+
+    assert str(colorful.red) == '\033[31m'
+

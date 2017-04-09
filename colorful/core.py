@@ -14,7 +14,7 @@ import os
 
 from . import ansi
 from . import rgb
-from . import utils
+from . import styles
 from . import terminal
 
 # For the ANSI escape code sequences please consult
@@ -291,6 +291,20 @@ class Colorful(object):
         with the given color palette
         """
         self.colorpalette.update(rgb.sanitize_color_palette(colorpalette))
+
+    def use_style(self, style_name):
+        """
+        Use a predefined style as color palette
+
+        :param str style_name: the name of the style
+        """
+        try:
+            style = getattr(styles, style_name.upper())
+        except AttributeError:
+            raise ColorfulError('the style "{0}" is undefined'.format(
+                style_name))
+        else:
+            self.colorpalette = style
 
     class ColorfulStyle(object):
         """

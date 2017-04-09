@@ -97,6 +97,15 @@ class ColorfulModule(types.ModuleType):
         colorful.update_palette(colorpalette)
         yield colorful
 
+    @contextmanager
+    def with_style(self, style_name):
+        colorful = Colorful(
+            colormode=self.colorful.colormode,
+            colorpalette={},
+        )
+        colorful.use_style(style_name)
+        yield colorful
+
     def __getattr__(self, name):
         """
         Dynamically get methods from Colorful object.

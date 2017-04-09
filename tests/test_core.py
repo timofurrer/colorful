@@ -481,6 +481,21 @@ def test_change_color_palette():
     assert exc.value.message == expected
 
 
+def test_use_styles():
+    """
+    Test using a predefined style
+    """
+    colorful = core.Colorful(colormode=terminal.TRUE_COLORS)
+    colorful.use_style('solarized')
+
+    assert str(colorful.red) == '\033[38;2;220;50;47m'
+
+    with pytest.raises(core.ColorfulError) as exc:
+        colorful.lightCoral('The color lightCoral only exists in the X11 rgb.txt palette')
+
+    assert exc.value.message.startswith('the color "lightCoral" is unknown.')
+
+
 # @pytest.mark.parametrize('method_name,expected', [
     # ('bold', 'No, I am your father'),
     # ('struckthrough', 'No, I am your father'),
