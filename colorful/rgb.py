@@ -43,10 +43,10 @@ def parse_rgb_txt_file(path=None):
 
     with open(path, 'r') as rgb_txt:
         for line in rgb_txt:
-            if line.startswith('!'):
+            line = line.strip()
+            if not line or line.startswith('!'):
                 continue  # skip comments
 
-            line = line.strip()
             parts = line.split()
             color_dict[__make_valid_color_name(parts[3:])] = (int(parts[0]),
                                                               int(parts[1]),

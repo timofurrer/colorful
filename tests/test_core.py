@@ -18,6 +18,7 @@ import pytest
 os.environ['COLORFUL_NO_MODULE_OVERWRITE'] = '1'
 
 import colorful.core as core  # noqa
+import colorful.terminal as terminal  # noqa
 
 
 @pytest.mark.parametrize('style_string,expected', [
@@ -55,7 +56,7 @@ def test_translate_style_8bit(style_string, expected):
     """
     Test translating style strings with 8bit colors
     """
-    assert core.translate_style(style_string, colormode=8,
+    assert core.translate_style(style_string, colormode=terminal.ANSI_8BIT_COLORS,
                                 colorpalette=core.COLOR_PALETTE) == expected
 
 
@@ -94,7 +95,7 @@ def test_translate_style_16bit(style_string, expected):
     """
     Test translating style strings with 16bit colors
     """
-    assert core.translate_style(style_string, colormode=16,
+    assert core.translate_style(style_string, colormode=terminal.ANSI_16BIT_COLORS,
                                 colorpalette=core.COLOR_PALETTE) == expected
 
 
@@ -133,7 +134,7 @@ def test_translate_style_256(style_string, expected):
     """
     Test translating style strings with 256 colors
     """
-    assert core.translate_style(style_string, colormode=256,
+    assert core.translate_style(style_string, colormode=terminal.ANSI_256_COLORS,
                                 colorpalette=core.COLOR_PALETTE) == expected
 
 
@@ -172,7 +173,7 @@ def test_translate_style_true_colors(style_string, expected):
     """
     Test translating style strings with true colors
     """
-    assert core.translate_style(style_string, colormode=0xFFFFFF,
+    assert core.translate_style(style_string, colormode=terminal.TRUE_COLORS,
                                 colorpalette=core.COLOR_PALETTE) == expected
 
 
@@ -210,7 +211,7 @@ def test_method_call_to_style_conversion(method_name, expected):
     """
     Test converting the method call to an actual style
     """
-    colorful = core.Colorful(colormode=8)
+    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
     method = getattr(colorful, method_name)
 
     assert method('No, I am your father') == expected
@@ -250,7 +251,7 @@ def test_method_call_to_style_conversion_disabled_colors(method_name):
     """
     Test converting the method call to an actual style with disabled colors
     """
-    colorful = core.Colorful(colormode=0)
+    colorful = core.Colorful(colormode=terminal.NO_COLORS)
     method = getattr(colorful, method_name)
 
     assert method('No, I am your father') == 'No, I am your father'
@@ -290,7 +291,7 @@ def test_method_str_to_style_conversion(method_name, expected):
     """
     Test converting the method to an actual style
     """
-    colorful = core.Colorful(colormode=8)
+    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
     method = getattr(colorful, method_name)
 
     assert str(method) == expected
@@ -330,10 +331,154 @@ def test_method_in_format_to_style_conversion(method_name, expected):
     """
     Test converting the method in a format() call to an actual style
     """
-    colorful = core.Colorful(colormode=8)
+    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
     method = getattr(colorful, method_name)
 
     assert '{method}No, I am your father{c.reset}'.format(method=method, c=colorful) == expected
+
+
+def test_invalid_color_mode():
+    """
+    Test setting an invalid color mode
+    """
+    colorful = core.Colorful(colormode=42)
+
+    with pytest.raises(core.ColorfulError) as exc:
+        colorful.white('Invalid color mode')
+        assert exc.value.message == 'invalid color mode "42"'
+
+
+def test_invalid_color_name():
+    """
+    Test invalid color name
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+
+    expected = ('the color "invalidColor" is unknown. '
+                'Use a color in your color palette (by default: X11 rgb.txt)')
+    with pytest.raises(core.ColorfulError) as exc:
+        colorful.bold_invalidColor('Invalid color name')
+    assert exc.value.message == expected
+
+
+@pytest.mark.parametrize('env,expected', [
+    ({'COLORFUL_DISABLE': '1'}, terminal.NO_COLORS),
+    ({'COLORTERM': 'truecolor'}, terminal.TRUE_COLORS),
+    ({'TERM_PROGRAM': 'iTerm.app'}, terminal.TRUE_COLORS),
+    ({'TERM': 'xterm-256color'}, terminal.ANSI_256_COLORS),
+    ({'TERM': 'screen'}, terminal.ANSI_16BIT_COLORS),
+    ({}, terminal.ANSI_8BIT_COLORS),
+])
+def test_colorful_obj_color_auto_detection(env, expected):
+    """
+    Test that the colorful object is able to auto detect the supported colors
+    """
+    os_env_backup = os.environ.copy()
+    os.environ.update(env)
+    colorful = core.Colorful(colormode=None)  # None to explicitly auto detect the colors
+    assert colorful.colormode == expected
+
+    # restore environ backup
+    os.environ = os_env_backup
+
+
+def test_reading_color_palette(tmpdir):
+    """
+    Test reading color palette from file
+    """
+    # create palette file
+    palette_file = tmpdir.mkdir('palettes').join('my_rgb.txt')
+    palette_file.write("""
+0 0 0 myBlack
+255 255 255      myWhite""")
+
+    colorful = core.Colorful(colorpalette=str(palette_file))
+    assert str(colorful.myBlack) == '\033[30m'
+    assert str(colorful.myWhite) == '\033[37m'
+
+
+def test_colorful_obj_setup():
+    """
+    Test setup of an existing colorful object
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful.setup(
+        colormode=terminal.TRUE_COLORS,
+        colorpalette={'testColor': (0, 0, 0)},
+        extend_colors=False
+    )
+
+    assert colorful.colormode == terminal.TRUE_COLORS
+    assert str(colorful.testColor) == '\033[38;2;0;0;0m'
+
+    with pytest.raises(core.ColorfulError) as exc:
+        colorful.black('black does not exist anymore')
+
+    expected = ('the color "black" is unknown. '
+                'Use a color in your color palette (by default: X11 rgb.txt)')
+    assert exc.value.message == expected
+
+
+def test_colorful_obj_setup_with_extending_palette():
+    """
+    Test setup of an existing colorful object and extend the color palette
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful.setup(
+        colormode=terminal.TRUE_COLORS,
+        colorpalette={'testColor': (0, 0, 0)},
+        extend_colors=True
+    )
+
+    assert colorful.colormode == terminal.TRUE_COLORS
+    assert str(colorful.testColor) == '\033[38;2;0;0;0m'
+    assert str(colorful.black) == '\033[38;2;0;0;0m'
+
+
+@pytest.mark.parametrize('method_name, colorname, expected', [
+    ('use_8bit_ansi_colors', 'black', '\033[30m'),
+    ('use_16bit_ansi_colors', 'black', '\033[30m'),
+    ('use_256_ansi_colors', 'black', '\033[38;5;16m'),
+    ('use_true_colors', 'black', '\033[38;2;0;0;0m')
+])
+def test_set_color_mode_methods(method_name, colorname, expected):
+    """
+    Test changing the color mode for an existing colorful object
+    """
+    colorful = core.Colorful(colormode=terminal.NO_COLORS)
+
+    # change color mode
+    getattr(colorful, method_name)()
+
+    assert str(getattr(colorful, colorname)) == expected
+
+
+def test_change_color_palette():
+    """
+    Test changing the color palette for an existing colorful object
+    """
+    NEW_COLOR_PALETTE = {
+        'black': (0, 0, 0)
+    }
+    colorful = core.Colorful(
+        colormode=terminal.ANSI_8BIT_COLORS, colorpalette={'defaultColor': (255, 255, 255)})
+
+    # updating existing color palette
+    colorful.update_palette(NEW_COLOR_PALETTE)
+    # old and new colors should exist
+    assert str(colorful.black) == '\033[30m'
+    assert str(colorful.defaultColor) == '\033[37m'
+
+    # set color palette and overwrite the old one
+    colorful.use_palette(NEW_COLOR_PALETTE)
+    assert str(colorful.black) == '\033[30m'
+
+    with pytest.raises(core.ColorfulError) as exc:
+        colorful.defaultColor('The defaultColor was overwritten by the new palette')
+
+    expected = ('the color "defaultColor" is unknown. '
+                'Use a color in your color palette (by default: X11 rgb.txt)')
+    assert exc.value.message == expected
 
 
 # @pytest.mark.parametrize('method_name,expected', [

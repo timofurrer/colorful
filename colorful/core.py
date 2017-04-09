@@ -98,25 +98,10 @@ def translate_colorname_to_ansi_code(colorname, offset, colormode, colorpalette)
     try:
         red, green, blue = colorpalette[colorname]
     except KeyError:
-        raise ColorfulError('the color "{0}" is unknown. Use X11 rgb.txt valid color name'.format(
+        raise ColorfulError('the color "{0}" is unknown. Use a color in your color palette (by default: X11 rgb.txt)'.format(
             colorname))
     else:
         return translate_rgb_to_ansi_code(red, green, blue, offset, colormode)
-
-
-def translate_hex_to_ansi_code(value, offset, colormode):
-    """
-    Translate the given RGB hex value to a valid
-    ANSI escape code.
-
-    :param str value: the RGB hex value
-    :param str offset: the offset for the color code
-    :param int colormode: the color mode to use. See ``translate_rgb_to_ansi_code``
-
-    :returns str: the color as ANSI escape code
-    """
-    red, green, blue = utils.hex_to_rgb(value)
-    return translate_rgb_to_ansi_code(red, green, blue, offset, colormode)
 
 
 def resolve_modifier_to_ansi_code(modifiername, colormode):
