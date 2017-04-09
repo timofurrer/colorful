@@ -10,11 +10,18 @@ import colorful
 # create a colored string using clever method translation
 print(colorful.bold_white('Hello World'))
 # create a colored string using `str.format()`
-print('{c.bold}{c.black_on_white}Hello World{c.reset}'.format(c=colorful))
+print('{c.bold}{c.lightCoral_on_white}Hello World{c.reset}'.format(c=colorful))
+
+# use true colors
+colorful.use_true_colors()
+
+# extend default color palette
+colorful.update_palette({'mint': '#c5e8c8'})
+print(colorful.mint_on_snow('Wow, this is actually mint'))
 
 # choose specific color mode for one block
-with colorful.with_true_colors() as c:
-    print(c.lightCoral('colorful is awesome!'))
+with colorful.with_8bit_ansi_colors() as c:
+    print(c.bold_green('colorful is awesome!'))
 
 # choose a predefined style for color names
 with colorful.with_style('solarized') as c:
