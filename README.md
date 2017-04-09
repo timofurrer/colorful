@@ -4,6 +4,8 @@ Terminal string styling done right, in Python :tada:
 
 ## Here's a tease
 
+![colorful example](examples/basic_example.png)
+
 ```python
 import colorful
 
