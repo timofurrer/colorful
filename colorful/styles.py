@@ -33,10 +33,19 @@ SOLARIZED = {
 
 #: Holds the monokai style
 MONOKAI = {
-    'black': '#272822',
-    'magenta': '#F92672',
+    'ghostWhite': '#F8F8F0',
+    'lightGhostWhite': '#F8F8F2',
+    'lightGray': '#CCCCCC',
+    'gray': '#888888',
+    'brownGray': '#49483E',
+    'darkGray': '#282828',
+    'yellow': '#E6DB74',
     'blue': '#66D9EF',
-    'green': '#A6E22E',
+    'magenta': '#F92672',
+    'purple': '#AE81FF',
+    'brown': '#75715E',
     'orange': '#FD971F',
-    'purple': '#AE81FF'
+    'lightOrange': '#FFD569',
+    'green': '#A6E22E',
+    'seaGreen': '#529B2F'
 }

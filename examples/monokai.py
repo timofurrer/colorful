@@ -31,16 +31,22 @@ def show():
         sys.stdout.write(c.struckthrough('struckthrough') + '\n')
 
         # foreground colors
+        sys.stdout.write(c.orange('orange') + ' ')
         sys.stdout.write(c.magenta('magenta') + ' ')
         sys.stdout.write(c.purple('purple') + ' ')
         sys.stdout.write(c.blue('blue') + ' ')
-        sys.stdout.write(c.green('green') + '\n')
+        sys.stdout.write(c.seaGreen('sea green') + ' ')
+        sys.stdout.write(c.green('green') + ' ')
+        sys.stdout.write(c.yellow('yellow') + '\n')
 
         # background colors
+        sys.stdout.write(c.on_orange('orange') + ' ')
         sys.stdout.write(c.on_magenta('magenta') + ' ')
         sys.stdout.write(c.on_purple('purple') + ' ')
         sys.stdout.write(c.on_blue('blue') + ' ')
-        sys.stdout.write(c.on_green('green') + '\n')
+        sys.stdout.write(c.on_seaGreen('sea green') + ' ')
+        sys.stdout.write(c.gray_on_green('green') + ' ')
+        sys.stdout.write(c.gray_on_yellow('yellow') + '\n')
 
 
 if __name__ == '__main__':
