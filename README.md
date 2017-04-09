@@ -19,15 +19,17 @@ colorful.use_true_colors()
 colorful.update_palette({'mint': '#c5e8c8'})
 print(colorful.mint_on_snow('Wow, this is actually mint'))
 
+# choose a predefined style
+colorful.use_style('solarized')
+# print the official solarized colors
+print(colorful.yellow('yellow'), colorful.orange('orange'), 
+    colorful.red('red'), colorful.magenta('magenta'),
+    colorful.violet('violet'), colorful.blue('blue'),
+    colorful.cyan('cyan'), colorful.green('green'))
+
 # choose specific color mode for one block
 with colorful.with_8bit_ansi_colors() as c:
     print(c.bold_green('colorful is awesome!'))
-
-# choose a predefined style for color names
-with colorful.with_style('solarized') as c:
-    # print the official solarized colors
-    print(c.yellow('yellow'), c.orange('orange'), c.red('red'), c.magenta('magenta'),
-        c.violet('violet'), c.blue('blue'), c.cyan('cyan'), c.green('green'))
 
 # create and choose your own color palette
 MY_COMPANY_PALETTE = {
