@@ -374,7 +374,7 @@ def test_colorful_obj_color_auto_detection(env, expected):
     Test that the colorful object is able to auto detect the supported colors
     """
     os_env_backup = os.environ.copy()
-    os.environ.update(env)
+    os.environ = env
     colorful = core.Colorful(colormode=None)  # None to explicitly auto detect the colors
     assert colorful.colormode == expected
 
