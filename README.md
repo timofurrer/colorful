@@ -171,7 +171,7 @@ The following styles are already supported:
 
 <details>
  <summary>solarized - screenshot</summary>
- <img src="https://raw.githubusercontent.com/timofurrer/colorful/master/examples/solarized_base_colors.png" alt="solarized colors">
+ <img src="https://github.com/timofurrer/colorful/blob/master/examples/solarized_base_colors.png" alt="solarized colors">
 </details>
 
 *Note: if you know some awesome color palettes which could be a new style in colorful, please contribute it!*
