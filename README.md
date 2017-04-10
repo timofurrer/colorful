@@ -191,6 +191,44 @@ The following styles are already supported:
 
 *Note: if you know some awesome color palettes which could be a new style in colorful, please contribute it!*
 
+### Style a string
+
+**colorful** provides multiple ways to use style a string. Most useful and expressive is probably the *method syntax* where you specify the modifiers and colors in the method name itself and pass the string as argument to this method. However, you can also `str().format()`.
+
+#### (1) Style a string with a method call
+
+```python
+print(colorful.red('I am red'))
+print(colorful.italic_yellow('I am italic and yellow'))
+print(colorful.black_on_white('I am black on white'))
+```
+
+The method syntax can be one of:
+
+* `colorful.<modifier>`
+* `colorful.<modifier1>_<modifier2>`
+* `colorful.<fg_color>`
+* `colorful.on_<bg_color>`
+* `colorful.<modifiers>_<fg_color>`
+* `colorful.<modifiers>_<bg_color>`
+* `colorful.<fg_colors>_on_<bg_color>`
+* `colorful.<modifiers>_<fg_color>_on_<bg_color>`
+
+#### (2) Style a string with `str.format()`
+
+```python
+print('{c.red}I am red{c.close_fg_color}'.format(c=colorful))
+# alternatively to ``c.close_fg_color`` you can reset every style with ``c.reset``
+print('{c.red}I am red{c.reset}'.format(c=colorful))
+
+print('{c.italic_yellow}I am italic and yellow{c.no_italic}{c.close_fg_color}'.format(
+    c=colorful))
+print('{c.black_on_white}I am black on white{c.close_fg_color}{c.close_bg_color}'.format(
+    c=colorful))
+```
+
+The same syntax for the style in `{c.<style>}` can be used as for [(1) Style a string with a method call](#style-a-string-with-a-method-call).
+
 ### Temporarily change colorful settings
 
 **colorful** provides a hand full of convenient context managers to change the colorful settings temporarily:
