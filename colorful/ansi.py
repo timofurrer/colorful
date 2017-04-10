@@ -16,12 +16,30 @@ import math
 # https://en.wikipedia.org/wiki/ANSI_escape_code
 
 #: Holds the modifier names in the correct order
-MODIFIER_NAMES = ['reset', 'bold', 'dimmed', 'italic', 'underlined',
-                  'blinkslow', 'blinkrapid', 'inversed', 'concealed', 'struckthrough']
+MODIFIERS = {
+    'reset': (0, 0),
+    'bold': (1, 22),
+    'dimmed': (2, 22),
+    'italic': (3, 23),
+    'underlined': (4, 24),
+    'blinkslow': (5, 25),
+    'blinkrapid': (6, 25),
+    'inversed': (7, 27),
+    'concealed': (8, 28),
+    'struckthrough': (9, 29)
+}
+
+#: Holds the offset for resetting the modifiers
+MODIFIER_RESET_OFFSET = 21
 
 #: Holds the start index for the fore- and background colors
-BACKGROUND_COLOR_OFFSET = 40
 FOREGROUND_COLOR_OFFSET = 30
+BACKGROUND_COLOR_OFFSET = 40
+
+#: Holds the offset to reset the color back to default.
+#  this number has to be added to either ``FOREGROUND_COLOR_OFFSET`` or
+#  ``BACKGROUND_COLOR_OFFSET`` to get an usable ANSI escape code.
+COLOR_CLOSE_OFFSET = 9
 
 #: Holds the Control Sequence Introducer
 CSI = '\033['

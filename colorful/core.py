@@ -49,20 +49,26 @@ def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
     :param int colormode: the color mode to use. See explanation above
     """
     if colormode == terminal.NO_COLORS:  # colors are disabled, thus return empty string
-        return ''
+        return '', ''
 
     if colormode == terminal.ANSI_8BIT_COLORS or colormode == terminal.ANSI_16BIT_COLORS:
         color_code = ansi.rgb_to_ansi16(red, green, blue)
-        return ansi.ANSI_ESCAPE_CODE.format(code=color_code + offset - ansi.FOREGROUND_COLOR_OFFSET)
+        start_code = ansi.ANSI_ESCAPE_CODE.format(code=color_code + offset - ansi.FOREGROUND_COLOR_OFFSET)
+        end_code = ansi.ANSI_ESCAPE_CODE.format(code=offset + ansi.COLOR_CLOSE_OFFSET)
+        return start_code, end_code
 
     if colormode == terminal.ANSI_256_COLORS:
         color_code = ansi.rgb_to_ansi265(red, green, blue)
-        return ansi.ANSI_ESCAPE_CODE.format(code='{base};5;{code}'.format(
+        start_code = ansi.ANSI_ESCAPE_CODE.format(code='{base};5;{code}'.format(
             base=8 + offset, code=color_code))
+        end_code = ansi.ANSI_ESCAPE_CODE.format(code=offset + ansi.COLOR_CLOSE_OFFSET)
+        return start_code, end_code
 
     if colormode == terminal.TRUE_COLORS:
-        return ansi.ANSI_ESCAPE_CODE.format(code='{base};2;{red};{green};{blue}'.format(
+        start_code = ansi.ANSI_ESCAPE_CODE.format(code='{base};2;{red};{green};{blue}'.format(
             base=8 + offset, red=red, green=green, blue=blue))
+        end_code = ansi.ANSI_ESCAPE_CODE.format(code=offset + ansi.COLOR_CLOSE_OFFSET)
+        return start_code, end_code
 
     raise ColorfulError('invalid color mode "{0}"'.format(colormode))
 
@@ -103,15 +109,17 @@ def resolve_modifier_to_ansi_code(modifiername, colormode):
     :raises ColorfulError: if the given modifier name is invalid
     """
     if colormode == terminal.NO_COLORS:  # return empty string if colors are disabled
-        return ''
+        return '', ''
 
     try:
-        code = ansi.MODIFIER_NAMES.index(modifiername)
-    except ValueError:
+        start_code, end_code = ansi.MODIFIERS[modifiername]
+    except KeyError:
         raise ColorfulError('the modifier "{0}" is unknown. Use one of: {1}'.format(
-            modifiername, ansi.MODIFIER_NAMES))
+            modifiername, ansi.MODIFIERS.keys()))
     else:
-        return ansi.ANSI_ESCAPE_CODE.format(code=code)
+        return ansi.ANSI_ESCAPE_CODE.format(
+            code=start_code), ansi.ANSI_ESCAPE_CODE.format(
+                code=end_code)
 
 
 def translate_style(style, colormode, colorpalette):
@@ -133,37 +141,44 @@ def translate_style(style, colormode, colorpalette):
     """
     style_parts = iter(style.split('_'))
 
-    ansi_sequence = []
+    ansi_start_sequence = []
+    ansi_end_sequence = []
 
     try:
         # consume all modifiers
         part = None
         for mod_part in style_parts:
             part = mod_part
-            if part not in ansi.MODIFIER_NAMES:
+            if part not in ansi.MODIFIERS:
                 break  # all modifiers have been consumed
 
-            ansi_sequence.append(resolve_modifier_to_ansi_code(part, colormode))
+            mod_start_code, mod_end_code = resolve_modifier_to_ansi_code(part, colormode)
+            ansi_start_sequence.append(mod_start_code)
+            ansi_end_sequence.append(mod_end_code)
         else:  # we've consumed all parts, thus we can exit
             raise StopIteration()
 
         # next part has to be a foreground color or the 'on' keyword
         # which means we have to consume background colors
         if part != 'on':
-            ansi_sequence.append(translate_colorname_to_ansi_code(
-                part, ansi.FOREGROUND_COLOR_OFFSET, colormode, colorpalette))
+            ansi_start_code, ansi_end_code = translate_colorname_to_ansi_code(
+                part, ansi.FOREGROUND_COLOR_OFFSET, colormode, colorpalette)
+            ansi_start_sequence.append(ansi_start_code)
+            ansi_end_sequence.append(ansi_end_code)
             # consume the required 'on' keyword after the foreground color
             next(style_parts)
 
         # next part has to be the background color
         part = next(style_parts)
-        ansi_sequence.append(translate_colorname_to_ansi_code(
-            part, ansi.BACKGROUND_COLOR_OFFSET, colormode, colorpalette))
+        ansi_start_code, ansi_end_code = translate_colorname_to_ansi_code(
+            part, ansi.BACKGROUND_COLOR_OFFSET, colormode, colorpalette)
+        ansi_start_sequence.append(ansi_start_code)
+        ansi_end_sequence.append(ansi_end_code)
     except StopIteration:  # we've consumed all parts of the styling string
         pass
 
     # construct and return ANSI escape code sequence
-    return ''.join(ansi_sequence)
+    return ''.join(ansi_start_sequence), ''.join(ansi_end_sequence)
 
 
 def style_string(string, ansi_style, colormode):
@@ -172,15 +187,15 @@ def style_string(string, ansi_style, colormode):
     ANSI style string.
 
     :param str string: the string to style
-    :param str ansi_style: the styling string returned by ``translate_style``
+    :param tuple ansi_style: the styling string returned by ``translate_style``
     :param int colormode: the color mode to use. See ``translate_rgb_to_ansi_code``
 
     :returns: a string containing proper ANSI sequence
     """
     return '{style}{string}{reset}'.format(
-        style=ansi_style,
+        style=ansi_style[0],
         string=string,
-        reset=resolve_modifier_to_ansi_code('reset', colormode))
+        reset=resolve_modifier_to_ansi_code('reset', colormode)[0])
 
 
 class Colorful(object):
@@ -301,7 +316,7 @@ class Colorful(object):
             self.colormode = colormode
 
         def __str__(self):
-            return self.style
+            return self.style[0]
 
         def __call__(self, string):
             return style_string(string, self.style, self.colormode)

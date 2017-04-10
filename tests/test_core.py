@@ -23,34 +23,34 @@ import colorful.terminal as terminal  # noqa
 
 @pytest.mark.parametrize('style_string,expected', [
     # modifiers
-    ('bold', '\033[1m'),
-    ('struckthrough', '\033[9m'),
+    ('bold', ('\033[1m', '\033[22m')),
+    ('struckthrough', ('\033[9m', '\033[29m')),
     # foreground colors
-    ('black', '\033[30m'),
-    ('blue', '\033[34m'),
-    ('white', '\033[37m'),
+    ('black', ('\033[30m', '\033[39m')),
+    ('blue', ('\033[34m', '\033[39m')),
+    ('white', ('\033[37m', '\033[39m')),
     # background colors
-    ('on_black', '\033[40m'),
-    ('on_blue', '\033[44m'),
-    ('on_white', '\033[47m'),
+    ('on_black', ('\033[40m', '\033[49m')),
+    ('on_blue', ('\033[44m', '\033[49m')),
+    ('on_white', ('\033[47m', '\033[49m')),
     # modifiers with foreground colors
-    ('bold_black', '\033[1m\033[30m'),
-    ('italic_blue', '\033[3m\033[34m'),
-    ('struckthrough_white', '\033[9m\033[37m'),
+    ('bold_black', ('\033[1m\033[30m', '\033[22m\033[39m')),
+    ('italic_blue', ('\033[3m\033[34m', '\033[23m\033[39m')),
+    ('struckthrough_white', ('\033[9m\033[37m', '\033[29m\033[39m')),
     # modifiers with background colors
-    ('bold_on_black', '\033[1m\033[40m'),
-    ('italic_on_blue', '\033[3m\033[44m'),
-    ('struckthrough_on_white', '\033[9m\033[47m'),
+    ('bold_on_black', ('\033[1m\033[40m', '\033[22m\033[49m')),
+    ('italic_on_blue', ('\033[3m\033[44m', '\033[23m\033[49m')),
+    ('struckthrough_on_white', ('\033[9m\033[47m', '\033[29m\033[49m')),
     # modifiers with foreground and background colors
-    ('bold_green_on_black', '\033[1m\033[32m\033[40m'),
-    ('italic_cyan_on_blue', '\033[3m\033[36m\033[44m'),
-    ('struckthrough_yellow_on_white', '\033[9m\033[33m\033[47m'),
+    ('bold_green_on_black', ('\033[1m\033[32m\033[40m', '\033[22m\033[39m\033[49m')),
+    ('italic_cyan_on_blue', ('\033[3m\033[36m\033[44m', '\033[23m\033[39m\033[49m')),
+    ('struckthrough_yellow_on_white', ('\033[9m\033[33m\033[47m', '\033[29m\033[39m\033[49m')),
     # multiple modifiers
-    ('bold_italic', '\033[1m\033[3m'),
-    ('underlined_struckthrough', '\033[4m\033[9m'),
+    ('bold_italic', ('\033[1m\033[3m', '\033[22m\033[23m')),
+    ('underlined_struckthrough', ('\033[4m\033[9m', '\033[24m\033[29m')),
     # multiple modifiers with foreground colors
-    ('bold_italic_green', '\033[1m\033[3m\033[32m'),
-    ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36m')
+    ('bold_italic_green', ('\033[1m\033[3m\033[32m', '\033[22m\033[23m\033[39m')),
+    ('underlined_struckthrough_cyan', ('\033[4m\033[9m\033[36m', '\033[24m\033[29m\033[39m'))
 ])
 def test_translate_style_8bit(style_string, expected):
     """
@@ -62,34 +62,34 @@ def test_translate_style_8bit(style_string, expected):
 
 @pytest.mark.parametrize('style_string,expected', [
     # modifiers
-    ('bold', '\033[1m'),
-    ('struckthrough', '\033[9m'),
+    ('bold', ('\033[1m', '\033[22m')),
+    ('struckthrough', ('\033[9m', '\033[29m')),
     # foreground colors
-    ('black', '\033[30m'),
-    ('blue', '\033[34m'),
-    ('white', '\033[37m'),
+    ('black', ('\033[30m', '\033[39m')),
+    ('blue', ('\033[34m', '\033[39m')),
+    ('white', ('\033[37m', '\033[39m')),
     # background colors
-    ('on_black', '\033[40m'),
-    ('on_blue', '\033[44m'),
-    ('on_white', '\033[47m'),
+    ('on_black', ('\033[40m', '\033[49m')),
+    ('on_blue', ('\033[44m', '\033[49m')),
+    ('on_white', ('\033[47m', '\033[49m')),
     # modifiers with foreground colors
-    ('bold_black', '\033[1m\033[30m'),
-    ('italic_blue', '\033[3m\033[34m'),
-    ('struckthrough_white', '\033[9m\033[37m'),
+    ('bold_black', ('\033[1m\033[30m', '\033[22m\033[39m')),
+    ('italic_blue', ('\033[3m\033[34m', '\033[23m\033[39m')),
+    ('struckthrough_white', ('\033[9m\033[37m', '\033[29m\033[39m')),
     # modifiers with background colors
-    ('bold_on_black', '\033[1m\033[40m'),
-    ('italic_on_blue', '\033[3m\033[44m'),
-    ('struckthrough_on_white', '\033[9m\033[47m'),
+    ('bold_on_black', ('\033[1m\033[40m', '\033[22m\033[49m')),
+    ('italic_on_blue', ('\033[3m\033[44m', '\033[23m\033[49m')),
+    ('struckthrough_on_white', ('\033[9m\033[47m', '\033[29m\033[49m')),
     # modifiers with foreground and background colors
-    ('bold_green_on_black', '\033[1m\033[32m\033[40m'),
-    ('italic_cyan_on_blue', '\033[3m\033[36m\033[44m'),
-    ('struckthrough_yellow_on_white', '\033[9m\033[33m\033[47m'),
+    ('bold_green_on_black', ('\033[1m\033[32m\033[40m', '\033[22m\033[39m\033[49m')),
+    ('italic_cyan_on_blue', ('\033[3m\033[36m\033[44m', '\033[23m\033[39m\033[49m')),
+    ('struckthrough_yellow_on_white', ('\033[9m\033[33m\033[47m', '\033[29m\033[39m\033[49m')),
     # multiple modifiers
-    ('bold_italic', '\033[1m\033[3m'),
-    ('underlined_struckthrough', '\033[4m\033[9m'),
+    ('bold_italic', ('\033[1m\033[3m', '\033[22m\033[23m')),
+    ('underlined_struckthrough', ('\033[4m\033[9m', '\033[24m\033[29m')),
     # multiple modifiers with foreground colors
-    ('bold_italic_green', '\033[1m\033[3m\033[32m'),
-    ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36m')
+    ('bold_italic_green', ('\033[1m\033[3m\033[32m', '\033[22m\033[23m\033[39m')),
+    ('underlined_struckthrough_cyan', ('\033[4m\033[9m\033[36m', '\033[24m\033[29m\033[39m'))
 ])
 def test_translate_style_16bit(style_string, expected):
     """
@@ -101,34 +101,34 @@ def test_translate_style_16bit(style_string, expected):
 
 @pytest.mark.parametrize('style_string,expected', [
     # modifiers
-    ('bold', '\033[1m'),
-    ('struckthrough', '\033[9m'),
+    ('bold', ('\033[1m', '\033[22m')),
+    ('struckthrough', ('\033[9m', '\033[29m')),
     # foreground colors
-    ('black', '\033[38;5;16m'),
-    ('blue', '\033[38;5;21m'),
-    ('white', '\033[38;5;231m'),
+    ('black', ('\033[38;5;16m', '\033[39m')),
+    ('blue', ('\033[38;5;21m', '\033[39m')),
+    ('white', ('\033[38;5;231m', '\033[39m')),
     # background colors
-    ('on_black', '\033[48;5;16m'),
-    ('on_blue', '\033[48;5;21m'),
-    ('on_white', '\033[48;5;231m'),
+    ('on_black', ('\033[48;5;16m', '\033[49m')),
+    ('on_blue', ('\033[48;5;21m', '\033[49m')),
+    ('on_white', ('\033[48;5;231m', '\033[49m')),
     # modifiers with foreground colors
-    ('bold_black', '\033[1m\033[38;5;16m'),
-    ('italic_blue', '\033[3m\033[38;5;21m'),
-    ('struckthrough_white', '\033[9m\033[38;5;231m'),
+    ('bold_black', ('\033[1m\033[38;5;16m', '\033[22m\033[39m')),
+    ('italic_blue', ('\033[3m\033[38;5;21m', '\033[23m\033[39m')),
+    ('struckthrough_white', ('\033[9m\033[38;5;231m', '\033[29m\033[39m')),
     # modifiers with background colors
-    ('bold_on_black', '\033[1m\033[48;5;16m'),
-    ('italic_on_blue', '\033[3m\033[48;5;21m'),
-    ('struckthrough_on_white', '\033[9m\033[48;5;231m'),
+    ('bold_on_black', ('\033[1m\033[48;5;16m', '\033[22m\033[49m')),
+    ('italic_on_blue', ('\033[3m\033[48;5;21m', '\033[23m\033[49m')),
+    ('struckthrough_on_white', ('\033[9m\033[48;5;231m', '\033[29m\033[49m')),
     # modifiers with foreground and background colors
-    ('bold_green_on_black', '\033[1m\033[38;5;46m\033[48;5;16m'),
-    ('italic_cyan_on_blue', '\033[3m\033[38;5;51m\033[48;5;21m'),
-    ('struckthrough_yellow_on_white', '\033[9m\033[38;5;226m\033[48;5;231m'),
+    ('bold_green_on_black', ('\033[1m\033[38;5;46m\033[48;5;16m', '\033[22m\033[39m\033[49m')),
+    ('italic_cyan_on_blue', ('\033[3m\033[38;5;51m\033[48;5;21m', '\033[23m\033[39m\033[49m')),
+    ('struckthrough_yellow_on_white', ('\033[9m\033[38;5;226m\033[48;5;231m', '\033[29m\033[39m\033[49m')),
     # multiple modifiers
-    ('bold_italic', '\033[1m\033[3m'),
-    ('underlined_struckthrough', '\033[4m\033[9m'),
+    ('bold_italic', ('\033[1m\033[3m', '\033[22m\033[23m')),
+    ('underlined_struckthrough', ('\033[4m\033[9m', '\033[24m\033[29m')),
     # multiple modifiers with foreground colors
-    ('bold_italic_green', '\033[1m\033[3m\033[38;5;46m'),
-    ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[38;5;51m')
+    ('bold_italic_green', ('\033[1m\033[3m\033[38;5;46m', '\033[22m\033[23m\033[39m')),
+    ('underlined_struckthrough_cyan', ('\033[4m\033[9m\033[38;5;51m', '\033[24m\033[29m\033[39m'))
 ])
 def test_translate_style_256(style_string, expected):
     """
@@ -140,34 +140,34 @@ def test_translate_style_256(style_string, expected):
 
 @pytest.mark.parametrize('style_string,expected', [
     # modifiers
-    ('bold', '\033[1m'),
-    ('struckthrough', '\033[9m'),
+    ('bold', ('\033[1m', '\033[22m')),
+    ('struckthrough', ('\033[9m', '\033[29m')),
     # foreground colors
-    ('black', '\033[38;2;0;0;0m'),
-    ('blue', '\033[38;2;0;0;255m'),
-    ('white', '\033[38;2;255;255;255m'),
+    ('black', ('\033[38;2;0;0;0m', '\033[39m')),
+    ('blue', ('\033[38;2;0;0;255m', '\033[39m')),
+    ('white', ('\033[38;2;255;255;255m', '\033[39m')),
     # background colors
-    ('on_black', '\033[48;2;0;0;0m'),
-    ('on_blue', '\033[48;2;0;0;255m'),
-    ('on_white', '\033[48;2;255;255;255m'),
+    ('on_black', ('\033[48;2;0;0;0m', '\033[49m')),
+    ('on_blue', ('\033[48;2;0;0;255m', '\033[49m')),
+    ('on_white', ('\033[48;2;255;255;255m', '\033[49m')),
     # modifiers with foreground colors
-    ('bold_black', '\033[1m\033[38;2;0;0;0m'),
-    ('italic_blue', '\033[3m\033[38;2;0;0;255m'),
-    ('struckthrough_white', '\033[9m\033[38;2;255;255;255m'),
+    ('bold_black', ('\033[1m\033[38;2;0;0;0m', '\033[22m\033[39m')),
+    ('italic_blue', ('\033[3m\033[38;2;0;0;255m', '\033[23m\033[39m')),
+    ('struckthrough_white', ('\033[9m\033[38;2;255;255;255m', '\033[29m\033[39m')),
     # modifiers with background colors
-    ('bold_on_black', '\033[1m\033[48;2;0;0;0m'),
-    ('italic_on_blue', '\033[3m\033[48;2;0;0;255m'),
-    ('struckthrough_on_white', '\033[9m\033[48;2;255;255;255m'),
+    ('bold_on_black', ('\033[1m\033[48;2;0;0;0m', '\033[22m\033[49m')),
+    ('italic_on_blue', ('\033[3m\033[48;2;0;0;255m', '\033[23m\033[49m')),
+    ('struckthrough_on_white', ('\033[9m\033[48;2;255;255;255m', '\033[29m\033[49m')),
     # modifiers with foreground and background colors
-    ('bold_green_on_black', '\033[1m\033[38;2;0;255;0m\033[48;2;0;0;0m'),
-    ('italic_cyan_on_blue', '\033[3m\033[38;2;0;255;255m\033[48;2;0;0;255m'),
-    ('struckthrough_yellow_on_white', '\033[9m\033[38;2;255;255;0m\033[48;2;255;255;255m'),
+    ('bold_green_on_black', ('\033[1m\033[38;2;0;255;0m\033[48;2;0;0;0m', '\033[22m\033[39m\033[49m')),
+    ('italic_cyan_on_blue', ('\033[3m\033[38;2;0;255;255m\033[48;2;0;0;255m', '\033[23m\033[39m\033[49m')),
+    ('struckthrough_yellow_on_white', ('\033[9m\033[38;2;255;255;0m\033[48;2;255;255;255m', '\033[29m\033[39m\033[49m')),
     # multiple modifiers
-    ('bold_italic', '\033[1m\033[3m'),
-    ('underlined_struckthrough', '\033[4m\033[9m'),
+    ('bold_italic', ('\033[1m\033[3m', '\033[22m\033[23m')),
+    ('underlined_struckthrough', ('\033[4m\033[9m', '\033[24m\033[29m')),
     # multiple modifiers with foreground colors
-    ('bold_italic_green', '\033[1m\033[3m\033[38;2;0;255;0m'),
-    ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[38;2;0;255;255m')
+    ('bold_italic_green', ('\033[1m\033[3m\033[38;2;0;255;0m', '\033[22m\033[23m\033[39m')),
+    ('underlined_struckthrough_cyan', ('\033[4m\033[9m\033[38;2;0;255;255m', '\033[24m\033[29m\033[39m'))
 ])
 def test_translate_style_true_colors(style_string, expected):
     """
