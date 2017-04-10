@@ -195,7 +195,7 @@ The following styles are already supported:
 
 **colorful** provides multiple ways to use style a string. Most useful and expressive is probably the *method syntax* where you specify the modifiers and colors in the method name itself and pass the string as argument to this method. However, you can also [`colorful.format()`](#2-style-a-string-with-colorfulformatstring-args-kwargs) or [`str.format()`](#3-style-a-string-with-strformat).
 
-#### (1) Style a string with a method call
+#### (1) Style a string with a method call `colorful.[<modifiers...>]_[<fgColor>]_[on_<bgColor>]`
 
 ```python
 print(colorful.red('I am red'))
