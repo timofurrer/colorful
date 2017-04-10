@@ -192,10 +192,11 @@ def style_string(string, ansi_style, colormode):
 
     :returns: a string containing proper ANSI sequence
     """
-    return '{style}{string}{reset}'.format(
-        style=ansi_style[0],
+    ansi_start_code, ansi_end_code = ansi_style
+    return '{start_code}{string}{end_code}'.format(
+        start_code=ansi_start_code,
         string=string,
-        reset=resolve_modifier_to_ansi_code('reset', colormode)[0])
+        end_code=ansi_end_code)
 
 
 class Colorful(object):

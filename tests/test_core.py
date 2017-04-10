@@ -178,34 +178,34 @@ def test_translate_style_true_colors(style_string, expected):
 
 
 @pytest.mark.parametrize('method_name,expected', [
-    ('bold', '\033[1mNo, I am your father\033[0m'),
-    ('struckthrough', '\033[9mNo, I am your father\033[0m'),
+    ('bold', '\033[1mNo, I am your father\033[22m'),
+    ('struckthrough', '\033[9mNo, I am your father\033[29m'),
     # foreground colors
-    ('black', '\033[30mNo, I am your father\033[0m'),
-    ('blue', '\033[34mNo, I am your father\033[0m'),
-    ('white', '\033[37mNo, I am your father\033[0m'),
+    ('black', '\033[30mNo, I am your father\033[39m'),
+    ('blue', '\033[34mNo, I am your father\033[39m'),
+    ('white', '\033[37mNo, I am your father\033[39m'),
     # background colors
-    ('on_black', '\033[40mNo, I am your father\033[0m'),
-    ('on_blue', '\033[44mNo, I am your father\033[0m'),
-    ('on_white', '\033[47mNo, I am your father\033[0m'),
+    ('on_black', '\033[40mNo, I am your father\033[49m'),
+    ('on_blue', '\033[44mNo, I am your father\033[49m'),
+    ('on_white', '\033[47mNo, I am your father\033[49m'),
     # modifiers with foreground colors
-    ('bold_black', '\033[1m\033[30mNo, I am your father\033[0m'),
-    ('italic_blue', '\033[3m\033[34mNo, I am your father\033[0m'),
-    ('struckthrough_white', '\033[9m\033[37mNo, I am your father\033[0m'),
+    ('bold_black', '\033[1m\033[30mNo, I am your father\033[22m\033[39m'),
+    ('italic_blue', '\033[3m\033[34mNo, I am your father\033[23m\033[39m'),
+    ('struckthrough_white', '\033[9m\033[37mNo, I am your father\033[29m\033[39m'),
     # modifiers with background colors
-    ('bold_on_black', '\033[1m\033[40mNo, I am your father\033[0m'),
-    ('italic_on_blue', '\033[3m\033[44mNo, I am your father\033[0m'),
-    ('struckthrough_on_white', '\033[9m\033[47mNo, I am your father\033[0m'),
+    ('bold_on_black', '\033[1m\033[40mNo, I am your father\033[22m\033[49m'),
+    ('italic_on_blue', '\033[3m\033[44mNo, I am your father\033[23m\033[49m'),
+    ('struckthrough_on_white', '\033[9m\033[47mNo, I am your father\033[29m\033[49m'),
     # modifiers with foreground and background colors
-    ('bold_green_on_black', '\033[1m\033[32m\033[40mNo, I am your father\033[0m'),
-    ('italic_cyan_on_blue', '\033[3m\033[36m\033[44mNo, I am your father\033[0m'),
-    ('struckthrough_yellow_on_white', '\033[9m\033[33m\033[47mNo, I am your father\033[0m'),
+    ('bold_green_on_black', '\033[1m\033[32m\033[40mNo, I am your father\033[22m\033[39m\033[49m'),
+    ('italic_cyan_on_blue', '\033[3m\033[36m\033[44mNo, I am your father\033[23m\033[39m\033[49m'),
+    ('struckthrough_yellow_on_white', '\033[9m\033[33m\033[47mNo, I am your father\033[29m\033[39m\033[49m'),
     # multiple modifiers
-    ('bold_italic', '\033[1m\033[3mNo, I am your father\033[0m'),
-    ('underlined_struckthrough', '\033[4m\033[9mNo, I am your father\033[0m'),
+    ('bold_italic', '\033[1m\033[3mNo, I am your father\033[22m\033[23m'),
+    ('underlined_struckthrough', '\033[4m\033[9mNo, I am your father\033[24m\033[29m'),
     # multiple modifiers with foreground colors
-    ('bold_italic_green', '\033[1m\033[3m\033[32mNo, I am your father\033[0m'),
-    ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36mNo, I am your father\033[0m')
+    ('bold_italic_green', '\033[1m\033[3m\033[32mNo, I am your father\033[22m\033[23m\033[39m'),
+    ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36mNo, I am your father\033[24m\033[29m\033[39m')
 ])
 def test_method_call_to_style_conversion(method_name, expected):
     """
