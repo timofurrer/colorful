@@ -12,6 +12,23 @@
 
 import math
 
+# For the ANSI escape code sequences please consult
+# https://en.wikipedia.org/wiki/ANSI_escape_code
+
+#: Holds the modifier names in the correct order
+MODIFIER_NAMES = ['reset', 'bold', 'dimmed', 'italic', 'underlined',
+                  'blinkslow', 'blinkrapid', 'inversed', 'concealed', 'struckthrough']
+
+#: Holds the start index for the fore- and background colors
+BACKGROUND_COLOR_OFFSET = 40
+FOREGROUND_COLOR_OFFSET = 30
+
+#: Holds the Control Sequence Introducer
+CSI = '\033['
+
+#: Holds the base ANSI escape code
+ANSI_ESCAPE_CODE = '{csi}{{code}}m'.format(csi=CSI)
+
 
 def round(value):
     x = math.floor(value)

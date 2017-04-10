@@ -17,22 +17,8 @@ from . import rgb
 from . import styles
 from . import terminal
 
-# For the ANSI escape code sequences please consult
-# https://en.wikipedia.org/wiki/ANSI_escape_code
-
 #: Holds the color names mapped to RGB channels
 COLOR_PALETTE = rgb.parse_rgb_txt_file()
-
-#: Holds the modifier names in the correct order
-MODIFIER_NAMES = ['reset', 'bold', 'dimmed', 'italic', 'underlined',
-                  'blinkslow', 'blinkrapid', 'inversed', 'concealed', 'struckthrough']
-
-#: Holds the start index for the fore- and background colors
-BACKGROUND_COLOR_OFFSET = 40
-FOREGROUND_COLOR_OFFSET = 30
-
-#: Holds the base ANSI escape code
-ANSI_ESCAPE_CODE = '\033[{code}m'
 
 
 class ColorfulError(Exception):
@@ -67,15 +53,15 @@ def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
 
     if colormode == terminal.ANSI_8BIT_COLORS or colormode == terminal.ANSI_16BIT_COLORS:
         color_code = ansi.rgb_to_ansi16(red, green, blue)
-        return ANSI_ESCAPE_CODE.format(code=color_code + offset - FOREGROUND_COLOR_OFFSET)
+        return ansi.ANSI_ESCAPE_CODE.format(code=color_code + offset - ansi.FOREGROUND_COLOR_OFFSET)
 
     if colormode == terminal.ANSI_256_COLORS:
         color_code = ansi.rgb_to_ansi265(red, green, blue)
-        return ANSI_ESCAPE_CODE.format(code='{base};5;{code}'.format(
+        return ansi.ANSI_ESCAPE_CODE.format(code='{base};5;{code}'.format(
             base=8 + offset, code=color_code))
 
     if colormode == terminal.TRUE_COLORS:
-        return ANSI_ESCAPE_CODE.format(code='{base};2;{red};{green};{blue}'.format(
+        return ansi.ANSI_ESCAPE_CODE.format(code='{base};2;{red};{green};{blue}'.format(
             base=8 + offset, red=red, green=green, blue=blue))
 
     raise ColorfulError('invalid color mode "{0}"'.format(colormode))
@@ -120,12 +106,12 @@ def resolve_modifier_to_ansi_code(modifiername, colormode):
         return ''
 
     try:
-        code = MODIFIER_NAMES.index(modifiername)
+        code = ansi.MODIFIER_NAMES.index(modifiername)
     except ValueError:
         raise ColorfulError('the modifier "{0}" is unknown. Use one of: {1}'.format(
-            modifiername, MODIFIER_NAMES))
+            modifiername, ansi.MODIFIER_NAMES))
     else:
-        return ANSI_ESCAPE_CODE.format(code=code)
+        return ansi.ANSI_ESCAPE_CODE.format(code=code)
 
 
 def translate_style(style, colormode, colorpalette):
@@ -154,7 +140,7 @@ def translate_style(style, colormode, colorpalette):
         part = None
         for mod_part in style_parts:
             part = mod_part
-            if part not in MODIFIER_NAMES:
+            if part not in ansi.MODIFIER_NAMES:
                 break  # all modifiers have been consumed
 
             ansi_sequence.append(resolve_modifier_to_ansi_code(part, colormode))
@@ -165,14 +151,14 @@ def translate_style(style, colormode, colorpalette):
         # which means we have to consume background colors
         if part != 'on':
             ansi_sequence.append(translate_colorname_to_ansi_code(
-                part, FOREGROUND_COLOR_OFFSET, colormode, colorpalette))
+                part, ansi.FOREGROUND_COLOR_OFFSET, colormode, colorpalette))
             # consume the required 'on' keyword after the foreground color
             next(style_parts)
 
         # next part has to be the background color
         part = next(style_parts)
         ansi_sequence.append(translate_colorname_to_ansi_code(
-            part, BACKGROUND_COLOR_OFFSET, colormode, colorpalette))
+            part, ansi.BACKGROUND_COLOR_OFFSET, colormode, colorpalette))
     except StopIteration:  # we've consumed all parts of the styling string
         pass
 
