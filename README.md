@@ -94,7 +94,7 @@ By default *colorful* tries to auto detect the best supported color mode by your
 However, sometimes it makes sense to specify what color mode should be used.<br>
 **colorful** provides multiple ways to do so: 
 
-**(1) specify color mode globally via Python API**
+#### (1) specify color mode globally via Python API
 
 ```python
 colorful.disable()
@@ -105,7 +105,7 @@ colorful.use_true_colors()
 
 If you change the color mode during runtime it takes affect immediately and globally. 
 
-**(2) enforce color mode globally via environment variable**
+#### (2) enforce color mode globally via environment variable
 
 ```bash
 COLORFUL_DISABLE=1 python eggs.py  # this process will not use ANY coloring
@@ -114,7 +114,7 @@ COLORFUL_FORCE_256_COLORS=1 python eggs.py  # this process will use 256 ANSI col
 COLORFUL_FORCE_TRUE_COLORS=1 python eggs.py  # this process will use true colors by default
 ```
 
-**(3) specify color mode locally via Python API (contextmanager)**
+#### (3) specify color mode locally via Python API (contextmanager)
 
 ```python
 with colorful.with_8bit_ansi_colors() as c:
@@ -227,13 +227,13 @@ print('{c.black_on_white}I am black on white{c.close_fg_color}{c.close_bg_color}
     c=colorful))
 ```
 
-The same syntax for the style in `{c.<style>}` can be used as for [(1) Style a string with a method call](#style-a-string-with-a-method-call).
+The same syntax for the style in `{c.<style>}` can be used as for [(1) Style a string with a method call](#1-style-a-string-with-a-method-call).
 
 ### Temporarily change colorful settings
 
 **colorful** provides a hand full of convenient context managers to change the colorful settings temporarily:
 
-**(1) change color mode**
+#### (1) change color mode
 
 Use 8 bit colors:
 
@@ -256,7 +256,7 @@ with colorful.with_true_colors() as c:
     print(c.red('I am red'))
 ```
 
-**(2) change color palette**
+#### (2) change color palette
 
 ```python
 # replace the entire color palette
@@ -268,7 +268,7 @@ with colorful.with_updated_palette(my_palette) as c:
     print(c.customRed('I am custom red'))
 ```
 
-**(3) change style**
+#### (3) change style
 
 ```python
 with colorful.with_style('solarized') as c:
