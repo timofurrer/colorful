@@ -21,6 +21,9 @@ script:
     - py.test --cov colorful --cov-report term-missing -vs tests/
     - flake8 --show-source colorful/ tests/
 
+after_success:
+    - codecov
+
 deploy:
     provider: pypi
     user: tuxtimo
