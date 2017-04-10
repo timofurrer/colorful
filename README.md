@@ -1,5 +1,10 @@
 # colorful
 
+[![Build Status](https://travis-ci.org/timofurrer/colorful.svg?branch=master)](https://travis-ci.org/timofurrer/colorful)
+[![PyPI version](https://badge.fury.io/py/colorful.svg)](https://badge.fury.io/py/colorful)
+[![PyPI](https://img.shields.io/pypi/pyversions/colorful.svg)](https://pypi.python.org/pypi/colorful)
+[![PyPI](https://img.shields.io/pypi/wheel/colorful.svg)](https://pypi.python.org/pypi/colorful)
+
 Terminal string styling done right, in Python :tada:
 
 ## Here's a tease
