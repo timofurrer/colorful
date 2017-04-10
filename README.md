@@ -244,6 +244,19 @@ print('{c.black_on_white}I am black on white{c.close_fg_color}{c.close_bg_color}
 
 The same syntax, modifiers and colors for the style in `{c.<style>}` can be used as for [(1) Style a string with a method call](#1-style-a-string-with-a-method-call).
 
+#### (3) Style a string with `colorful.format(string, *args, **kwargs)`
+
+```python
+print(colorful.format('{c.red}I am {what}{c.close_fg_color}', what='red'))
+# alternatively to ``c.close_fg_color`` you can reset every style with ``c.reset``
+print(colorful.format('{c.red}I am red{c.reset}'))
+
+print(colorful.format('{c.italic_yellow}I am italic and yellow{c.no_italic}{c.close_fg_color}'))
+print(colorful.format('{c.black_on_white}I am black on white{c.close_fg_color}{c.close_bg_color}'))
+```
+
+**colorful** will replace the `{c.<style>}` with the correspnding style. It's **not** necessary to pass a colorful object for `c` to `format()` - colorful will handle that. Every other format argument (`{<name>}`) has to be pass to the `colorful.format()` call as *args* or *kwarg*.
+
 ### Temporarily change colorful settings
 
 **colorful** provides a hand full of convenient context managers to change the colorful settings temporarily:
