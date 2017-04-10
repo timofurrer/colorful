@@ -214,6 +214,21 @@ The method syntax can be one of:
 * `colorful.<fg_colors>_on_<bg_color>`
 * `colorful.<modifiers>_<fg_color>_on_<bg_color>`
 
+Available modifiers are:
+
+* reset (explicitely reset all styles before the passed argument)
+* bold
+* dimmed (not widely supported)
+* italic
+* underlined
+* blinkslow
+* blinkrapid
+* inversed (not widely supported)
+* concealed (not widely supported)
+* struckthrough
+
+The available colors depend on the [color palette](#color-palette) you are using. By default all [X11 rgb.txt colors](https://en.wikipedia.org/wiki/X11_color_names) are available.
+
 #### (2) Style a string with `str.format()`
 
 ```python
@@ -227,7 +242,7 @@ print('{c.black_on_white}I am black on white{c.close_fg_color}{c.close_bg_color}
     c=colorful))
 ```
 
-The same syntax for the style in `{c.<style>}` can be used as for [(1) Style a string with a method call](#1-style-a-string-with-a-method-call).
+The same syntax, modifiers and colors for the style in `{c.<style>}` can be used as for [(1) Style a string with a method call](#1-style-a-string-with-a-method-call).
 
 ### Temporarily change colorful settings
 
