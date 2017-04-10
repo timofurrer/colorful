@@ -568,8 +568,8 @@ def test_colorful_format():
     colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
 
     expected = '\033[3m\033[31mNo, I am your father\033[23m\033[39m'
-    assert colorful.format('{c.italic_red}{0}, I am your {who}{c.no_italic}{c.close_fg_color}', \
-        'No', who='father') == expected
+    assert colorful.format('{c.italic_red}{0}, I am your {who}{c.no_italic}{c.close_fg_color}',
+                           'No', who='father') == expected
 
 
 # @pytest.mark.parametrize('method_name,expected', [

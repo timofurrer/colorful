@@ -344,7 +344,6 @@ class Colorful(object):
         """
         return string.format(c=self, *args, **kwargs)
 
-
     class ColorfulStyle(object):
         """
         Represents a colorful style
