@@ -193,7 +193,7 @@ The following styles are already supported:
 
 ### Style a string
 
-**colorful** provides multiple ways to use style a string. Most useful and expressive is probably the *method syntax* where you specify the modifiers and colors in the method name itself and pass the string as argument to this method. However, you can also [`colorful.format()`](#3-style-a-string-with-colorfulformatstring-args-kwargs) or [`str.format()`](https://docs.python.org/3.6/library/stdtypes.html#str.format).
+**colorful** provides multiple ways to use style a string. Most useful and expressive is probably the *method syntax* where you specify the modifiers and colors in the method name itself and pass the string as argument to this method. However, you can also [`colorful.format()`](#2-style-a-string-with-colorfulformatstring-args-kwargs) or [`str.format()`](#3-style-a-string-with-str-format).
 
 #### (1) Style a string with a method call
 
@@ -231,7 +231,22 @@ Available modifiers are:
 
 The available colors depend on the [color palette](#color-palette) you are using. By default all [X11 rgb.txt colors](https://en.wikipedia.org/wiki/X11_color_names) are available.
 
-#### (2) Style a string with `str.format()`
+#### (2) Style a string with `colorful.format(string, *args, **kwargs)`
+
+```python
+print(colorful.format('{c.red}I am {what}{c.close_fg_color}', what='red'))
+# alternatively to ``c.close_fg_color`` you can reset every style with ``c.reset``
+print(colorful.format('{c.red}I am red{c.reset}'))
+
+print(colorful.format('{c.italic_yellow}I am italic and yellow{c.no_italic}{c.close_fg_color}'))
+print(colorful.format('{c.black_on_white}I am black on white{c.close_fg_color}{c.close_bg_color}'))
+```
+
+**colorful** will replace the `{c.<style>}` with the correspnding style. It's **not** necessary to pass a colorful object for `c` to `format()` - colorful will handle that. Every other format argument (`{<name>}`) has to be pass to the `colorful.format()` call as *args* or *kwarg*.
+
+Note: The same syntax, modifiers and colors for the style in `{c.<style>}` can be used as for [(1) Style a string with a method call](#1-style-a-string-with-a-method-call).
+
+#### (3) Style a string with [`str.format()`](https://docs.python.org/3.6/library/stdtypes.html#str.format)
 
 ```python
 print('{c.red}I am red{c.close_fg_color}'.format(c=colorful))
@@ -244,20 +259,7 @@ print('{c.black_on_white}I am black on white{c.close_fg_color}{c.close_bg_color}
     c=colorful))
 ```
 
-The same syntax, modifiers and colors for the style in `{c.<style>}` can be used as for [(1) Style a string with a method call](#1-style-a-string-with-a-method-call).
-
-#### (3) Style a string with `colorful.format(string, *args, **kwargs)`
-
-```python
-print(colorful.format('{c.red}I am {what}{c.close_fg_color}', what='red'))
-# alternatively to ``c.close_fg_color`` you can reset every style with ``c.reset``
-print(colorful.format('{c.red}I am red{c.reset}'))
-
-print(colorful.format('{c.italic_yellow}I am italic and yellow{c.no_italic}{c.close_fg_color}'))
-print(colorful.format('{c.black_on_white}I am black on white{c.close_fg_color}{c.close_bg_color}'))
-```
-
-**colorful** will replace the `{c.<style>}` with the correspnding style. It's **not** necessary to pass a colorful object for `c` to `format()` - colorful will handle that. Every other format argument (`{<name>}`) has to be pass to the `colorful.format()` call as *args* or *kwarg*.
+Note: The same syntax, modifiers and colors for the style in `{c.<style>}` can be used as for [(1) Style a string with a method call](#1-style-a-string-with-a-method-call).
 
 ### Temporarily change colorful settings
 
