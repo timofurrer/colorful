@@ -214,6 +214,8 @@ The method syntax can be one of:
 * `colorful.<fg_colors>_on_<bg_color>`
 * `colorful.<modifiers>_<fg_color>_on_<bg_color>`
 
+*Note that multiple `<modifier>`s can be specified at once.*
+
 Available modifiers are:
 
 * reset (explicitely reset all styles before the passed argument)
