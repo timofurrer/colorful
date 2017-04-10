@@ -193,7 +193,7 @@ The following styles are already supported:
 
 ### Style a string
 
-**colorful** provides multiple ways to use style a string. Most useful and expressive is probably the *method syntax* where you specify the modifiers and colors in the method name itself and pass the string as argument to this method. However, you can also `str().format()`.
+**colorful** provides multiple ways to use style a string. Most useful and expressive is probably the *method syntax* where you specify the modifiers and colors in the method name itself and pass the string as argument to this method. However, you can also [`colorful.format()`](#3-style-a-string-with-colorfulformatstring-args-kwargs) or [`str.format()`](https://docs.python.org/3.6/library/stdtypes.html#str.format).
 
 #### (1) Style a string with a method call
 
