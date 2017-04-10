@@ -50,12 +50,12 @@ with colorful.with_palette(my_company_palette) as c:
 
 ## Key Features
 
-* expressive and consistent API
-* support for different color modes (8bit ANSI, 256 ANSI, true colors)
-* support for predefined awesome styles (solarized, ...)
-* support for custom color palettes
+* expressive and consistent API ([docs](#style-a-string))
+* support for different color modes (8bit ANSI, 256 ANSI, true colors) ([docs](#color-modes))
+* support for predefined awesome styles (solarized, ...) ([docs](#styles))
+* support for custom color palettes ([docs](#color-palette))
 * support for different platforms (using colorama on windows)
-* context managers for clean color mode, color palette or style switch
+* context managers for clean color mode, color palette or style switch ([docs](#temporarily-change-colorful-settings))
 * no dependencies
 
 ## Usage
