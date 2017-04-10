@@ -28,15 +28,6 @@ class ColorfulModule(types.ModuleType):
     Module Type object for dynamic attribute access on
     this module.
     """
-
-    # re-expose the color modes from ``colorful.terminal``
-    # on a package level.
-    NO_COLORS = terminal.NO_COLORS
-    ANSI_8BIT_COLORS = terminal.ANSI_8BIT_COLORS
-    ANSI_16BIT_COLORS = terminal.ANSI_16BIT_COLORS
-    ANSI_256_COLORS = terminal.ANSI_256_COLORS
-    TRUE_COLORS = terminal.TRUE_COLORS
-
     def __init__(self, colorful, *args):
         super(ColorfulModule, self).__init__(*args)
         self.colorful = colorful

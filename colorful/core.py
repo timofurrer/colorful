@@ -206,6 +206,31 @@ class Colorful(object):
 
     :param int colormode: the color mode to use. See ``translate_rgb_to_ansi_code``
     """
+    # re-expose the color modes from ``colorful.terminal``
+    # on a package level.
+    NO_COLORS = terminal.NO_COLORS
+    ANSI_8BIT_COLORS = terminal.ANSI_8BIT_COLORS
+    ANSI_16BIT_COLORS = terminal.ANSI_16BIT_COLORS
+    ANSI_256_COLORS = terminal.ANSI_256_COLORS
+    TRUE_COLORS = terminal.TRUE_COLORS
+
+    # expose ANSI escape codes to close colors
+    # this is especially useful when using ``str.format()``.
+    close_fg_color = ansi.ANSI_ESCAPE_CODE.format(
+        code=ansi.FOREGROUND_COLOR_OFFSET + ansi.COLOR_CLOSE_OFFSET)
+    close_bg_color = ansi.ANSI_ESCAPE_CODE.format(
+        code=ansi.BACKGROUND_COLOR_OFFSET + ansi.COLOR_CLOSE_OFFSET)
+
+    # expose ANSI escape codes to close modifiers
+    no_bold = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['bold'][1])
+    no_dimmed = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['dimmed'][1])
+    no_italic = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['italic'][1])
+    no_underline = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['underlined'][1])
+    no_blink = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['blinkslow'][1])
+    no_inversed = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['inversed'][1])
+    no_reveal = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['concealed'][1])
+    no_strikethrough = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['struckthrough'][1])
+
     def __init__(self, colormode=None, colorpalette=None):
         if colormode is None:  # try to auto-detect color mode
             colormode = terminal.detect_color_support(env=os.environ)

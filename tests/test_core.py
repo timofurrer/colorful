@@ -297,44 +297,109 @@ def test_method_str_to_style_conversion(method_name, expected):
     assert str(method) == expected
 
 
-@pytest.mark.parametrize('method_name,expected', [
-    ('bold', '\033[1mNo, I am your father\033[0m'),
-    ('struckthrough', '\033[9mNo, I am your father\033[0m'),
+@pytest.mark.parametrize('format_str, expected', [
+    (
+        '{c.bold}No, I am your father{c.reset}',
+        '\033[1mNo, I am your father\033[0m'
+    ), (
+        '{c.struckthrough}No, I am your father{c.reset}',
+        '\033[9mNo, I am your father\033[0m'
+    ),
     # foreground colors
-    ('black', '\033[30mNo, I am your father\033[0m'),
-    ('blue', '\033[34mNo, I am your father\033[0m'),
-    ('white', '\033[37mNo, I am your father\033[0m'),
+    (
+        '{c.black}No, I am your father{c.reset}',
+        '\033[30mNo, I am your father\033[0m'
+    ), (
+        '{c.blue}No, I am your father{c.reset}',
+        '\033[34mNo, I am your father\033[0m'
+    ), (
+        '{c.white}No, I am your father{c.reset}',
+        '\033[37mNo, I am your father\033[0m'
+    ),
     # background colors
-    ('on_black', '\033[40mNo, I am your father\033[0m'),
-    ('on_blue', '\033[44mNo, I am your father\033[0m'),
-    ('on_white', '\033[47mNo, I am your father\033[0m'),
+    (
+        '{c.on_black}No, I am your father{c.reset}',
+        '\033[40mNo, I am your father\033[0m'
+    ), (
+        '{c.on_blue}No, I am your father{c.reset}',
+        '\033[44mNo, I am your father\033[0m'
+    ), (
+        '{c.on_white}No, I am your father{c.reset}',
+        '\033[47mNo, I am your father\033[0m'
+    ),
     # modifiers with foreground colors
-    ('bold_black', '\033[1m\033[30mNo, I am your father\033[0m'),
-    ('italic_blue', '\033[3m\033[34mNo, I am your father\033[0m'),
-    ('struckthrough_white', '\033[9m\033[37mNo, I am your father\033[0m'),
+    (
+        '{c.bold_black}No, I am your father{c.reset}',
+        '\033[1m\033[30mNo, I am your father\033[0m'
+    ), (
+        '{c.italic_blue}No, I am your father{c.reset}',
+        '\033[3m\033[34mNo, I am your father\033[0m'
+    ), (
+        '{c.struckthrough_white}No, I am your father{c.reset}',
+        '\033[9m\033[37mNo, I am your father\033[0m'
+    ),
     # modifiers with background colors
-    ('bold_on_black', '\033[1m\033[40mNo, I am your father\033[0m'),
-    ('italic_on_blue', '\033[3m\033[44mNo, I am your father\033[0m'),
-    ('struckthrough_on_white', '\033[9m\033[47mNo, I am your father\033[0m'),
+    (
+        '{c.bold_on_black}No, I am your father{c.reset}',
+        '\033[1m\033[40mNo, I am your father\033[0m'
+    ), (
+        '{c.italic_on_blue}No, I am your father{c.reset}',
+        '\033[3m\033[44mNo, I am your father\033[0m'
+    ), (
+        '{c.struckthrough_on_white}No, I am your father{c.reset}',
+        '\033[9m\033[47mNo, I am your father\033[0m'
+    ),
     # modifiers with foreground and background colors
-    ('bold_green_on_black', '\033[1m\033[32m\033[40mNo, I am your father\033[0m'),
-    ('italic_cyan_on_blue', '\033[3m\033[36m\033[44mNo, I am your father\033[0m'),
-    ('struckthrough_yellow_on_white', '\033[9m\033[33m\033[47mNo, I am your father\033[0m'),
+    (
+        '{c.bold_green_on_black}No, I am your father{c.reset}',
+        '\033[1m\033[32m\033[40mNo, I am your father\033[0m'
+    ), (
+        '{c.italic_cyan_on_blue}No, I am your father{c.reset}',
+        '\033[3m\033[36m\033[44mNo, I am your father\033[0m'
+    ), (
+        '{c.struckthrough_yellow_on_white}No, I am your father{c.reset}',
+        '\033[9m\033[33m\033[47mNo, I am your father\033[0m'
+    ),
     # multiple modifiers
-    ('bold_italic', '\033[1m\033[3mNo, I am your father\033[0m'),
-    ('underlined_struckthrough', '\033[4m\033[9mNo, I am your father\033[0m'),
+    (
+        '{c.bold_italic}No, I am your father{c.reset}',
+        '\033[1m\033[3mNo, I am your father\033[0m'
+    ), (
+        '{c.underlined_struckthrough}No, I am your father{c.reset}',
+        '\033[4m\033[9mNo, I am your father\033[0m'
+    ),
     # multiple modifiers with foreground colors
-    ('bold_italic_green', '\033[1m\033[3m\033[32mNo, I am your father\033[0m'),
-    ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36mNo, I am your father\033[0m')
+    (
+        '{c.bold_italic_green}No, I am your father{c.reset}',
+        '\033[1m\033[3m\033[32mNo, I am your father\033[0m'
+    ), (
+        '{c.underlined_struckthrough_cyan}No, I am your father{c.reset}',
+        '\033[4m\033[9m\033[36mNo, I am your father\033[0m'
+    ),
+    # color closing delimiters
+    (
+        '{c.black}No, I am your father{c.close_fg_color}',
+        '\033[30mNo, I am your father\033[39m'
+    ), (
+        '{c.on_black}No, I am your father{c.close_bg_color}',
+        '\033[40mNo, I am your father\033[49m'
+    ),
+    # modifier closing delimiters
+    (
+        '{c.bold}No, I am your father{c.no_bold}',
+        '\033[1mNo, I am your father\033[22m'
+    ), (
+        '{c.struckthrough}No, I am your father{c.no_strikethrough}',
+        '\033[9mNo, I am your father\033[29m'
+    )
 ])
-def test_method_in_format_to_style_conversion(method_name, expected):
+def test_method_in_format_to_style_conversion(format_str, expected):
     """
     Test converting the method in a format() call to an actual style
     """
     colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
-    method = getattr(colorful, method_name)
 
-    assert '{method}No, I am your father{c.reset}'.format(method=method, c=colorful) == expected
+    assert format_str.format(c=colorful) == expected
 
 
 def test_invalid_color_mode():
