@@ -122,7 +122,7 @@ def test_translate_style_16bit(style_string, expected):
     # modifiers with foreground and background colors
     ('bold_green_on_black', ('\033[1m\033[38;5;46m\033[48;5;16m', '\033[22m\033[39m\033[49m')),
     ('italic_cyan_on_blue', ('\033[3m\033[38;5;51m\033[48;5;21m', '\033[23m\033[39m\033[49m')),
-    ('struckthrough_yellow_on_white', ('\033[9m\033[38;5;226m\033[48;5;231m', '\033[29m\033[39m\033[49m')),
+    ('struckthrough_yellow_on_white', ('\033[9m\033[38;5;226m\033[48;5;231m', '\033[29m\033[39m\033[49m')),  # noqa
     # multiple modifiers
     ('bold_italic', ('\033[1m\033[3m', '\033[22m\033[23m')),
     ('underlined_struckthrough', ('\033[4m\033[9m', '\033[24m\033[29m')),
@@ -159,15 +159,15 @@ def test_translate_style_256(style_string, expected):
     ('italic_on_blue', ('\033[3m\033[48;2;0;0;255m', '\033[23m\033[49m')),
     ('struckthrough_on_white', ('\033[9m\033[48;2;255;255;255m', '\033[29m\033[49m')),
     # modifiers with foreground and background colors
-    ('bold_green_on_black', ('\033[1m\033[38;2;0;255;0m\033[48;2;0;0;0m', '\033[22m\033[39m\033[49m')),
-    ('italic_cyan_on_blue', ('\033[3m\033[38;2;0;255;255m\033[48;2;0;0;255m', '\033[23m\033[39m\033[49m')),
-    ('struckthrough_yellow_on_white', ('\033[9m\033[38;2;255;255;0m\033[48;2;255;255;255m', '\033[29m\033[39m\033[49m')),
+    ('bold_green_on_black', ('\033[1m\033[38;2;0;255;0m\033[48;2;0;0;0m', '\033[22m\033[39m\033[49m')),  # noqa
+    ('italic_cyan_on_blue', ('\033[3m\033[38;2;0;255;255m\033[48;2;0;0;255m', '\033[23m\033[39m\033[49m')),  # noqa
+    ('struckthrough_yellow_on_white', ('\033[9m\033[38;2;255;255;0m\033[48;2;255;255;255m', '\033[29m\033[39m\033[49m')),  # noqa
     # multiple modifiers
     ('bold_italic', ('\033[1m\033[3m', '\033[22m\033[23m')),
     ('underlined_struckthrough', ('\033[4m\033[9m', '\033[24m\033[29m')),
     # multiple modifiers with foreground colors
     ('bold_italic_green', ('\033[1m\033[3m\033[38;2;0;255;0m', '\033[22m\033[23m\033[39m')),
-    ('underlined_struckthrough_cyan', ('\033[4m\033[9m\033[38;2;0;255;255m', '\033[24m\033[29m\033[39m'))
+    ('underlined_struckthrough_cyan', ('\033[4m\033[9m\033[38;2;0;255;255m', '\033[24m\033[29m\033[39m'))  # noqa
 ])
 def test_translate_style_true_colors(style_string, expected):
     """
@@ -199,13 +199,13 @@ def test_translate_style_true_colors(style_string, expected):
     # modifiers with foreground and background colors
     ('bold_green_on_black', '\033[1m\033[32m\033[40mNo, I am your father\033[22m\033[39m\033[49m'),
     ('italic_cyan_on_blue', '\033[3m\033[36m\033[44mNo, I am your father\033[23m\033[39m\033[49m'),
-    ('struckthrough_yellow_on_white', '\033[9m\033[33m\033[47mNo, I am your father\033[29m\033[39m\033[49m'),
+    ('struckthrough_yellow_on_white', '\033[9m\033[33m\033[47mNo, I am your father\033[29m\033[39m\033[49m'),  # noqa
     # multiple modifiers
     ('bold_italic', '\033[1m\033[3mNo, I am your father\033[22m\033[23m'),
     ('underlined_struckthrough', '\033[4m\033[9mNo, I am your father\033[24m\033[29m'),
     # multiple modifiers with foreground colors
     ('bold_italic_green', '\033[1m\033[3m\033[32mNo, I am your father\033[22m\033[23m\033[39m'),
-    ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36mNo, I am your father\033[24m\033[29m\033[39m')
+    ('underlined_struckthrough_cyan', '\033[4m\033[9m\033[36mNo, I am your father\033[24m\033[29m\033[39m')  # noqa
 ])
 def test_method_call_to_style_conversion(method_name, expected):
     """

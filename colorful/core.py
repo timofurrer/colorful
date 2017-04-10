@@ -53,7 +53,8 @@ def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
 
     if colormode == terminal.ANSI_8BIT_COLORS or colormode == terminal.ANSI_16BIT_COLORS:
         color_code = ansi.rgb_to_ansi16(red, green, blue)
-        start_code = ansi.ANSI_ESCAPE_CODE.format(code=color_code + offset - ansi.FOREGROUND_COLOR_OFFSET)
+        start_code = ansi.ANSI_ESCAPE_CODE.format(
+            code=color_code + offset - ansi.FOREGROUND_COLOR_OFFSET)
         end_code = ansi.ANSI_ESCAPE_CODE.format(code=offset + ansi.COLOR_CLOSE_OFFSET)
         return start_code, end_code
 
