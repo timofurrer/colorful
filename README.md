@@ -274,7 +274,7 @@ Note: The same syntax, modifiers and colors for the style in `{c.<style>}` can b
 11
 >>> len(colorful.yellow(s))
 11
->>> assert len(s) == colorful.yellow(s)
+>>> assert len(s) == len(colorful.yellow(s))
 ```
 
 ### Temporarily change colorful settings
