@@ -214,7 +214,7 @@ def test_method_call_to_style_conversion(method_name, expected):
     colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
     method = getattr(colorful, method_name)
 
-    assert method('No, I am your father') == expected
+    assert str(method('No, I am your father')) == expected
 
 
 @pytest.mark.parametrize('method_name', [
@@ -254,7 +254,7 @@ def test_method_call_to_style_conversion_disabled_colors(method_name):
     colorful = core.Colorful(colormode=terminal.NO_COLORS)
     method = getattr(colorful, method_name)
 
-    assert method('No, I am your father') == 'No, I am your father'
+    assert str(method('No, I am your father')) == 'No, I am your father'
 
 
 @pytest.mark.parametrize('method_name,expected', [
@@ -572,41 +572,41 @@ def test_colorful_format():
                            'No', who='father') == expected
 
 
-# @pytest.mark.parametrize('method_name,expected', [
-    # ('bold', 'No, I am your father'),
-    # ('struckthrough', 'No, I am your father'),
-    # # foreground colors
-    # ('black', 'No, I am your father'),
-    # ('blue', 'No, I am your father'),
-    # ('white', 'No, I am your father'),
-    # # background colors
-    # ('on_black', 'No, I am your father'),
-    # ('on_blue', 'No, I am your father'),
-    # ('on_white', 'No, I am your father'),
-    # # modifiers with foreground colors
-    # ('bold_black', 'No, I am your father'),
-    # ('italic_blue', 'No, I am your father'),
-    # ('struckthrough_white', 'No, I am your father'),
-    # # modifiers with background colors
-    # ('bold_on_black', 'No, I am your father'),
-    # ('italic_on_blue', 'No, I am your father'),
-    # ('struckthrough_on_white', 'No, I am your father'),
-    # # modifiers with foreground and background colors
-    # ('bold_green_on_black', 'No, I am your father'),
-    # ('italic_cyan_on_blue', 'No, I am your father'),
-    # ('struckthrough_yellow_on_white', 'No, I am your father'),
-    # # multiple modifiers
-    # ('bold_italic', 'No, I am your father'),
-    # ('underlined_struckthrough', 'No, I am your father'),
-    # # multiple modifiers with foreground colors
-    # ('bold_italic_green', 'No, I am your father'),
-    # ('underlined_struckthrough_cyan', 'No, I am your father')
-# ])
-# def test_length_of_styled_string(method_name, expected):
-    # """
-    # Test the length of a styled string
-    # """
-    # colorful = core.Colorful(colormode=8)
-    # method = getattr(colorful, method_name)
+@pytest.mark.parametrize('method_name, expected', [
+    ('bold', 'No, I am your father'),
+    ('struckthrough', 'No, I am your father'),
+    # foreground colors
+    ('black', 'No, I am your father'),
+    ('blue', 'No, I am your father'),
+    ('white', 'No, I am your father'),
+    # background colors
+    ('on_black', 'No, I am your father'),
+    ('on_blue', 'No, I am your father'),
+    ('on_white', 'No, I am your father'),
+    # modifiers with foreground colors
+    ('bold_black', 'No, I am your father'),
+    ('italic_blue', 'No, I am your father'),
+    ('struckthrough_white', 'No, I am your father'),
+    # modifiers with background colors
+    ('bold_on_black', 'No, I am your father'),
+    ('italic_on_blue', 'No, I am your father'),
+    ('struckthrough_on_white', 'No, I am your father'),
+    # modifiers with foreground and background colors
+    ('bold_green_on_black', 'No, I am your father'),
+    ('italic_cyan_on_blue', 'No, I am your father'),
+    ('struckthrough_yellow_on_white', 'No, I am your father'),
+    # multiple modifiers
+    ('bold_italic', 'No, I am your father'),
+    ('underlined_struckthrough', 'No, I am your father'),
+    # multiple modifiers with foreground colors
+    ('bold_italic_green', 'No, I am your father'),
+    ('underlined_struckthrough_cyan', 'No, I am your father')
+])
+def test_length_of_styled_string(method_name, expected):
+    """
+    Test the length of a styled string
+    """
+    colorful = core.Colorful(colormode=8)
+    method = getattr(colorful, method_name)
 
-    # assert len(method(expected)) == len(expected)
+    assert len(method(expected)) == len(expected)

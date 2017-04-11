@@ -11,6 +11,7 @@
 """
 
 import os
+import sys
 
 from . import ansi
 from . import rgb
@@ -19,6 +20,9 @@ from . import terminal
 
 #: Holds the color names mapped to RGB channels
 COLOR_PALETTE = rgb.parse_rgb_txt_file()
+
+#: Holds a flag if the Python version is 2.X
+PY2 = sys.version_info.major == 2
 
 
 class ColorfulError(Exception):
@@ -200,6 +204,56 @@ def style_string(string, ansi_style, colormode):
         end_code=ansi_end_code)
 
 
+class ColorfulString(object):
+    """
+    Represents a colored string
+    """
+    def __init__(self, orig_string, styled_string):
+        self.orig_string = orig_string
+        self.styled_string = styled_string
+
+    def __str__(self):
+        return self.styled_string
+
+    if PY2:
+        __unicode__ = __str__
+
+    def __len__(self):
+        return len(self.orig_string)
+
+    def __iter__(self):
+        return iter(self.styled_string)
+
+    def __add__(self, other):
+        if isinstance(other, ColorfulString):
+            return ColorfulString(
+                self.orig_string + other.orig_string,
+                self.styled_string + other.styled_string)
+
+        return ColorfulString(
+            self.orig_string + other,
+            self.styled_string + other)
+
+    def __radd__(self, other):
+        if isinstance(other, ColorfulString):
+            return ColorfulString(
+                other.orig_string + self.orig_string,
+                other.styled_string + self.styled_string)
+
+        return ColorfulString(
+            other + self.orig_string,
+            other + self.styled_string)
+
+    def __mul__(self, other):
+        return ColorfulString(
+            self.orig_string * other,
+            self.styled_string * other)
+
+    def __getattr__(self, name):
+        str_method = getattr(self.styled_string, name)
+        return str_method
+
+
 class Colorful(object):
     """
     Provides methods to style strings for terminal
@@ -356,7 +410,9 @@ class Colorful(object):
             return self.style[0]
 
         def __call__(self, string):
-            return style_string(string, self.style, self.colormode)
+            return ColorfulString(
+                string,
+                style_string(string, self.style, self.colormode))
 
     def __getattr__(self, name):
         # translate the given name into an ANSI escape code sequence
