@@ -56,6 +56,7 @@ with colorful.with_palette(my_company_palette) as c:
 * support for custom color palettes ([docs](#color-palette))
 * support for different platforms (using colorama on windows)
 * context managers for clean color mode, color palette or style switch ([docs](#temporarily-change-colorful-settings))
+* support `len()` on colored strings ([docs](https://docs.python.org/3/library/functions.html#len)
 * no dependencies
 
 ## Usage
@@ -231,6 +232,8 @@ Available modifiers are:
 
 The available colors depend on the [color palette](#color-palette) you are using. By default all [X11 rgb.txt colors](https://en.wikipedia.org/wiki/X11_color_names) are available.
 
+The type of the return value of such a *style method* is `colorful.ColorfulString`. It correctly supports all `str()` methods including [`len()`](#correctly-support-the-lenprotocol).
+
 #### (2) Style a string with `colorful.format(string, *args, **kwargs)`
 
 ```python
@@ -260,6 +263,19 @@ print('{c.black_on_white}I am black on white{c.close_fg_color}{c.close_bg_color}
 ```
 
 Note: The same syntax, modifiers and colors for the style in `{c.<style>}` can be used as for [(1) Style a string with a method call](#1-style-a-string-with-a-method-call).
+
+#### Correctly support the [`len()` protocol](https://docs.python.org/3/library/functions.html#len)
+
+**colorful** correctly supports the `len()` protocol (`__len__`) on the styled strings. As mentioned above, when you style a string a `colorful.ColorfulString` object is returned. This object returns the length (when calling `len()`) as it would be for the *unstyled string* to integrate styled strings seemlessly into your application.
+
+```python
+>>> s = 'Hello World'
+>>> len(s)
+11
+>>> len(colorful.yellow(s))
+11
+>>> assert len(s) == colorful.yellow(s)
+```
 
 ### Temporarily change colorful settings
 
