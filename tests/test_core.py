@@ -606,7 +606,29 @@ def test_length_of_styled_string(method_name, expected):
     """
     Test the length of a styled string
     """
-    colorful = core.Colorful(colormode=8)
+    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
     method = getattr(colorful, method_name)
 
     assert len(method(expected)) == len(expected)
+
+
+def test_nested_styled_string():
+    """
+    Test nested styled string
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+
+    s = colorful.red('Hello ' + colorful.blue('awesome', nested=True) + ' world')
+    assert str(s) == '\033[31mHello \033[34mawesome\033[39m\033[31m world\033[39m'
+
+    s = colorful.red('Hello') + ' World'
+    assert str(s) == '\033[31mHello\033[39m World'
+
+    s = 'Hello' + colorful.red(' World')
+    assert str(s) == 'Hello\033[31m World\033[39m'
+
+    s = colorful.red('Hello') + colorful.blue(' World')
+    assert str(s) == '\033[31mHello\033[39m\033[34m World\033[39m'
+
+    s = colorful.red('Hello {0} world'.format(colorful.blue('awesome', nested=True)))
+    assert str(s) == '\033[31mHello \033[34mawesome\033[39m\033[31m world\033[39m'

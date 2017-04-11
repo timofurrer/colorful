@@ -47,6 +47,9 @@ CSI = '\033['
 #: Holds the base ANSI escape code
 ANSI_ESCAPE_CODE = '{csi}{{code}}m'.format(csi=CSI)
 
+#: Holds the placeholder for the nest indicators
+NEST_PLACEHOLDER = ANSI_ESCAPE_CODE.format(code=26)
+
 
 def round(value):
     x = math.floor(value)

@@ -186,7 +186,7 @@ def translate_style(style, colormode, colorpalette):
     return ''.join(ansi_start_sequence), ''.join(ansi_end_sequence)
 
 
-def style_string(string, ansi_style, colormode):
+def style_string(string, ansi_style, colormode, nested=False):
     """
     Style the given string according to the given
     ANSI style string.
@@ -198,10 +198,15 @@ def style_string(string, ansi_style, colormode):
     :returns: a string containing proper ANSI sequence
     """
     ansi_start_code, ansi_end_code = ansi_style
-    return '{start_code}{string}{end_code}'.format(
+
+    # replace nest placeholders with the current begin style
+    string = string.replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
+
+    return '{start_code}{string}{end_code}{nest_ph}'.format(
         start_code=ansi_start_code,
         string=string,
-        end_code=ansi_end_code)
+        end_code=ansi_end_code,
+        nest_ph=ansi.NEST_PLACEHOLDER if nested else '')
 
 
 class ColorfulString(object):
@@ -409,10 +414,10 @@ class Colorful(object):
         def __str__(self):
             return self.style[0]
 
-        def __call__(self, string):
+        def __call__(self, string, nested=False):
             return ColorfulString(
                 string,
-                style_string(string, self.style, self.colormode))
+                style_string(string, self.style, self.colormode, nested))
 
     def __getattr__(self, name):
         # translate the given name into an ANSI escape code sequence
