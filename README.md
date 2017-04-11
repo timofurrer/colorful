@@ -56,7 +56,7 @@ with colorful.with_palette(my_company_palette) as c:
 * support for custom color palettes ([docs](#color-palette))
 * support for different platforms (using colorama on windows)
 * context managers for clean color mode, color palette or style switch ([docs](#temporarily-change-colorful-settings))
-* support `len()` on colored strings ([docs](https://docs.python.org/3/library/functions.html#len)
+* support `len()` on colored strings ([docs](#correctly-support-the-len-protocol))
 * no dependencies
 
 ## Usage
@@ -232,7 +232,7 @@ Available modifiers are:
 
 The available colors depend on the [color palette](#color-palette) you are using. By default all [X11 rgb.txt colors](https://en.wikipedia.org/wiki/X11_color_names) are available.
 
-The type of the return value of such a *style method* is `colorful.ColorfulString`. It correctly supports all `str()` methods including [`len()`](#correctly-support-the-lenprotocol).
+The type of the return value of such a *style method* is `colorful.ColorfulString`. It correctly supports all `str()` methods including [`len()`](#correctly-support-the-len-protocol).
 
 #### (2) Style a string with `colorful.format(string, *args, **kwargs)`
 
