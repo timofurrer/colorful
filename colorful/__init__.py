@@ -20,7 +20,7 @@ from .core import Colorful
 from . import terminal
 
 #: Holds the current version
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 
 
 class ColorfulModule(types.ModuleType):
