@@ -561,6 +561,18 @@ def test_use_styles():
     assert str(exc.value).startswith('the color "lightCoral" is unknown.')
 
 
+def test_use_unknown_style():
+    """
+    Test exception for unknown style
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+
+    with pytest.raises(core.ColorfulError) as exc:
+        colorful.use_style('unknown')
+
+    assert str(exc.value) == 'the style "unknown" is undefined'
+
+
 def test_colorful_format():
     """
     Test the colorful.format method
