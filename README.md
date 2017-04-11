@@ -20,6 +20,10 @@ print(colorful.bold_white('Hello World'))
 # create a colored string using `str.format()`
 print('{c.bold}{c.lightCoral_on_white}Hello World{c.reset}'.format(c=colorful))
 
+# nest colors
+print(colorful.red('red' + colorful.white(' white ') + 'red'))
+print(colorful.red('red {0} red'.format(colorful.white('white'))))
+
 # use true colors
 colorful.use_true_colors()
 
@@ -54,6 +58,7 @@ with colorful.with_palette(my_company_palette) as c:
 * support for different color modes (8bit ANSI, 256 ANSI, true colors) ([docs](#color-modes))
 * support for predefined awesome styles (solarized, ...) ([docs](#styles))
 * support for custom color palettes ([docs](#color-palette))
+* support nesting styles ([docs]())
 * support for different platforms (using colorama on windows)
 * context managers for clean color mode, color palette or style switch ([docs](#temporarily-change-colorful-settings))
 * support `len()` on colored strings ([docs](#correctly-support-the-len-protocol))
@@ -196,7 +201,7 @@ The following styles are already supported:
 
 **colorful** provides multiple ways to use style a string. Most useful and expressive is probably the *method syntax* where you specify the modifiers and colors in the method name itself and pass the string as argument to this method. However, you can also [`colorful.format()`](#2-style-a-string-with-colorfulformatstring-args-kwargs) or [`str.format()`](#3-style-a-string-with-strformat).
 
-#### (1) Style a string with a method call `colorful.[<modifiers...>]_[<fgColor>]_[on_<bgColor>](str)`
+#### (1) Style a string with a method call `colorful.[<modifiers...>]_[<fgColor>]_[on_<bgColor>](str, nested=False)`
 
 ```python
 print(colorful.red('I am red'))
@@ -234,6 +239,8 @@ The available colors depend on the [color palette](#color-palette) you are using
 
 The type of the return value of such a *style method* is `colorful.ColorfulString`. It correctly supports all `str()` methods including [`len()`](#correctly-support-the-len-protocol).
 
+As you can see from the syntax in the section name, **colorful** supports nesting styles. See []().
+
 #### (2) Style a string with `colorful.format(string, *args, **kwargs)`
 
 ```python
@@ -263,6 +270,21 @@ print('{c.black_on_white}I am black on white{c.close_fg_color}{c.close_bg_color}
 ```
 
 Note: The same syntax, modifiers and colors for the style in `{c.<style>}` can be used as for [(1) Style a string with a method call](#1-style-a-string-with-a-method-call).
+
+#### Nesting styles
+
+**colorful** supports to nest styles with it's [method call syntax](#1-style-a-string-with-a-method-call) when setting the paramter `nested` to `True`.
+
+The following examples show the behavior:
+
+```python
+print(colorful.red('red' + colorful.white(' white ') + 'red'))
+print(colorful.red('red {0} red'.format(colorful.white('white'))))
+
+# if using ``nested=True`` but you don't actually nest 
+# it's absolutely fine and will work as expected.
+print(colorful.red('red', nested=True) + ' default color')
+```
 
 #### Correctly support the [`len()` protocol](https://docs.python.org/3/library/functions.html#len)
 
