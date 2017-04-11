@@ -21,8 +21,8 @@ print(colorful.bold_white('Hello World'))
 print('{c.bold}{c.lightCoral_on_white}Hello World{c.reset}'.format(c=colorful))
 
 # nest colors
-print(colorful.red('red' + colorful.white(' white ') + 'red'))
-print(colorful.red('red {0} red'.format(colorful.white('white'))))
+print(colorful.red('red' + colorful.white(' white ', nested=True) + 'red'))
+print(colorful.red('red {0} red'.format(colorful.white('white', nested=True))))
 
 # use true colors
 colorful.use_true_colors()
@@ -278,8 +278,8 @@ Note: The same syntax, modifiers and colors for the style in `{c.<style>}` can b
 The following examples show the behavior:
 
 ```python
-print(colorful.red('red' + colorful.white(' white ') + 'red'))
-print(colorful.red('red {0} red'.format(colorful.white('white'))))
+print(colorful.red('red' + colorful.white(' white ', nested=True) + 'red'))
+print(colorful.red('red {0} red'.format(colorful.white('white', nested=True))))
 
 # if using ``nested=True`` but you don't actually nest 
 # it's absolutely fine and will work as expected.
