@@ -245,9 +245,9 @@ class ColorfulString(object):
                 other.orig_string + self.orig_string,
                 other.styled_string + self.styled_string)
 
-        return ColorfulString(
-            other + self.orig_string,
-            other + self.styled_string)
+        # we return handover the conversion to the
+        # object on the left side
+        return other + self.styled_string
 
     def __mul__(self, other):
         return ColorfulString(

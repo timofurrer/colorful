@@ -644,3 +644,26 @@ def test_styling_object_which_implements_str_proto():
 
     colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
     assert str(colorful.black(Dummy())) == '\033[30mI am a dummy object\033[39m'
+
+
+def test_str_behavior_for_colorfulstring():
+    """
+    Test that the ColorfulString object behaves like a str
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    s = colorful.black('Hello')
+
+    # test adding to str
+    assert str(s + ' World') == '\033[30mHello\033[39m World'
+
+    # test beeing added to str
+    assert 'World ' + s == 'World \033[30mHello\033[39m'
+
+    # test ColorfulString to ColorfulString
+    assert str(s + s) == '\033[30mHello\033[39m\033[30mHello\033[39m'
+
+    # test multipling ColorfulString
+    assert str(s * 3) == '\033[30mHello\033[39m\033[30mHello\033[39m\033[30mHello\033[39m'
+
+    # other str methods operate on the styled string
+    assert s.replace('Hello', 'Adieu') == '\033[30mAdieu\033[39m'
