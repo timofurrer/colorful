@@ -679,3 +679,21 @@ def test_str_behavior_for_colorfulstring():
 
     # other str methods operate on the styled string
     assert s.replace('Hello', 'Adieu') == '\033[30mAdieu\033[39m'
+
+
+def test_unicode_support():
+    """
+    Test unicode support
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+
+    s = u'🐧🎉🐧'
+    styled_s = colorful.black(s)
+
+    if core.PY2:
+        unicode_type = unicode  # noqa
+    else:
+        unicode_type = str
+
+    # test basic unicode support
+    assert unicode_type(styled_s) == u'\033[30m🐧🎉🐧\033[39m'

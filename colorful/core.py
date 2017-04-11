@@ -10,6 +10,8 @@
     :license: MIT, see LICENSE for more details.
 """
 
+from __future__ import unicode_literals
+
 import os
 import sys
 
@@ -200,7 +202,11 @@ def style_string(string, ansi_style, colormode, nested=False):
     ansi_start_code, ansi_end_code = ansi_style
 
     # replace nest placeholders with the current begin style
-    string = str(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
+    if PY2 and isinstance(string, unicode):  # noqa
+        str_type = unicode  # noqa
+    else:
+        str_type = str
+    string = str_type(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
 
     return '{start_code}{string}{end_code}{nest_ph}'.format(
         start_code=ansi_start_code,
@@ -217,11 +223,17 @@ class ColorfulString(object):
         self.orig_string = orig_string
         self.styled_string = styled_string
 
-    def __str__(self):
-        return self.styled_string
+    if not PY2:
+        def __str__(self):
+            return self.styled_string
+    else:
+        def __unicode__(self):
+            string = self.styled_string
+            if isinstance(string, bytes):
+                string = string.decode('utf-8')
+            return string
 
-    if PY2:
-        __unicode__ = __str__
+        __str__ = __unicode__
 
     def __len__(self):
         return len(self.orig_string)
