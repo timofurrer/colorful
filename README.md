@@ -58,7 +58,7 @@ with colorful.with_palette(my_company_palette) as c:
 * support for different color modes (8bit ANSI, 256 ANSI, true colors) ([docs](#color-modes))
 * support for predefined awesome styles (solarized, ...) ([docs](#styles))
 * support for custom color palettes ([docs](#color-palette))
-* support nesting styles ([docs]())
+* support nesting styles ([docs](#nesting-styles))
 * support for different platforms (using colorama on windows)
 * context managers for clean color mode, color palette or style switch ([docs](#temporarily-change-colorful-settings))
 * support `len()` on colored strings ([docs](#correctly-support-the-len-protocol))
@@ -239,7 +239,7 @@ The available colors depend on the [color palette](#color-palette) you are using
 
 The type of the return value of such a *style method* is `colorful.ColorfulString`. It correctly supports all `str()` methods including [`len()`](#correctly-support-the-len-protocol).
 
-As you can see from the syntax in the section name, **colorful** supports nesting styles. See []().
+As you can see from the syntax in the section name, **colorful** supports nesting styles. See [Nesting styles](#nesting-styles).
 
 #### (2) Style a string with `colorful.format(string, *args, **kwargs)`
 
