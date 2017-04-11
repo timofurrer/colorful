@@ -200,7 +200,7 @@ def style_string(string, ansi_style, colormode, nested=False):
     ansi_start_code, ansi_end_code = ansi_style
 
     # replace nest placeholders with the current begin style
-    string = string.replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
+    string = str(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
 
     return '{start_code}{string}{end_code}{nest_ph}'.format(
         start_code=ansi_start_code,

@@ -632,3 +632,15 @@ def test_nested_styled_string():
 
     s = colorful.red('Hello {0} world'.format(colorful.blue('awesome', nested=True)))
     assert str(s) == '\033[31mHello \033[34mawesome\033[39m\033[31m world\033[39m'
+
+
+def test_styling_object_which_implements_str_proto():
+    """
+    Test styling an object which implements the str protocol
+    """
+    class Dummy(object):
+        def __str__(self):
+            return 'I am a dummy object'
+
+    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    assert str(colorful.black(Dummy())) == '\033[30mI am a dummy object\033[39m'
