@@ -23,7 +23,7 @@ import colorful.terminal as terminal  # noqa
 # replace colorful name with ColorfulModule instance
 ColorfulError = colorful.core.ColorfulError
 colorful = colorful.ColorfulModule(
-    colorful.Colorful(colormode=terminal.ANSI_8BIT_COLORS), 'colorful')
+    colorful.Colorful(colormode=terminal.ANSI_8_COLORS), 'colorful')
 
 
 def test_color_method_resolution():
@@ -38,7 +38,7 @@ def test_setup_contextmanager():
     """
     Test the package level setup context manager
     """
-    with colorful.with_setup(colormode=terminal.ANSI_16BIT_COLORS,
+    with colorful.with_setup(colormode=terminal.ANSI_16_COLORS,
                              colorpalette={'testColor': (0, 0, 0)}, extend_colors=False) as c:
         assert str(c.testColor) == '\033[30m'
 
@@ -51,13 +51,13 @@ def test_setup_contextmanager():
     assert str(exc.value).startswith('the color "testColor" is unknown.')
 
 
-@pytest.mark.parametrize('ctxmgr_name, colorname, expected, expected_8bit', [
-    ('with_8bit_ansi_colors', 'black', '\033[30m', '\033[30m'),
-    ('with_16bit_ansi_colors', 'black', '\033[30m', '\033[30m'),
+@pytest.mark.parametrize('ctxmgr_name, colorname, expected, expected_8', [
+    ('with_8_ansi_colors', 'black', '\033[30m', '\033[30m'),
+    ('with_16_ansi_colors', 'black', '\033[30m', '\033[30m'),
     ('with_256_ansi_colors', 'black', '\033[38;5;16m', '\033[30m'),
     ('with_true_colors', 'black', '\033[38;2;0;0;0m', '\033[30m')
 ])
-def test_set_color_mode_methods(ctxmgr_name, colorname, expected, expected_8bit):
+def test_set_color_mode_methods(ctxmgr_name, colorname, expected, expected_8):
     """
     Test changing the color mode in a with-block
     """
@@ -66,7 +66,7 @@ def test_set_color_mode_methods(ctxmgr_name, colorname, expected, expected_8bit)
     with contextmanager() as c:
         assert str(getattr(c, colorname)) == expected
 
-    assert str(getattr(colorful, colorname)) == expected_8bit
+    assert str(getattr(colorful, colorname)) == expected_8
 
 
 def test_change_color_palette():

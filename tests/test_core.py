@@ -52,11 +52,11 @@ import colorful.terminal as terminal  # noqa
     ('bold_italic_green', ('\033[1m\033[3m\033[32m', '\033[22m\033[23m\033[39m')),
     ('underlined_struckthrough_cyan', ('\033[4m\033[9m\033[36m', '\033[24m\033[29m\033[39m'))
 ])
-def test_translate_style_8bit(style_string, expected):
+def test_translate_style_8(style_string, expected):
     """
-    Test translating style strings with 8bit colors
+    Test translating style strings with 8 colors
     """
-    assert core.translate_style(style_string, colormode=terminal.ANSI_8BIT_COLORS,
+    assert core.translate_style(style_string, colormode=terminal.ANSI_8_COLORS,
                                 colorpalette=core.COLOR_PALETTE) == expected
 
 
@@ -91,11 +91,11 @@ def test_translate_style_8bit(style_string, expected):
     ('bold_italic_green', ('\033[1m\033[3m\033[32m', '\033[22m\033[23m\033[39m')),
     ('underlined_struckthrough_cyan', ('\033[4m\033[9m\033[36m', '\033[24m\033[29m\033[39m'))
 ])
-def test_translate_style_16bit(style_string, expected):
+def test_translate_style_16(style_string, expected):
     """
-    Test translating style strings with 16bit colors
+    Test translating style strings with 16 colors
     """
-    assert core.translate_style(style_string, colormode=terminal.ANSI_16BIT_COLORS,
+    assert core.translate_style(style_string, colormode=terminal.ANSI_16_COLORS,
                                 colorpalette=core.COLOR_PALETTE) == expected
 
 
@@ -211,7 +211,7 @@ def test_method_call_to_style_conversion(method_name, expected):
     """
     Test converting the method call to an actual style
     """
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
     method = getattr(colorful, method_name)
 
     assert str(method('No, I am your father')) == expected
@@ -291,7 +291,7 @@ def test_method_str_to_style_conversion(method_name, expected):
     """
     Test converting the method to an actual style
     """
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
     method = getattr(colorful, method_name)
 
     assert str(method) == expected
@@ -397,7 +397,7 @@ def test_method_in_format_to_style_conversion(format_str, expected):
     """
     Test converting the method in a format() call to an actual style
     """
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
 
     assert format_str.format(c=colorful) == expected
 
@@ -417,7 +417,7 @@ def test_invalid_color_name():
     """
     Test invalid color name
     """
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
 
     expected = ('the color "invalidColor" is unknown. '
                 'Use a color in your color palette (by default: X11 rgb.txt)')
@@ -431,8 +431,8 @@ def test_invalid_color_name():
     ({'COLORTERM': 'truecolor'}, terminal.TRUE_COLORS),
     ({'TERM_PROGRAM': 'iTerm.app'}, terminal.TRUE_COLORS),
     ({'TERM': 'xterm-256color'}, terminal.ANSI_256_COLORS),
-    ({'TERM': 'screen'}, terminal.ANSI_16BIT_COLORS),
-    ({}, terminal.ANSI_8BIT_COLORS),
+    ({'TERM': 'screen'}, terminal.ANSI_16_COLORS),
+    ({}, terminal.ANSI_8_COLORS),
 ])
 def test_colorful_obj_color_auto_detection(env, expected):
     """
@@ -466,7 +466,7 @@ def test_colorful_obj_setup():
     """
     Test setup of an existing colorful object
     """
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
     colorful.setup(
         colormode=terminal.TRUE_COLORS,
         colorpalette={'testColor': (0, 0, 0)},
@@ -488,7 +488,7 @@ def test_colorful_obj_setup_with_extending_palette():
     """
     Test setup of an existing colorful object and extend the color palette
     """
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
     colorful.setup(
         colormode=terminal.TRUE_COLORS,
         colorpalette={'testColor': (0, 0, 0)},
@@ -501,8 +501,8 @@ def test_colorful_obj_setup_with_extending_palette():
 
 
 @pytest.mark.parametrize('method_name, colorname, expected', [
-    ('use_8bit_ansi_colors', 'black', '\033[30m'),
-    ('use_16bit_ansi_colors', 'black', '\033[30m'),
+    ('use_8_ansi_colors', 'black', '\033[30m'),
+    ('use_16_ansi_colors', 'black', '\033[30m'),
     ('use_256_ansi_colors', 'black', '\033[38;5;16m'),
     ('use_true_colors', 'black', '\033[38;2;0;0;0m')
 ])
@@ -526,7 +526,7 @@ def test_change_color_palette():
         'black': (0, 0, 0)
     }
     colorful = core.Colorful(
-        colormode=terminal.ANSI_8BIT_COLORS, colorpalette={'defaultColor': (255, 255, 255)})
+        colormode=terminal.ANSI_8_COLORS, colorpalette={'defaultColor': (255, 255, 255)})
 
     # updating existing color palette
     colorful.update_palette(NEW_COLOR_PALETTE)
@@ -565,7 +565,7 @@ def test_use_unknown_style():
     """
     Test exception for unknown style
     """
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
 
     with pytest.raises(core.ColorfulError) as exc:
         colorful.use_style('unknown')
@@ -577,7 +577,7 @@ def test_colorful_format():
     """
     Test the colorful.format method
     """
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
 
     expected = '\033[3m\033[31mNo, I am your father\033[23m\033[39m'
     assert colorful.format('{c.italic_red}{0}, I am your {who}{c.no_italic}{c.close_fg_color}',
@@ -618,7 +618,7 @@ def test_length_of_styled_string(method_name, expected):
     """
     Test the length of a styled string
     """
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
     method = getattr(colorful, method_name)
 
     assert len(method(expected)) == len(expected)
@@ -628,7 +628,7 @@ def test_nested_styled_string():
     """
     Test nested styled string
     """
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
 
     s = colorful.red('Hello ' + colorful.blue('awesome', nested=True) + ' world')
     assert str(s) == '\033[31mHello \033[34mawesome\033[39m\033[31m world\033[39m'
@@ -654,7 +654,7 @@ def test_styling_object_which_implements_str_proto():
         def __str__(self):
             return 'I am a dummy object'
 
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
     assert str(colorful.black(Dummy())) == '\033[30mI am a dummy object\033[39m'
 
 
@@ -662,7 +662,7 @@ def test_str_behavior_for_colorfulstring():
     """
     Test that the ColorfulString object behaves like a str
     """
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
     s = colorful.black('Hello')
 
     # test adding to str
@@ -685,7 +685,7 @@ def test_unicode_support():
     """
     Test unicode support
     """
-    colorful = core.Colorful(colormode=terminal.ANSI_8BIT_COLORS)
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
 
     s = u'🐧🎉🐧'
     styled_s = colorful.black(s)

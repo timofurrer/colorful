@@ -79,7 +79,7 @@ def rgb_to_ansi265(r, g, b):
 
 def rgb_to_ansi16(r, g, b, use_bright=False):
     """
-    Convert RGB to ANSI 16bit color
+    Convert RGB to ANSI 16 color
     """
     ansi_b = round(b / 255.0) << 2
     ansi_g = round(g / 255.0) << 1

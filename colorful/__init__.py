@@ -48,16 +48,16 @@ class ColorfulModule(types.ModuleType):
         yield colorful
 
     @contextmanager
-    def with_8bit_ansi_colors(self):
+    def with_8_ansi_colors(self):
         yield Colorful(
-            colormode=terminal.ANSI_8BIT_COLORS,
+            colormode=terminal.ANSI_8_COLORS,
             colorpalette=copy.copy(self.colorful.colorpalette)
         )
 
     @contextmanager
-    def with_16bit_ansi_colors(self):
+    def with_16_ansi_colors(self):
         yield Colorful(
-            colormode=terminal.ANSI_16BIT_COLORS,
+            colormode=terminal.ANSI_16_COLORS,
             colorpalette=copy.copy(self.colorful.colorpalette)
         )
 

@@ -15,8 +15,8 @@ import sys
 
 # Valid color modes for colorful
 NO_COLORS = 0
-ANSI_8BIT_COLORS = 8
-ANSI_16BIT_COLORS = 16
+ANSI_8_COLORS = 8
+ANSI_16_COLORS = 16
 ANSI_256_COLORS = 256
 TRUE_COLORS = 0xFFFFFF
 
@@ -32,11 +32,11 @@ def detect_color_support(env):  # noqa
     if env.get('COLORFUL_DISABLE', '0') == '1':
         return NO_COLORS
 
-    if env.get('COLORFUL_FORCE_8BIT_COLORS', '0') == '1':
-        return ANSI_8BIT_COLORS
+    if env.get('COLORFUL_FORCE_8_COLORS', '0') == '1':
+        return ANSI_8_COLORS
 
-    if env.get('COLORFUL_FORCE_16BIT_COLORS', '0') == '1':
-        return ANSI_16BIT_COLORS
+    if env.get('COLORFUL_FORCE_16_COLORS', '0') == '1':
+        return ANSI_16_COLORS
 
     if env.get('COLORFUL_FORCE_256_COLORS', '0') == '1':
         return ANSI_256_COLORS
@@ -50,10 +50,10 @@ def detect_color_support(env):  # noqa
 
     colorterm_env = env.get('COLORTERM')
     if colorterm_env:
-        if colorterm_env in {'truecolor'}:
+        if colorterm_env in {'truecolor', '24bit'}:
             return TRUE_COLORS
 
-        if colorterm_env in {'24bit'}:
+        if colorterm_env in {'8bit'}:
             return ANSI_256_COLORS
 
     termprog_env = env.get('TERM_PROGRAM')
@@ -70,11 +70,11 @@ def detect_color_support(env):  # noqa
             return ANSI_256_COLORS
 
         if term_env in {'screen', 'xterm', 'vt100', 'color', 'ansi', 'cygwin', 'linux'}:
-            return ANSI_16BIT_COLORS
+            return ANSI_16_COLORS
 
     if colorterm_env:
         # if there was no match with $TERM either but we
         # had one with $COLORTERM, we use it!
-        return ANSI_16BIT_COLORS
+        return ANSI_16_COLORS
 
-    return ANSI_8BIT_COLORS
+    return ANSI_8_COLORS

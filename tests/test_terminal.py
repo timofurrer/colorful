@@ -23,14 +23,15 @@ import colorful.terminal as terminal  # noqa
 @pytest.mark.parametrize('env,expected', [
     # test force color settings
     ({'COLORFUL_DISABLE': '1'}, terminal.NO_COLORS),
-    ({'COLORFUL_FORCE_8BIT_COLORS': '1'}, terminal.ANSI_8BIT_COLORS),
-    ({'COLORFUL_FORCE_16BIT_COLORS': '1'}, terminal.ANSI_16BIT_COLORS),
+    ({'COLORFUL_FORCE_8_COLORS': '1'}, terminal.ANSI_8_COLORS),
+    ({'COLORFUL_FORCE_16_COLORS': '1'}, terminal.ANSI_16_COLORS),
     ({'COLORFUL_FORCE_256_COLORS': '1'}, terminal.ANSI_256_COLORS),
     ({'COLORFUL_FORCE_TRUE_COLORS': '1'}, terminal.TRUE_COLORS),
     # test recommended $COLORTERM variable
     ({'COLORTERM': 'truecolor'}, terminal.TRUE_COLORS),
-    ({'COLORTERM': '24bit'}, terminal.ANSI_256_COLORS),
-    ({'COLORTERM': 'XYZ'}, terminal.ANSI_16BIT_COLORS),
+    ({'COLORTERM': '24bit'}, terminal.TRUE_COLORS),
+    ({'COLORTERM': '8bit'}, terminal.ANSI_256_COLORS),
+    ({'COLORTERM': 'XYZ'}, terminal.ANSI_16_COLORS),
     # test $TERM_PROGRAM variable
     ({'TERM_PROGRAM': 'iTerm.app'}, terminal.TRUE_COLORS),
     ({'TERM_PROGRAM': 'Hyper'}, terminal.TRUE_COLORS),
@@ -40,20 +41,20 @@ import colorful.terminal as terminal  # noqa
     ({'TERM': 'screen-256color'}, terminal.ANSI_256_COLORS),
     ({'TERM': 'xterm-256'}, terminal.ANSI_256_COLORS),
     ({'TERM': 'xterm-256color'}, terminal.ANSI_256_COLORS),
-    # test $TERM variable values for 16bit colors
-    ({'TERM': 'screen'}, terminal.ANSI_16BIT_COLORS),
-    ({'TERM': 'xterm'}, terminal.ANSI_16BIT_COLORS),
-    ({'TERM': 'vt100'}, terminal.ANSI_16BIT_COLORS),
-    ({'TERM': 'color'}, terminal.ANSI_16BIT_COLORS),
-    ({'TERM': 'ansi'}, terminal.ANSI_16BIT_COLORS),
-    ({'TERM': 'cygwin'}, terminal.ANSI_16BIT_COLORS),
-    ({'TERM': 'linux'}, terminal.ANSI_16BIT_COLORS),
-    # test fallback to 8bit colors
-    ({}, terminal.ANSI_8BIT_COLORS),
+    # test $TERM variable values for 16 colors
+    ({'TERM': 'screen'}, terminal.ANSI_16_COLORS),
+    ({'TERM': 'xterm'}, terminal.ANSI_16_COLORS),
+    ({'TERM': 'vt100'}, terminal.ANSI_16_COLORS),
+    ({'TERM': 'color'}, terminal.ANSI_16_COLORS),
+    ({'TERM': 'ansi'}, terminal.ANSI_16_COLORS),
+    ({'TERM': 'cygwin'}, terminal.ANSI_16_COLORS),
+    ({'TERM': 'linux'}, terminal.ANSI_16_COLORS),
+    # test fallback to 8 colors
+    ({}, terminal.ANSI_8_COLORS),
     # force disable overrules force colors
     ({
         'COLORFUL_DISABLE': '1',
-        'COLORFUL_FORCE_8BIT_COLORS': '1', 'COLORFUL_FORCE_16BIT_COLORS': '1',
+        'COLORFUL_FORCE_8_COLORS': '1', 'COLORFUL_FORCE_16_COLORS': '1',
         'COLORFUL_FORCE_256_COLORS': '1', 'COLORFUL_FORCE_TRUE_COLORS': '1'
     }, terminal.NO_COLORS),
     # force colors overrules $COLORTERM

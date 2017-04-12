@@ -34,13 +34,13 @@ print(colorful.mint_on_snow('Wow, this is actually mint'))
 # choose a predefined style
 colorful.use_style('solarized')
 # print the official solarized colors
-print(colorful.yellow('yellow'), colorful.orange('orange'), 
+print(colorful.yellow('yellow'), colorful.orange('orange'),
     colorful.red('red'), colorful.magenta('magenta'),
     colorful.violet('violet'), colorful.blue('blue'),
     colorful.cyan('cyan'), colorful.green('green'))
 
 # choose specific color mode for one block
-with colorful.with_8bit_ansi_colors() as c:
+with colorful.with_8_ansi_colors() as c:
     print(c.bold_green('colorful is awesome!'))
 
 # create and choose your own color palette
@@ -55,7 +55,7 @@ with colorful.with_palette(my_company_palette) as c:
 ## Key Features
 
 * expressive and consistent API ([docs](#style-a-string))
-* support for different color modes (8bit ANSI, 256 ANSI, true colors) ([docs](#color-modes))
+* support for different color modes (8 ANSI, 256 ANSI, true colors) ([docs](#color-modes))
 * support for predefined awesome styles (solarized, ...) ([docs](#styles))
 * support for custom color palettes ([docs](#color-palette))
 * support nesting styles ([docs](#nesting-styles))
@@ -87,36 +87,36 @@ print('{c.italic_coral_on_beige}Hello World{c.reset}'.format(c=colorful))
 
 ### Color modes
 
-These days terminals not only support the ancient 8 bit ANSI colors but often they support up to 16 Million colors with *[true color](https://en.wikipedia.org/wiki/Color_depth#True_color_.2824-bit.29)*. And if they don't support *true color* they might support the *[256 ANSI color palette](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors)* at least.
+These days terminals not only support the ancient 8 ANSI colors but often they support up to 16 Million colors with *[true color](https://en.wikipedia.org/wiki/Color_depth#True_color_.2824-bit.29)*. And if they don't support *true color* they might support the *[256 ANSI color palette](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors)* at least.
 
 **colorful** supports the following color modes:
 
 * no colors / disable (``colorful.NO_COLORS``)
-* 8 colors -> 8 bit ANSI colors (``colorful.ANSI_8BIT_COLORS``)
-* 256 colors -> 256 ANSI color palette (24bit ``colorful.ANSI_256_COLORS``)
-* 16'777'215 colors -> true color (``colorful.TRUE_COLORS``)
+* 8 colors -> 8 ANSI colors (``colorful.ANSI_8_COLORS``)
+* 256 colors -> 256 ANSI color palette (8bit ``colorful.ANSI_256_COLORS``)
+* 16'777'215 colors -> true color (24bit, ``colorful.TRUE_COLORS``)
 
 By default *colorful* tries to auto detect the best supported color mode by your terminal. Consult [`colorful.terminal`](https://github.com/timofurrer/colorful/blob/master/colorful/terminal.py) for more details.
 
 However, sometimes it makes sense to specify what color mode should be used.<br>
-**colorful** provides multiple ways to do so: 
+**colorful** provides multiple ways to do so:
 
 #### (1) specify color mode globally via Python API
 
 ```python
 colorful.disable()
-colorful.use_8bit_ansi_colors()
+colorful.use_8_ansi_colors()
 colorful.use_256_ansi_colors()
 colorful.use_true_colors()
 ```
 
-If you change the color mode during runtime it takes affect immediately and globally. 
+If you change the color mode during runtime it takes affect immediately and globally.
 
 #### (2) enforce color mode globally via environment variable
 
 ```bash
 COLORFUL_DISABLE=1 python eggs.py  # this process will not use ANY coloring
-COLORFUL_FORCE_8BIT_COLORS=1 python eggs.py  # this process will use 8 bit ANSI colors by default
+COLORFUL_FORCE_8_COLORS=1 python eggs.py  # this process will use 8 ANSI colors by default
 COLORFUL_FORCE_256_COLORS=1 python eggs.py  # this process will use 256 ANSI colors by default
 COLORFUL_FORCE_TRUE_COLORS=1 python eggs.py  # this process will use true colors by default
 ```
@@ -124,12 +124,12 @@ COLORFUL_FORCE_TRUE_COLORS=1 python eggs.py  # this process will use true colors
 #### (3) specify color mode locally via Python API (contextmanager)
 
 ```python
-with colorful.with_8bit_ansi_colors() as c:
+with colorful.with_8_ansi_colors() as c:
     print(c.italic_coral_on_beige('Hello world'))
-    
+
 with colorful.with_256_ansi_colors() as c:
     print(c.italic_coral_on_beige('Hello world'))
-    
+
 with colorful.with_true_colors() as c:
     print(c.italic_coral_on_beige('Hello world'))
 ```
@@ -176,7 +176,7 @@ print(colorful.italic_mint_on_darkRed('My company'))
 colorful.use_style('solarized')
 
 # print the official solarized colors
-print(colorful.yellow('yellow'), colorful.orange('orange'), 
+print(colorful.yellow('yellow'), colorful.orange('orange'),
     colorful.red('red'), colorful.magenta('magenta'),
     colorful.violet('violet'), colorful.blue('blue'),
     colorful.cyan('cyan'), colorful.green('green'))
@@ -282,7 +282,7 @@ The following examples show the behavior:
 print(colorful.red('red' + colorful.white(' white ', nested=True) + 'red'))
 print(colorful.red('red {0} red'.format(colorful.white('white', nested=True))))
 
-# if using ``nested=True`` but you don't actually nest 
+# if using ``nested=True`` but you don't actually nest
 # it's absolutely fine and will work as expected.
 print(colorful.red('red', nested=True) + ' default color')
 ```
@@ -306,14 +306,14 @@ print(colorful.red('red', nested=True) + ' default color')
 
 #### (1) change color mode
 
-Use 8 bit colors:
+Use 8 ANSI colors:
 
 ```python
-with colorful.with_8bit_ansi_colors() as c:
+with colorful.with_8_ansi_colors() as c:
     print(c.red('I am red'))
 ```
 
-Use 256 colors:
+Use 256 ANSI colors:
 
 ```python
 with colorful.with_256_ansi_colors() as c:

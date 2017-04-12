@@ -43,8 +43,8 @@ def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
 
     The ``colormode`` has to be one of:
         * 0: no colors / disabled
-        * 8: use ANSI 8bit colors
-        * 16: use ANSI 16bit colors (same as 8bit but with brightness)
+        * 8: use ANSI 8 colors
+        * 16: use ANSI 16 colors (same as 8 but with brightness)
         * 256: use ANSI 256 colors
         * 0xFFFFFF / 16777215: use 16 Million true colors
 
@@ -57,7 +57,7 @@ def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
     if colormode == terminal.NO_COLORS:  # colors are disabled, thus return empty string
         return '', ''
 
-    if colormode == terminal.ANSI_8BIT_COLORS or colormode == terminal.ANSI_16BIT_COLORS:
+    if colormode == terminal.ANSI_8_COLORS or colormode == terminal.ANSI_16_COLORS:
         color_code = ansi.rgb_to_ansi16(red, green, blue)
         start_code = ansi.ANSI_ESCAPE_CODE.format(
             code=color_code + offset - ansi.FOREGROUND_COLOR_OFFSET)
@@ -281,8 +281,8 @@ class Colorful(object):
     # re-expose the color modes from ``colorful.terminal``
     # on a package level.
     NO_COLORS = terminal.NO_COLORS
-    ANSI_8BIT_COLORS = terminal.ANSI_8BIT_COLORS
-    ANSI_16BIT_COLORS = terminal.ANSI_16BIT_COLORS
+    ANSI_8_COLORS = terminal.ANSI_8_COLORS
+    ANSI_16_COLORS = terminal.ANSI_16_COLORS
     ANSI_256_COLORS = terminal.ANSI_256_COLORS
     TRUE_COLORS = terminal.TRUE_COLORS
 
@@ -354,17 +354,17 @@ class Colorful(object):
             else:
                 self.colorpalette = colorpalette
 
-    def use_8bit_ansi_colors(self):
+    def use_8_ansi_colors(self):
         """
-        Use 8bit ANSI colors for this colorful object
+        Use 8 ANSI colors for this colorful object
         """
-        self.colormode = terminal.ANSI_8BIT_COLORS
+        self.colormode = terminal.ANSI_8_COLORS
 
-    def use_16bit_ansi_colors(self):
+    def use_16_ansi_colors(self):
         """
-        Use 16bit ANSI colors for this colorful object
+        Use 16 ANSI colors for this colorful object
         """
-        self.colormode = terminal.ANSI_16BIT_COLORS
+        self.colormode = terminal.ANSI_16_COLORS
 
     def use_256_ansi_colors(self):
         """
