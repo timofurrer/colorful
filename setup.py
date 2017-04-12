@@ -56,26 +56,6 @@ def read_version():
     return finder.version
 
 
-def local_text_file(*f):
-    path = os.path.join(PROJECT_ROOT, *f)
-    with open(path, 'rt') as fp:
-        file_data = fp.read()
-
-    return file_data
-
-
-def read_readme():
-    """Read README content.
-    If the README.rst file does not exist yet
-    (this is the case when not releasing)
-    only the short description is returned.
-    """
-    try:
-        return local_text_file('README.rst')
-    except IOError:
-        return __doc__
-
-
 #: Holds the requirements for colorful
 requirements = [
     'colorama;platform_system=="Windows"'
@@ -87,8 +67,8 @@ if __name__ == '__main__':
     setup(
         name='colorful',
         version=read_version(),
-        description=__doc__,
-        long_description=read_readme(),
+        description='Terminal string styling done right, in Python.',
+        long_description='Terminal string styling done right, in Python.',
         url='http://github.com/timofurrer/colorful',
         author='Timo Furrer',
         author_email='tuxtimo@gmail.com',
