@@ -20,8 +20,14 @@ from . import rgb
 from . import styles
 from . import terminal
 
+#: Holds the name of the env variable which is
+#  used as path to the default rgb.txt file
+DEFAULT_RGB_TXT_PATH = os.environ.get(
+    'COLORFUL_DEFAULT_COLOR_PALETTE',
+    os.path.join(os.path.dirname(__file__), 'data', 'rgb.txt'))
+
 #: Holds the color names mapped to RGB channels
-COLOR_PALETTE = rgb.parse_rgb_txt_file()
+COLOR_PALETTE = rgb.parse_rgb_txt_file(path=DEFAULT_RGB_TXT_PATH)
 
 #: Holds a flag if the Python version is 2.X
 PY2 = sys.version_info.major == 2

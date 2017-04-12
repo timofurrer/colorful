@@ -148,6 +148,11 @@ color_palette_example = {
 *Note: Depending on the color mode which is used the RGB value will be reduced to fit in the value domain of the color mode.*
 
 The default color palette is the [X11 rgb.txt](https://en.wikipedia.org/wiki/X11_color_names) palette - it's shipped with *colorful*, thus, you don't have to provide your own.
+If you wish to have another `rgb.txt` file as your default color palette you can set the `COLORFUL_DEFAULT_COLOR_PALETTE` environment variable to this file:
+
+```bash
+COLORFUL_DEFAULT_COLOR_PALETTE=/usr/share/X11/rgb.txt python spam.py
+```
 
 **colorful** supports to update or replace the default color palette with custom colors. The colors have to be specified as RGB hex or channel values:
 
