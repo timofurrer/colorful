@@ -10,6 +10,9 @@
     :license: MIT, see LICENSE for more details.
 """
 
+# NOTE: only used for Colorful.print()
+from __future__ import print_function
+
 import os
 
 import pytest
@@ -582,6 +585,33 @@ def test_colorful_format():
     expected = '\033[3m\033[31mNo, I am your father\033[23m\033[39m'
     assert colorful.format('{c.italic_red}{0}, I am your {who}{c.no_italic}{c.close_fg_color}',
                            'No', who='father') == expected
+
+
+def test_colorful_direct_print(capsys):
+    """
+    Test the colorful.print method
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+
+    expected = u'\033[3m\033[31mNo, I am your father\033[23m\033[39m\n'
+
+    colorful.print('{c.italic_red}No, I am your father{c.no_italic}{c.close_fg_color}', flush=True)
+
+    out, err = capsys.readouterr()
+    assert repr(out) == repr(expected)
+    assert err == ''
+
+
+def test_colorful_print_wrong_argument():
+    """
+    Test calling the colorful.print method with wrong arguments
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+
+    with pytest.raises(TypeError) as exc:
+        colorful.print('Never printed because of argument error', foo=42)
+
+    assert str(exc.value) == 'Colorful.print() got unexpected keyword arguments: foo'
 
 
 @pytest.mark.parametrize('method_name, expected', [
