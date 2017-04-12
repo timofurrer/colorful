@@ -40,7 +40,7 @@ print(colorful.yellow('yellow'), colorful.orange('orange'),
     colorful.cyan('cyan'), colorful.green('green'))
     
 # directly print with colors
-colorful.print('{cbold_blue}Hello World{c.reset}')
+colorful.print('{c.bold_blue}Hello World{c.reset}')
 
 # choose specific color mode for one block
 with colorful.with_8_ansi_colors() as c:
