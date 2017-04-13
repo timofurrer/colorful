@@ -760,3 +760,16 @@ def test_piping_styled_str_into_style():
     string = colorful.bold_red | colorful.on_black('No, I am your father')
 
     assert str(string) == '\033[1m\033[31m\033[40mNo, I am your father\033[49m\033[22m\033[39m'
+
+
+def test_piping_constitency():
+    """
+    Test piping a string into a style does the same as the method call
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+
+    string_piped = colorful.bold & colorful.red | 'No, I am your father'
+    string_called = (colorful.bold & colorful.red)('No, I am your father')
+    string_called_single = colorful.bold_red('No, I am your father')
+
+    assert str(string_piped) == str(string_called) == str(string_called_single)
