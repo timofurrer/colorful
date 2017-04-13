@@ -24,6 +24,9 @@ print('{c.bold}{c.lightCoral_on_white}Hello World{c.reset}'.format(c=colorful))
 print(colorful.red('red' + colorful.white(' white ', nested=True) + 'red'))
 print(colorful.red('red {0} red'.format(colorful.white('white', nested=True))))
 
+# combine styles with strings
+print(colorful.bold & colorful.red | 'Hello World')
+
 # use true colors
 colorful.use_true_colors()
 
@@ -208,7 +211,7 @@ The following styles are already supported:
 
 ### Style a string
 
-**colorful** provides multiple ways to use style a string. Most useful and expressive is probably the *method syntax* where you specify the modifiers and colors in the method name itself and pass the string as argument to this method. However, you can also [`colorful.format()`](#2-style-a-string-with-colorfulformatstring-args-kwargs) or [`str.format()`](#4-style-a-string-with-strformat).
+**colorful** provides multiple ways to use style a string. Most useful and expressive is probably the *method syntax* where you specify the modifiers and colors in the method name itself and pass the string as argument to this method. However, you can use all the following methods to achive similars things:
 
 #### (1) Style a string with a method call `colorful.[<modifiers...>]_[<fgColor>]_[on_<bgColor>](str, nested=False)`
 
@@ -250,7 +253,20 @@ The type of the return value of such a *style method* is `colorful.ColorfulStrin
 
 As you can see from the syntax in the section name, **colorful** supports nesting styles. See [Nesting styles](#nesting-styles).
 
-#### (2) Style a string with `colorful.format(string, *args, **kwargs)`
+#### (2) Style a string with `&` and `|`
+
+**colorful** implements the `__or__` and `__and__` protocol to combine styles and pipe strings into them:
+
+```python
+print(colorful.bold & colorful.red | 'Hello World')
+print(colorful.bold_red_on_black | 'Hello World')
+print(colorful.bold | colorful.red_on_black('Hello World')
+```
+
+*Note: the piping `|` has the same effect as doing a method call to the style. 
+So you could do `(colorful.bold & colorful.red)('Hello World')`
+
+#### (3) Style a string with `colorful.format(string, *args, **kwargs)`
 
 ```python
 print(colorful.format('{c.red}I am {what}{c.close_fg_color}', what='red'))
@@ -265,7 +281,7 @@ print(colorful.format('{c.black_on_white}I am black on white{c.close_fg_color}{c
 
 Note: The same syntax, modifiers and colors for the style in `{c.<style>}` can be used as for [(1) Style a string with a method call](#1-style-a-string-with-a-method-call).
 
-#### (3) Style and print a string with `colorful.print(*strings, sep=' ', end='\n', file=sys.stdout, flush=False)`
+#### (4) Style and print a string with `colorful.print(*strings, sep=' ', end='\n', file=sys.stdout, flush=False)`
 
 ```python
 colorful.print('{c.italic_yellow}I am italic and yellow{c.no_italic}{c.close_fg_color}')
@@ -276,7 +292,7 @@ The `colorful.print()` method accepts the same arguments as the Python 3.X [buil
 
 *Note: for Python 2 you have to import the print function: `from __future__ import print_function`.*
 
-#### (4) Style a string with [`str.format()`](https://docs.python.org/3.6/library/stdtypes.html#str.format)
+#### (5) Style a string with [`str.format()`](https://docs.python.org/3.6/library/stdtypes.html#str.format)
 
 ```python
 print('{c.red}I am red{c.close_fg_color}'.format(c=colorful))
