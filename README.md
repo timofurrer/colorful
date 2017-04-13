@@ -263,8 +263,8 @@ print(colorful.bold_red_on_black | 'Hello World')
 print(colorful.bold | colorful.red_on_black('Hello World')
 ```
 
-*Note: the piping `|` has the same effect as doing a method call to the style. 
-So you could do `(colorful.bold & colorful.red)('Hello World')`
+*Note: the piping `|` has the same effect as doing a method call to the style.<br>
+So you could do `(colorful.bold & colorful.red)('Hello World')`*
 
 #### (3) Style a string with `colorful.format(string, *args, **kwargs)`
 
