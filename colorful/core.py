@@ -466,13 +466,33 @@ class Colorful(object):
             self.style = style
             self.colormode = colormode
 
-        def __str__(self):
-            return self.style[0]
+        def evaluate(self, string, nested=False):
+            """
+            Evaluate the style on the given string.
 
-        def __call__(self, string, nested=False):
+            :parma str string: the string to style
+            :param bool nested: if the string is part of another styled string
+                                (=> nested in another style)
+            """
             return ColorfulString(
                 string,
                 style_string(string, self.style, self.colormode, nested))
+
+        def __str__(self):
+            return self.style[0]
+
+        def __and__(self, other):
+            new_style = (
+                self.style[0] + other.style[0],
+                self.style[1] + other.style[1]
+            )
+            return Colorful.ColorfulStyle(new_style, self.colormode)
+
+        def __call__(self, string, nested=False):
+            return self.evaluate(string, nested)
+
+        def __or__(self, other):
+            return self.evaluate(other)
 
     def __getattr__(self, name):
         # translate the given name into an ANSI escape code sequence

@@ -727,3 +727,36 @@ def test_unicode_support():
 
     # test basic unicode support
     assert unicode_type(styled_s) == u'\033[30m🐧🎉🐧\033[39m'
+
+
+def test_combining_styles():
+    """
+    Test combining styles
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+
+    style = colorful.bold & colorful.red & colorful.on_black
+
+    assert str(style) == '\033[1m\033[31m\033[40m'
+
+
+def test_piping_str_into_style():
+    """
+    Test piping a string into a style
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+
+    string = colorful.bold_red | 'No, I am your father'
+
+    assert str(string) == '\033[1m\033[31mNo, I am your father\033[22m\033[39m'
+
+
+def test_piping_styled_str_into_style():
+    """
+    Test piping a string into a style
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+
+    string = colorful.bold_red | colorful.on_black('No, I am your father')
+
+    assert str(string) == '\033[1m\033[31m\033[40mNo, I am your father\033[49m\033[22m\033[39m'
