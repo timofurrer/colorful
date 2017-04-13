@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 *Nothing here yet.*
 
+## [v0.3.6]
+
+### Added
+- Combine and Pipe Styles
+
 ## [v0.3.5]
 
 ### Added
@@ -37,7 +42,8 @@ This release is just to fix the PyPI project page.
 
 - Initial release
 
-[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.3.5...HEAD
+[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.3.6...HEAD
+[v0.3.6]: https://github.com/timofurrer/colorful/compare/v0.3.5...v0.3.6
 [v0.3.5]: https://github.com/timofurrer/colorful/compare/v0.3.4...v0.3.5
 [v0.3.4]: https://github.com/timofurrer/colorful/compare/v0.3.3...v0.3.4
 [v0.3.3]: https://github.com/timofurrer/colorful/compare/v0.3.2...v0.3.3
