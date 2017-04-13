@@ -56,6 +56,9 @@ MY_COMPANY_PALETTE = {
 }
 with colorful.with_palette(my_company_palette) as c:
     print(c.companyOrange_on_companyBaige('Thanks for choosing our product!'))
+    
+# use f-string (only Python >= 3.6)
+print(f'{colorful.bold}Hello World')
 ```
 
 ## Key Features
