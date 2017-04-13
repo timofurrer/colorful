@@ -21,7 +21,7 @@ from .core import Colorful
 from . import terminal
 
 #: Holds the current version
-__version__ = '0.3.4'
+__version__ = '0.3.5'
 
 # if we are on Windows we have to init colorama
 if platform.system() == 'Windows':

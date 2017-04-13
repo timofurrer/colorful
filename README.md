@@ -38,7 +38,7 @@ print(colorful.yellow('yellow'), colorful.orange('orange'),
     colorful.red('red'), colorful.magenta('magenta'),
     colorful.violet('violet'), colorful.blue('blue'),
     colorful.cyan('cyan'), colorful.green('green'))
-    
+
 # directly print with colors
 colorful.print('{c.bold_blue}Hello World{c.reset}')
 
@@ -62,7 +62,7 @@ with colorful.with_palette(my_company_palette) as c:
 * support for predefined awesome styles (solarized, ...) ([docs](#styles))
 * support for custom color palettes ([docs](#color-palette))
 * support nesting styles ([docs](#nesting-styles))
-* support for different platforms (using colorama on windows, *needs verification*)
+* support for different platforms (using colorama on Windows)
 * context managers for clean color mode, color palette or style switch ([docs](#temporarily-change-colorful-settings))
 * support `len()` on colored strings ([docs](#correctly-support-the-len-protocol))
 * support color names from [X11 rgb.txt](https://en.wikipedia.org/wiki/X11_color_names) ([docs](#1-style-a-string-with-a-method-call-colorfulmodifiers_fgcolor_on_bgcolorstr-nestedfalse))

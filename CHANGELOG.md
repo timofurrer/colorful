@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 *Nothing here yet.*
 
+## [v0.3.5]
+
+### Added
+- Support for Windows using colorama
+
 ## [v0.3.4]
 
 ### Added
@@ -32,7 +37,8 @@ This release is just to fix the PyPI project page.
 
 - Initial release
 
-[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.3.4...HEAD
+[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.3.5...HEAD
+[v0.3.5]: https://github.com/timofurrer/colorful/compare/v0.3.4...v0.3.5
 [v0.3.4]: https://github.com/timofurrer/colorful/compare/v0.3.3...v0.3.4
 [v0.3.3]: https://github.com/timofurrer/colorful/compare/v0.3.2...v0.3.3
 [v0.3.2]: https://github.com/timofurrer/colorful/compare/v0.3.1...v0.3.2
