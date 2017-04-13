@@ -14,6 +14,7 @@ import os
 import sys
 import copy
 import types
+import platform
 from contextlib import contextmanager
 
 from .core import Colorful
@@ -21,6 +22,11 @@ from . import terminal
 
 #: Holds the current version
 __version__ = '0.3.4'
+
+# if we are on Windows we have to init colorama
+if platform.system() == 'Windows':
+    from colorama import init
+    init()
 
 
 class ColorfulModule(types.ModuleType):
