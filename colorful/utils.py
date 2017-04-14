@@ -18,9 +18,17 @@ def hex_to_rgb(value):
     valid RGB channel triplet.
     """
     value = value.lstrip('#')
-    if re.search(r'[g-z]', value, re.I):
-        raise ValueError('Invalid Hex String')
-
     length = len(value)
+
+    check_hex(value, length)
+
     step = int(length / 3)
     return tuple(int(value[i:i+step], 16) for i in range(0, length, step))
+
+
+def check_hex(value, length):
+    if re.search(r'[g-z]', value, re.I):
+        raise ValueError('Invalid Hex String: #{}'.format(value))
+
+    if length not in (3, 6):
+        raise ValueError('Hex string #{} is too long'.format(value))
