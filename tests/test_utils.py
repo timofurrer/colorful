@@ -36,3 +36,13 @@ def test_hex_to_rgb_conversion(hex_value):
     """
     red, green, blue = utils.hex_to_rgb(hex_value)
     assert '#{:02X}{:02X}{:02X}'.format(red, green, blue) == hex_value
+
+
+@pytest.mark.parametrize('hex_error_value', [
+    '#FFFFF',
+    '#FFFFFFF',
+    '#FFFFFG',
+])
+def test_hex_to_rgv_error(hex_error_value):
+    with pytest.raises(ValueError):
+        utils.hex_to_rgb(hex_error_value)
