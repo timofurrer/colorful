@@ -27,7 +27,7 @@ def hex_to_rgb(value):
 
 
 def check_hex(value, length):
-    if re.search(r'[g-z]', value, re.I):
+    if not re.search(r'[0-9a-f]', value, re.I):
         raise ValueError('Invalid Hex String: #{}'.format(value))
 
     if length not in (3, 6):
