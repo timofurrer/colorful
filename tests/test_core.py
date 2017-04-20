@@ -698,11 +698,21 @@ def test_str_behavior_for_colorfulstring():
     # test adding to str
     assert str(s + ' World') == '\033[30mHello\033[39m World'
 
-    # test beeing added to str
+    # test being added to str
     assert 'World ' + s == 'World \033[30mHello\033[39m'
+
+    # test being augment added to str
+    string = 'World '
+    string += s
+    assert string == 'World \033[30mHello\033[39m'
 
     # test ColorfulString to ColorfulString
     assert str(s + s) == '\033[30mHello\033[39m\033[30mHello\033[39m'
+
+    # test ColorfulString augmented added to other ColorfulString
+    s2 = colorful.red('World ')
+    s2 += s
+    assert str(s2) == '\033[31mWorld \033[39m\033[30mHello\033[39m'
 
     # test multipling ColorfulString
     assert str(s * 3) == '\033[30mHello\033[39m\033[30mHello\033[39m\033[30mHello\033[39m'
