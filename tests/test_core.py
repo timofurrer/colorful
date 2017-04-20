@@ -721,6 +721,18 @@ def test_str_behavior_for_colorfulstring():
     assert s.replace('Hello', 'Adieu') == '\033[30mAdieu\033[39m'
 
 
+def test_creating_unstyled_colorfulstring():
+    """
+    Test creating an unstyled ColorfulString
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    s = colorful.str('Hello ')
+    s += colorful.black('World')
+
+    assert s.orig_string == 'Hello World'
+    assert s.styled_string == str(s) == 'Hello \033[30mWorld\033[39m'
+
+
 def test_unicode_support():
     """
     Test unicode support

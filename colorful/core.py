@@ -431,6 +431,24 @@ class Colorful(object):
         """
         return string.format(c=self, *args, **kwargs)
 
+    def str(self, string):
+        """
+        Create a new ColorfulString instance of the given
+        unstyled string.
+
+        This method should be used to create a ColorfulString
+        which is actually not styled yet but can safely be concatinated
+        with other ColorfulStrings like:
+
+        >>> s = colorful.str('Hello ')
+        >>> s =+ colorful.black('World')
+        >>> str(s)
+        'Hello \033[30mWorld\033[39m'
+
+        :param str string: the string to use for the ColorfulString
+        """
+        return ColorfulString(string, string)
+
     def print(self, *objects, **options):
         """
         Print the given objects to the given file stream.
