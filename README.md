@@ -56,7 +56,7 @@ MY_COMPANY_PALETTE = {
 }
 with colorful.with_palette(my_company_palette) as c:
     print(c.companyOrange_on_companyBaige('Thanks for choosing our product!'))
-    
+
 # use f-string (only Python >= 3.6)
 print(f'{colorful.bold}Hello World')
 ```
@@ -91,8 +91,11 @@ pip install colorful
 import colorful
 
 print(colorful.italic_coral_on_beige('Hello World'))
+print(colorful.italic & colorful.coral_on_beige | 'Hello World')
 print('{c.italic_coral_on_beige}Hello World{c.reset}'.format(c=colorful))
 ```
+
+See the [Style a string](https://github.com/timofurrer/colorful#style-a-string) section for more information!
 
 ### Color modes
 
