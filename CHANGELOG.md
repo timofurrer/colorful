@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 *Nothing here yet.*
 
+## [v0.3.11]
+- Support original module functionality for module hack
+
 ## [v0.3.10]
 - Add disable method
 
@@ -61,7 +64,8 @@ This release is just to fix the PyPI project page.
 
 - Initial release
 
-[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.3.10...HEAD
+[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.3.11...HEAD
+[v0.3.11]: https://github.com/timofurrer/colorful/compare/v0.3.11...v0.3.11
 [v0.3.10]: https://github.com/timofurrer/colorful/compare/v0.3.10...v0.3.10
 [v0.3.9]: https://github.com/timofurrer/colorful/compare/v0.3.8...v0.3.9
 [v0.3.8]: https://github.com/timofurrer/colorful/compare/v0.3.7...v0.3.8
