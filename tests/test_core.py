@@ -676,6 +676,16 @@ def test_nested_styled_string():
     assert str(s) == '\033[31mHello \033[34mawesome\033[39m\033[31m world\033[39m'
 
 
+def test_nested_styled_string_with_format():
+    """
+    Test nested styled string with format()
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+
+    s = colorful.red('Hello {0} world'.format(colorful.blue('awesome')))
+    assert str(s) == '\033[31mHello \033[34mawesome\033[39m\033[31m world\033[39m'
+
+
 def test_styling_object_which_implements_str_proto():
     """
     Test styling an object which implements the str protocol
@@ -823,8 +833,8 @@ def test_colorfulstring_format_protocol():
     s = colorful.black('father')
 
     string = 'No, I am your {0}'.format(s)
-    assert string == 'No, I am your \033[30mfather\033[39m'
+    assert string == 'No, I am your \033[30mfather\033[39m\033[26m'
 
     string = colorful.red('No, I am your {0}')
     formatted = string.format(s)
-    assert str(formatted) == '\033[31mNo, I am your \033[30mfather\033[39m\033[39m'
+    assert str(formatted) == '\033[31mNo, I am your \033[30mfather\033[39m\033[26m\033[39m'

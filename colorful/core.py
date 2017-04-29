@@ -284,7 +284,15 @@ class ColorfulString(object):
             self.styled_string * other)
 
     def __format__(self, format_spec):
-        return self.styled_string.__format__(format_spec)
+        # append nested placeholder to styled string in order to continue the
+        # previous styles. If the string already ends with the nest placeholder
+        # we don't have to append it again.
+        if self.styled_string.endswith(ansi.NEST_PLACEHOLDER):
+            styled_string = self.styled_string
+        else:
+            styled_string = '{orig_str}{nest_ph}'.format(
+                orig_str=self.styled_string, nest_ph=ansi.NEST_PLACEHOLDER)
+        return styled_string.__format__(format_spec)
 
     def __getattr__(self, name):
         str_method = getattr(self.styled_string, name)

@@ -21,8 +21,8 @@ print(colorful.bold_white('Hello World'))
 print('{c.bold}{c.lightCoral_on_white}Hello World{c.reset}'.format(c=colorful))
 
 # nest colors
+print(colorful.red('red {0} red'.format(colorful.white('white'))))
 print(colorful.red('red' + colorful.white(' white ', nested=True) + 'red'))
-print(colorful.red('red {0} red'.format(colorful.white('white', nested=True))))
 
 # combine styles with strings
 print(colorful.bold & colorful.red | 'Hello World')
@@ -315,13 +315,14 @@ Note: The same syntax, modifiers and colors for the style in `{c.<style>}` can b
 
 #### Nesting styles
 
-**colorful** supports to nest styles with it's [method call syntax](#1-style-a-string-with-a-method-call) when setting the paramter `nested` to `True`.
+**colorful** supports to nest styles with it's [method call syntax](#1-style-a-string-with-a-method-call) when setting the parameter `nested` to `True`.
+If you are using `str.format()` like in the first example below you don't even need the `nested=True` flag!
 
 The following examples show the behavior:
 
 ```python
+print(colorful.red('red {0} red'.format(colorful.white('white'))))
 print(colorful.red('red' + colorful.white(' white ', nested=True) + 'red'))
-print(colorful.red('red {0} red'.format(colorful.white('white', nested=True))))
 
 # if using ``nested=True`` but you don't actually nest
 # it's absolutely fine and will work as expected.
