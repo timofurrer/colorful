@@ -259,12 +259,13 @@ class ColorfulString(object):
             self.styled_string + other)
 
     def __iadd__(self, other):
-        if not isinstance(other, ColorfulString):
-            raise TypeError("unsupported operand type(s) for +=: '{0}' and '{1}'".format(
-                type(other).__name__, type(self).__name__))
+        if isinstance(other, ColorfulString):
+            self.orig_string += other.orig_string
+            self.styled_string += other.styled_string
+        else:
+            self.orig_string += other
+            self.styled_string += other
 
-        self.orig_string += other.orig_string
-        self.styled_string += other.styled_string
         return self
 
     def __radd__(self, other):

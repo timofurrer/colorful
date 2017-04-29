@@ -706,6 +706,11 @@ def test_str_behavior_for_colorfulstring():
     string += s
     assert string == 'World \033[30mHello\033[39m'
 
+    # test augment add a str
+    s2 = colorful.red('Hello ')
+    s2 += 'World'
+    assert str(s2) == '\033[31mHello \033[39mWorld'
+
     # test ColorfulString to ColorfulString
     assert str(s + s) == '\033[30mHello\033[39m\033[30mHello\033[39m'
 
@@ -795,3 +800,18 @@ def test_piping_constitency():
     string_called_single = colorful.bold_red('No, I am your father')
 
     assert str(string_piped) == str(string_called) == str(string_called_single)
+
+
+def test_colorfulstring_format_protocol():
+    """
+    Test format protocol for colorful string
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    s = colorful.black('father')
+
+    string = 'No, I am your {0}'.format(s)
+    assert string == 'No, I am your \033[30mfather\033[39m'
+
+    string = colorful.red('No, I am your {0}')
+    formatted = string.format(s)
+    assert str(formatted) == '\033[31mNo, I am your \033[30mfather\033[39m\033[39m'
