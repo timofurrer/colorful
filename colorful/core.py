@@ -283,6 +283,9 @@ class ColorfulString(object):
             self.orig_string * other,
             self.styled_string * other)
 
+    def __format__(self, format_spec):
+        return self.styled_string.__format__(format_spec)
+
     def __getattr__(self, name):
         str_method = getattr(self.styled_string, name)
         return str_method
@@ -370,6 +373,12 @@ class Colorful(object):
                 self.update_palette(colorpalette)
             else:
                 self.colorpalette = colorpalette
+
+    def disable(self):
+        """
+        Disable all colors and styles
+        """
+        self.colormode = terminal.NO_COLORS
 
     def use_8_ansi_colors(self):
         """

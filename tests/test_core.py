@@ -726,6 +726,19 @@ def test_str_behavior_for_colorfulstring():
     assert s.replace('Hello', 'Adieu') == '\033[30mAdieu\033[39m'
 
 
+def test_joining_colorfulstrings():
+    """
+    Test joining ColorfulStrings
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+
+    parts = [colorful.red('Hello'), colorful.black('World')]
+
+    # FIXME(TF): is there any other way??
+    string = ' '.join(str(part) for part in parts)
+    assert string == '\033[31mHello\033[39m \033[30mWorld\033[39m'
+
+
 def test_creating_unstyled_colorfulstring():
     """
     Test creating an unstyled ColorfulString
