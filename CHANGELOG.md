@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 *Nothing here yet.*
 
 ## [v0.4.0]
+- Officially support PyPy 5.6, including Python 2 and 3 support
+
+## [v0.3.12]
 - Improve support for nesting styles with `str.format()`
 
 ## [v0.3.11]
@@ -67,10 +70,11 @@ This release is just to fix the PyPI project page.
 
 - Initial release
 
-[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.3.12...HEAD
-[v0.3.12]: https://github.com/timofurrer/colorful/compare/v0.3.12...v0.3.12
-[v0.3.11]: https://github.com/timofurrer/colorful/compare/v0.3.11...v0.3.11
-[v0.3.10]: https://github.com/timofurrer/colorful/compare/v0.3.10...v0.3.10
+[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.4.0...HEAD
+[v0.4.0]: https://github.com/timofurrer/colorful/compare/v0.3.12...v0.4.0
+[v0.3.12]: https://github.com/timofurrer/colorful/compare/v0.3.11...v0.3.12
+[v0.3.11]: https://github.com/timofurrer/colorful/compare/v0.3.10...v0.3.11
+[v0.3.10]: https://github.com/timofurrer/colorful/compare/v0.3.9...v0.3.10
 [v0.3.9]: https://github.com/timofurrer/colorful/compare/v0.3.8...v0.3.9
 [v0.3.8]: https://github.com/timofurrer/colorful/compare/v0.3.7...v0.3.8
 [v0.3.7]: https://github.com/timofurrer/colorful/compare/v0.3.6...v0.3.7
