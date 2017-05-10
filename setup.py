@@ -77,7 +77,8 @@ if __name__ == '__main__':
         include_package_data=True,
         package_data={'': ['colorful/data/*.txt']},
         packages=find_packages(exclude=['*tests*']),
-        install_requires=requirements,
+        # install_requires=requirements,
+        install_requires=[],
         classifiers=[
             'Development Status :: 5 - Production/Stable',
             'Environment :: Console',
