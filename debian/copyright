@@ -1,0 +1,8 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: colorful
+Upstream-Contact: Timo Furrer <tuxtimo@gmail.com>
+Source: https://github.com/timofurrer/colorful
+
+Files: *
+Copyright: 2017 Roche Diagnostics International Ltd. <timo.furrer@roche.com>
+License: Proprietary

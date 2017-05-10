@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+export PYBUILD_NAME = colorful
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+
+override_dh_auto_test:
+	@echo I dunno need no tests
