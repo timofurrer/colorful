@@ -1,3 +1,9 @@
+python-colorful (0.4.2) jessie; urgency=medium
+
+  * pybuild in jessie does not support platform specific requirements
+
+ -- Timo Furrer <timo.furrer@roche.com>  Wed, 10 May 2017 14:42:44 +0200
+
 python-colorful (0.4.1) jessie; urgency=medium
 
   * pybuild in jessie does not support platform specific requirements
