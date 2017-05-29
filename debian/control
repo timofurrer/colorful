@@ -2,9 +2,16 @@ Source: python-colorful
 Maintainer: Timo Furrer <timo.furrer@roche.com>
 Section: python
 Priority: optional
-Build-Depends: debhelper (>= 7.4.3), dh-python, python3-all, python3-setuptools,
- python3-pytest
+Build-Depends: debhelper (>= 7.4.3), dh-python,
+ python-all, python-setuptools, python-pytest,
+ python3-all, python3-setuptools, python3-pytest
 Standards-Version: 3.9.7
+
+Package: python-colorful
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}
+Description: Terminal string styling done right, in Python
+ Terminal string styling done right, in Python
 
 Package: python3-colorful
 Architecture: all
