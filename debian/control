@@ -2,10 +2,14 @@ Source: python-colorful
 Maintainer: Timo Furrer <timo.furrer@roche.com>
 Section: python
 Priority: optional
-Build-Depends: debhelper (>= 7.4.3), dh-python,
+Build-Depends: git, debhelper (>= 7.4.3), dh-python,
  python-all, python-setuptools, python-pytest,
  python3-all, python3-setuptools, python3-pytest
 Standards-Version: 3.9.7
+X-Python-Version: >= 2.7
+X-Python3-Version: >= 3.2
+XS-Python-Version: >= 2.7
+XS-Python3-Version: >= 3.2
 
 Package: python-colorful
 Architecture: all
