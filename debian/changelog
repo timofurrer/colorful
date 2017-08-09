@@ -1,3 +1,9 @@
+python-colorful (0.4.3-2) jessie; urgency=medium
+
+  * bump version 0.4.3-2
+
+ -- Timo Furrer <timo.furrer@roche.com>  Wed, 09 Aug 2017 15:58:38 +0200
+
 python-colorful (0.4.3-1) jessie; urgency=medium
 
   * bump version 0.4.3-1
