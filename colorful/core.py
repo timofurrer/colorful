@@ -256,6 +256,16 @@ class ColorfulString(object):
             self.orig_string + other,
             self.styled_string + other)
 
+    def __iadd__(self, other):
+        if isinstance(other, ColorfulString):
+            self.orig_string += other.orig_string
+            self.styled_string += other.styled_string
+        else:
+            self.orig_string += other
+            self.styled_string += other
+
+        return self
+
     def __radd__(self, other):
         if isinstance(other, ColorfulString):
             return ColorfulString(
@@ -270,6 +280,17 @@ class ColorfulString(object):
         return ColorfulString(
             self.orig_string * other,
             self.styled_string * other)
+
+    def __format__(self, format_spec):
+        # append nested placeholder to styled string in order to continue the
+        # previous styles. If the string already ends with the nest placeholder
+        # we don't have to append it again.
+        if self.styled_string.endswith(ansi.NEST_PLACEHOLDER):
+            styled_string = self.styled_string
+        else:
+            styled_string = '{orig_str}{nest_ph}'.format(
+                orig_str=self.styled_string, nest_ph=ansi.NEST_PLACEHOLDER)
+        return styled_string.__format__(format_spec)
 
     def __getattr__(self, name):
         str_method = getattr(self.styled_string, name)
@@ -359,6 +380,12 @@ class Colorful(object):
             else:
                 self.colorpalette = colorpalette
 
+    def disable(self):
+        """
+        Disable all colors and styles
+        """
+        self.colormode = terminal.NO_COLORS
+
     def use_8_ansi_colors(self):
         """
         Use 8 ANSI colors for this colorful object
@@ -419,6 +446,24 @@ class Colorful(object):
         :param str string: the string to format
         """
         return string.format(c=self, *args, **kwargs)
+
+    def str(self, string):
+        """
+        Create a new ColorfulString instance of the given
+        unstyled string.
+
+        This method should be used to create a ColorfulString
+        which is actually not styled yet but can safely be concatinated
+        with other ColorfulStrings like:
+
+        >>> s = colorful.str('Hello ')
+        >>> s =+ colorful.black('World')
+        >>> str(s)
+        'Hello \033[30mWorld\033[39m'
+
+        :param str string: the string to use for the ColorfulString
+        """
+        return ColorfulString(string, string)
 
     def print(self, *objects, **options):
         """

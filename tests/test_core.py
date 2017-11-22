@@ -676,6 +676,16 @@ def test_nested_styled_string():
     assert str(s) == '\033[31mHello \033[34mawesome\033[39m\033[31m world\033[39m'
 
 
+def test_nested_styled_string_with_format():
+    """
+    Test nested styled string with format()
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+
+    s = colorful.red('Hello {0} world'.format(colorful.blue('awesome')))
+    assert str(s) == '\033[31mHello \033[34mawesome\033[39m\033[31m world\033[39m'
+
+
 def test_styling_object_which_implements_str_proto():
     """
     Test styling an object which implements the str protocol
@@ -698,17 +708,57 @@ def test_str_behavior_for_colorfulstring():
     # test adding to str
     assert str(s + ' World') == '\033[30mHello\033[39m World'
 
-    # test beeing added to str
+    # test being added to str
     assert 'World ' + s == 'World \033[30mHello\033[39m'
+
+    # test being augment added to str
+    string = 'World '
+    string += s
+    assert string == 'World \033[30mHello\033[39m'
+
+    # test augment add a str
+    s2 = colorful.red('Hello ')
+    s2 += 'World'
+    assert str(s2) == '\033[31mHello \033[39mWorld'
 
     # test ColorfulString to ColorfulString
     assert str(s + s) == '\033[30mHello\033[39m\033[30mHello\033[39m'
+
+    # test ColorfulString augmented added to other ColorfulString
+    s2 = colorful.red('World ')
+    s2 += s
+    assert str(s2) == '\033[31mWorld \033[39m\033[30mHello\033[39m'
 
     # test multipling ColorfulString
     assert str(s * 3) == '\033[30mHello\033[39m\033[30mHello\033[39m\033[30mHello\033[39m'
 
     # other str methods operate on the styled string
     assert s.replace('Hello', 'Adieu') == '\033[30mAdieu\033[39m'
+
+
+def test_joining_colorfulstrings():
+    """
+    Test joining ColorfulStrings
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+
+    parts = [colorful.red('Hello'), colorful.black('World')]
+
+    # FIXME(TF): is there any other way??
+    string = ' '.join(str(part) for part in parts)
+    assert string == '\033[31mHello\033[39m \033[30mWorld\033[39m'
+
+
+def test_creating_unstyled_colorfulstring():
+    """
+    Test creating an unstyled ColorfulString
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    s = colorful.str('Hello ')
+    s += colorful.black('World')
+
+    assert s.orig_string == 'Hello World'
+    assert s.styled_string == str(s) == 'Hello \033[30mWorld\033[39m'
 
 
 def test_unicode_support():
@@ -773,3 +823,18 @@ def test_piping_constitency():
     string_called_single = colorful.bold_red('No, I am your father')
 
     assert str(string_piped) == str(string_called) == str(string_called_single)
+
+
+def test_colorfulstring_format_protocol():
+    """
+    Test format protocol for colorful string
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    s = colorful.black('father')
+
+    string = 'No, I am your {0}'.format(s)
+    assert string == 'No, I am your \033[30mfather\033[39m\033[26m'
+
+    string = colorful.red('No, I am your {0}')
+    formatted = string.format(s)
+    assert str(formatted) == '\033[31mNo, I am your \033[30mfather\033[39m\033[26m\033[39m'

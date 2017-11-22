@@ -18,15 +18,21 @@ def hex_to_rgb(value):
     valid RGB channel triplet.
     """
     value = value.lstrip('#')
+    check_hex(value)
+
     length = len(value)
-
-    check_hex(value, length)
-
     step = int(length / 3)
     return tuple(int(value[i:i+step], 16) for i in range(0, length, step))
 
 
-def check_hex(value, length):
+def check_hex(value):
+    """
+    Check if the given hex value is a valid RGB color
+
+    It should match the format: [0-9a-fA-F]
+    and be of length 3 or 6.
+    """
+    length = len(value)
     if length not in (3, 6):
         raise ValueError('Hex string #{} is too long'.format(value))
 

@@ -21,7 +21,7 @@ from .core import Colorful
 from . import terminal
 
 #: Holds the current version
-__version__ = '0.3.6'
+__version__ = '0.4.0'
 
 # if we are on Windows we have to init colorama
 if platform.system() == 'Windows':
@@ -110,6 +110,16 @@ class ColorfulModule(types.ModuleType):
         """
         Dynamically get methods from Colorful object.
         """
+        # check if original module had the requested attribute
+        # if yes, we have to return it since we don't want to
+        # break the module functionality
+        orig_module = __name__ + '_orig'
+        if orig_module in sys.modules:
+            try:
+                return getattr(sys.modules[orig_module], name)
+            except AttributeError:
+                pass  # fallback to colorful functionality
+
         return getattr(self.colorful, name)
 
 
