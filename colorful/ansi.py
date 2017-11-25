@@ -58,7 +58,7 @@ def round(value):
     return int(math.ceil(value))
 
 
-def rgb_to_ansi265(r, g, b):
+def rgb_to_ansi256(r, g, b):
     """
     Convert RGB to ANSI 256 color
     """
