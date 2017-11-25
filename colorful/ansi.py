@@ -68,7 +68,7 @@ def rgb_to_ansi256(r, g, b):
         if r > 248:
             return 231
 
-        return round(((r - 8) / 247) * 24) + 232
+        return round(((r - 8) / 247.0) * 24) + 232
 
     ansi_r = 36 * round(r / 255.0 * 5.0)
     ansi_g = 6 * round(g / 255.0 * 5.0)
