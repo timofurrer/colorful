@@ -31,7 +31,7 @@ DEFAULT_RGB_TXT_PATH = os.environ.get(
 COLOR_PALETTE = rgb.parse_rgb_txt_file(path=DEFAULT_RGB_TXT_PATH)
 
 #: Holds a flag if the Python version is 2.X
-PY2 = sys.version_info.major == 2
+PY2 = sys.version_info[0] == 2
 
 CHAR = sys.stdout.encoding
 
