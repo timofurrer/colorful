@@ -33,6 +33,8 @@ COLOR_PALETTE = rgb.parse_rgb_txt_file(path=DEFAULT_RGB_TXT_PATH)
 #: Holds a flag if the Python version is 2.X
 PY2 = sys.version_info.major == 2
 
+CHAR = sys.stdout.encoding
+
 
 class ColorfulError(Exception):
     """
@@ -209,17 +211,19 @@ def style_string(string, ansi_style, colormode, nested=False):
     ansi_start_code, ansi_end_code = ansi_style
 
     # replace nest placeholders with the current begin style
-    if PY2 and isinstance(string, unicode):  # noqa
-        str_type = unicode  # noqa
+    if PY2:
+        str_type = unicode
+        if isinstance(string, str):
+            string = string.decode(CHAR)
     else:
         str_type = str
     string = str_type(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
 
-    return '{start_code}{string}{end_code}{nest_ph}'.format(
-        start_code=ansi_start_code,
-        string=string,
-        end_code=ansi_end_code,
-        nest_ph=ansi.NEST_PLACEHOLDER if nested else '')
+    return u'{start_code}{string}{end_code}{nest_ph}'.format(
+             start_code=ansi_start_code,
+             string=string,
+             end_code=ansi_end_code,
+             nest_ph=ansi.NEST_PLACEHOLDER if nested else '')
 
 
 class ColorfulString(object):
@@ -235,12 +239,10 @@ class ColorfulString(object):
             return self.styled_string
     else:
         def __unicode__(self):
-            string = self.styled_string
-            if isinstance(string, bytes):
-                string = string.decode('utf-8')
-            return string
+            return self.styled_string
 
-        __str__ = __unicode__
+        def __str__(self):
+            return self.styled_string.encode(CHAR)
 
     def __len__(self):
         return len(self.orig_string)
