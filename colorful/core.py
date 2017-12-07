@@ -219,11 +219,11 @@ def style_string(string, ansi_style, colormode, nested=False):
         str_type = str
     string = str_type(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
 
-    return u'{start_code}{string}{end_code}{nest_ph}'.format(
-             start_code=ansi_start_code,
-             string=string,
-             end_code=ansi_end_code,
-             nest_ph=ansi.NEST_PLACEHOLDER if nested else '')
+    return ('{start_code}{string}{end_code}{nest_ph}'
+            .format(start_code=ansi_start_code,
+                    string=string,
+                    end_code=ansi_end_code,
+                    nest_ph=ansi.NEST_PLACEHOLDER if nested else ''))
 
 
 class ColorfulString(object):
