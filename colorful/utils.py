@@ -20,7 +20,6 @@ else:
     UNICODE = str
 
 DEFAULT_ENCODE = sys.stdout.encoding
-STDOUT = sys.stdout
 
 
 def hex_to_rgb(value):

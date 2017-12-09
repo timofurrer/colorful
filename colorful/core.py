@@ -14,12 +14,13 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import os
+import sys
 
 from . import ansi
 from . import rgb
 from . import styles
 from . import terminal
-from .utils import PY2, DEFAULT_ENCODE, STDOUT, UNICODE
+from .utils import PY2, DEFAULT_ENCODE, UNICODE
 
 #: Holds the name of the env variable which is
 #  used as path to the default rgb.txt file
@@ -486,7 +487,7 @@ class Colorful(object):
 
         sep = options.get('sep', ' ')
         end = options.get('end', '\n')
-        file = options.get('file', STDOUT)
+        file = options.get('file', sys.stdout)
         flush = options.get('flush', False)
 
         styled_objects = [self.format(o) for o in objects]
