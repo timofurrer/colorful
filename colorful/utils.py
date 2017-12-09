@@ -10,6 +10,17 @@
     :license: MIT, see LICENSE for more details.
 """
 import re
+import sys
+
+PY2 = sys.version_info.major == 2
+
+if PY2:
+    UNICODE = unicode  # noqa
+else:
+    UNICODE = str
+
+DEFAULT_ENCODE = sys.stdout.encoding
+STDOUT = sys.stdout
 
 
 def hex_to_rgb(value):

@@ -14,12 +14,12 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import os
-import sys
 
 from . import ansi
 from . import rgb
 from . import styles
 from . import terminal
+from .utils import PY2, DEFAULT_ENCODE, STDOUT, UNICODE
 
 #: Holds the name of the env variable which is
 #  used as path to the default rgb.txt file
@@ -29,11 +29,6 @@ DEFAULT_RGB_TXT_PATH = os.environ.get(
 
 #: Holds the color names mapped to RGB channels
 COLOR_PALETTE = rgb.parse_rgb_txt_file(path=DEFAULT_RGB_TXT_PATH)
-
-#: Holds a flag if the Python version is 2.X
-PY2 = sys.version_info[0] == 2
-
-CHAR = sys.stdout.encoding
 
 
 class ColorfulError(Exception):
@@ -212,12 +207,9 @@ def style_string(string, ansi_style, colormode, nested=False):
 
     # replace nest placeholders with the current begin style
     if PY2:
-        str_type = unicode
         if isinstance(string, str):
-            string = string.decode(CHAR)
-    else:
-        str_type = str
-    string = str_type(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
+            string = string.decode(DEFAULT_ENCODE)
+    string = UNICODE(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
 
     return ('{start_code}{string}{end_code}{nest_ph}'
             .format(start_code=ansi_start_code,
@@ -234,15 +226,15 @@ class ColorfulString(object):
         self.orig_string = orig_string
         self.styled_string = styled_string
 
-    if not PY2:
-        def __str__(self):
-            return self.styled_string
-    else:
+    if PY2:
         def __unicode__(self):
             return self.styled_string
 
         def __str__(self):
-            return self.styled_string.encode(CHAR)
+            return self.styled_string.encode(DEFAULT_ENCODE)
+    else:
+        def __str__(self):
+            return self.styled_string
 
     def __len__(self):
         return len(self.orig_string)
@@ -494,7 +486,7 @@ class Colorful(object):
 
         sep = options.get('sep', ' ')
         end = options.get('end', '\n')
-        file = options.get('file', sys.stdout)
+        file = options.get('file', STDOUT)
         flush = options.get('flush', False)
 
         styled_objects = [self.format(o) for o in objects]
