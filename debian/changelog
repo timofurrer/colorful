@@ -1,3 +1,10 @@
+python-colorful (0.4.3-4) jessie; urgency=medium
+
+  * bump version 0.4.3-4
+  * Change target repo version to 2.0-stretch
+
+ -- Timo Furrer <timo.furrer@roche.com>  Thu, 04 Jan 2018 09:14:19 +0100
+
 python-colorful (0.4.3-3) jessie; urgency=medium
 
   * bump version 0.4.3-3
