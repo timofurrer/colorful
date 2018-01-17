@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 *Nothing here yet.*
 
+## [v0.4.1]
+
+## Fixed
+- Support for Chinese and other languages requiring unicode. Refs #9
+
 ## [v0.4.0]
 - Officially support PyPy 5.6, including Python 2 and 3 support
 
@@ -70,7 +75,8 @@ This release is just to fix the PyPI project page.
 
 - Initial release
 
-[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.4.1...HEAD
+[v0.4.1]: https://github.com/timofurrer/colorful/compare/v0.4.0...v0.4.1
 [v0.4.0]: https://github.com/timofurrer/colorful/compare/v0.3.12...v0.4.0
 [v0.3.12]: https://github.com/timofurrer/colorful/compare/v0.3.11...v0.3.12
 [v0.3.11]: https://github.com/timofurrer/colorful/compare/v0.3.10...v0.3.11
