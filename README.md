@@ -59,6 +59,9 @@ with colorful.with_palette(my_company_palette) as c:
 
 # use f-string (only Python >= 3.6)
 print(f'{colorful.bold}Hello World')
+
+# support for chinese
+print(colorful.red('你好'))
 ```
 
 ## Key Features
