@@ -1,3 +1,9 @@
+python-colorful (0.4.3-7) jessie; urgency=medium
+
+  * Release for 3rdparty-python version 2.0-stretch
+
+ -- Felix Niederberger <felix.niederberger@roche.com>  Mon, 28 May 2018 17:55:00 +0200
+
 python-colorful (0.4.3-6) jessie; urgency=medium
 
   * Release for 3rdparty-python version 2.0.0-stretch
