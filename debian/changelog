@@ -1,3 +1,9 @@
+python-colorful (0.4.3-8) jessie; urgency=medium
+
+  * Release for 3rdparty-python version 2.0.0-jessie
+
+ -- Timo Furrer <timo.furrer@roche.com>  Fri, 08 Jun 2018 09:01:46 +0200
+
 python-colorful (0.4.3-7) jessie; urgency=medium
 
   * Release for 3rdparty-python version 2.0-stretch
