@@ -20,7 +20,7 @@ from . import ansi
 from . import rgb
 from . import styles
 from . import terminal
-from .utils import PY2, DEFAULT_ENCODE, UNICODE
+from .utils import PY2, DEFAULT_ENCODING, UNICODE
 
 #: Holds the name of the env variable which is
 #  used as path to the default rgb.txt file
@@ -209,7 +209,7 @@ def style_string(string, ansi_style, colormode, nested=False):
     # replace nest placeholders with the current begin style
     if PY2:
         if isinstance(string, str):
-            string = string.decode('utf-8' if DEFAULT_ENCODE is None else DEFAULT_ENCODE)
+            string = string.decode(DEFAULT_ENCODING)
     string = UNICODE(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
 
     return '{start_code}{string}{end_code}{nest_ph}'.format(
@@ -232,7 +232,7 @@ class ColorfulString(object):
             return self.styled_string
 
         def __str__(self):
-            return self.styled_string.encode('utf-8' if DEFAULT_ENCODE is None else DEFAULT_ENCODE)
+            return self.styled_string.encode(DEFAULT_ENCODING)
     else:
         def __str__(self):
             return self.styled_string
