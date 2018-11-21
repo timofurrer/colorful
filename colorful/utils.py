@@ -19,7 +19,12 @@ if PY2:
 else:
     UNICODE = str
 
-DEFAULT_ENCODE = sys.stdout.encoding
+# Catch error in case sys.stdout was patched with an object that doesn't provide
+# the 'encoding' attribute.
+try:
+    DEFAULT_ENCODING = sys.stdout.encoding or 'utf-8'
+except AttributeError:
+    DEFAULT_ENCODING = 'utf-8'
 
 
 def hex_to_rgb(value):
