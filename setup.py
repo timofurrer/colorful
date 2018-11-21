@@ -21,7 +21,7 @@ from setuptools import setup, find_packages
 # with unicode strings. If there is an urgent reason why
 # to support it after all or if you have a quick fix
 # please open an issue on GitHub.
-EXPL_NOT_SUPPORTED_VERSIONS = ((3, 0), (3, 1), (3, 2))
+EXPL_NOT_SUPPORTED_VERSIONS = ((3, 0), (3, 1), (3, 2), (3, 3))
 
 if sys.version_info[0:2] in EXPL_NOT_SUPPORTED_VERSIONS:
     raise SystemExit("colorful does explicitly not support the following python versions "
@@ -90,7 +90,6 @@ if __name__ == '__main__':
             'Programming Language :: Python :: 2',
             'Programming Language :: Python :: 2.7',
             'Programming Language :: Python :: 3',
-            'Programming Language :: Python :: 3.3',
             'Programming Language :: Python :: 3.4',
             'Programming Language :: Python :: 3.5',
             'Programming Language :: Python :: 3.6',
