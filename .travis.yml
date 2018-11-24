@@ -9,10 +9,6 @@ python:
     - 'pypy3'
     - 'pypy-5.3.1'
 
-matrix:
-    allow_failures:
-        - python: 3.7-dev
-
 before_install:
     - pip install codecov
 
