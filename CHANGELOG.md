@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 *Nothing here yet.*
 
+## [v0.4.4]
+
+## Added
+- Official Python 3.7 support
+
 ## [v0.4.3]
 
 ## Fixed
@@ -85,7 +90,8 @@ This release is just to fix the PyPI project page.
 
 - Initial release
 
-[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.4.3...HEAD
+[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.4.4...HEAD
+[v0.4.4]: https://github.com/timofurrer/colorful/compare/v0.4.3...v0.4.4
 [v0.4.3]: https://github.com/timofurrer/colorful/compare/v0.4.2...v0.4.3
 [v0.4.2]: https://github.com/timofurrer/colorful/compare/v0.4.1...v0.4.2
 [v0.4.1]: https://github.com/timofurrer/colorful/compare/v0.4.0...v0.4.1
