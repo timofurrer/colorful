@@ -1,1 +1,2 @@
 include colorful/data/*.txt
+include README.md
