@@ -320,11 +320,12 @@ class Colorful(object):
     no_bold = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['bold'][1])
     no_dimmed = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['dimmed'][1])
     no_italic = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['italic'][1])
-    no_underline = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['underlined'][1])
-    no_blink = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['blinkslow'][1])
+    no_underlined = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['underlined'][1])
+    no_blinkslow = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['blinkslow'][1])
+    no_blinkrapid = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['blinkrapid'][1])
     no_inversed = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['inversed'][1])
-    no_reveal = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['concealed'][1])
-    no_strikethrough = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['struckthrough'][1])
+    no_concealed = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['concealed'][1])
+    no_struckthrough = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['struckthrough'][1])
 
     def __init__(self, colormode=None, colorpalette=None):
         if colormode is None:  # try to auto-detect color mode

@@ -393,7 +393,7 @@ def test_method_str_to_style_conversion(method_name, expected):
         '{c.bold}No, I am your father{c.no_bold}',
         '\033[1mNo, I am your father\033[22m'
     ), (
-        '{c.struckthrough}No, I am your father{c.no_strikethrough}',
+        '{c.struckthrough}No, I am your father{c.no_struckthrough}',
         '\033[9mNo, I am your father\033[29m'
     )
 ])
