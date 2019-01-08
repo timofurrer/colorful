@@ -204,12 +204,12 @@ print(colorful.yellow('yellow'), colorful.orange('orange'),
 
 The following styles are already supported:
 
-<details>
+<details open>
  <summary>solarized - <a href="http://ethanschoonover.com/solarized">Website</a></summary>
  <br>
  <img src="https://github.com/timofurrer/colorful/blob/master/examples/solarized_base_colors.png" alt="solarized colors">
 </details>
-<details>
+<details open>
  <summary>monokai</summary>
  <br>
  <img src="https://github.com/timofurrer/colorful/blob/master/examples/monokai_base_colors.png" alt="monokai colors">

@@ -9,10 +9,6 @@ python:
     - 'pypy3'
     - 'pypy-5.3.1'
 
-matrix:
-    allow_failures:
-        - python: 3.7-dev
-
 before_install:
     - pip install codecov
 
@@ -20,7 +16,7 @@ install:
     - pip install -r requirements-dev.txt
 
 script:
-    - py.test --cov colorful --cov-report term-missing -vs tests/
+    - coverage run -a --source colorful -m pytest tests -vs --failed-first tests/
     - flake8 --show-source colorful/ tests/
 
 after_success:
