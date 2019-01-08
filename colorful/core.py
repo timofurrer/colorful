@@ -20,6 +20,7 @@ from . import ansi
 from . import rgb
 from . import styles
 from . import terminal
+from .utils import PY2, DEFAULT_ENCODING, UNICODE
 
 #: Holds the name of the env variable which is
 #  used as path to the default rgb.txt file
@@ -29,9 +30,6 @@ DEFAULT_RGB_TXT_PATH = os.environ.get(
 
 #: Holds the color names mapped to RGB channels
 COLOR_PALETTE = rgb.parse_rgb_txt_file(path=DEFAULT_RGB_TXT_PATH)
-
-#: Holds a flag if the Python version is 2.X
-PY2 = sys.version_info.major == 2
 
 
 class ColorfulError(Exception):
@@ -72,7 +70,7 @@ def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
         return start_code, end_code
 
     if colormode == terminal.ANSI_256_COLORS:
-        color_code = ansi.rgb_to_ansi265(red, green, blue)
+        color_code = ansi.rgb_to_ansi256(red, green, blue)
         start_code = ansi.ANSI_ESCAPE_CODE.format(code='{base};5;{code}'.format(
             base=8 + offset, code=color_code))
         end_code = ansi.ANSI_ESCAPE_CODE.format(code=offset + ansi.COLOR_CLOSE_OFFSET)
@@ -209,17 +207,16 @@ def style_string(string, ansi_style, colormode, nested=False):
     ansi_start_code, ansi_end_code = ansi_style
 
     # replace nest placeholders with the current begin style
-    if PY2 and isinstance(string, unicode):  # noqa
-        str_type = unicode  # noqa
-    else:
-        str_type = str
-    string = str_type(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
+    if PY2:
+        if isinstance(string, str):
+            string = string.decode(DEFAULT_ENCODING)
+    string = UNICODE(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
 
     return '{start_code}{string}{end_code}{nest_ph}'.format(
-        start_code=ansi_start_code,
-        string=string,
-        end_code=ansi_end_code,
-        nest_ph=ansi.NEST_PLACEHOLDER if nested else '')
+            start_code=ansi_start_code,
+            string=string,
+            end_code=ansi_end_code,
+            nest_ph=ansi.NEST_PLACEHOLDER if nested else '')
 
 
 class ColorfulString(object):
@@ -230,17 +227,15 @@ class ColorfulString(object):
         self.orig_string = orig_string
         self.styled_string = styled_string
 
-    if not PY2:
+    if PY2:
+        def __unicode__(self):
+            return self.styled_string
+
+        def __str__(self):
+            return self.styled_string.encode(DEFAULT_ENCODING)
+    else:
         def __str__(self):
             return self.styled_string
-    else:
-        def __unicode__(self):
-            string = self.styled_string
-            if isinstance(string, bytes):
-                string = string.decode('utf-8')
-            return string
-
-        __str__ = __unicode__
 
     def __len__(self):
         return len(self.orig_string)
@@ -325,11 +320,12 @@ class Colorful(object):
     no_bold = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['bold'][1])
     no_dimmed = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['dimmed'][1])
     no_italic = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['italic'][1])
-    no_underline = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['underlined'][1])
-    no_blink = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['blinkslow'][1])
+    no_underlined = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['underlined'][1])
+    no_blinkslow = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['blinkslow'][1])
+    no_blinkrapid = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['blinkrapid'][1])
     no_inversed = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['inversed'][1])
-    no_reveal = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['concealed'][1])
-    no_strikethrough = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['struckthrough'][1])
+    no_concealed = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['concealed'][1])
+    no_struckthrough = ansi.ANSI_ESCAPE_CODE.format(code=ansi.MODIFIERS['struckthrough'][1])
 
     def __init__(self, colormode=None, colorpalette=None):
         if colormode is None:  # try to auto-detect color mode

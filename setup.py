@@ -21,7 +21,7 @@ from setuptools import setup, find_packages
 # with unicode strings. If there is an urgent reason why
 # to support it after all or if you have a quick fix
 # please open an issue on GitHub.
-EXPL_NOT_SUPPORTED_VERSIONS = ((3, 0), (3, 1), (3, 2))
+EXPL_NOT_SUPPORTED_VERSIONS = ((3, 0), (3, 1), (3, 2), (3, 3))
 
 # NOTE: version check disable for Roche usage where wheezy is widely used.
 # if sys.version_info[0:2] in EXPL_NOT_SUPPORTED_VERSIONS:
@@ -57,6 +57,10 @@ def read_version():
     return finder.version
 
 
+with open("README.md", "r") as desc_file:
+    long_description = desc_file.read()
+
+
 #: Holds the requirements for colorful
 requirements = [
     'colorama;platform_system=="Windows"'
@@ -69,14 +73,15 @@ if __name__ == '__main__':
         name='colorful',
         version=read_version(),
         description='Terminal string styling done right, in Python.',
-        long_description='Terminal string styling done right, in Python.',
+        long_description=long_description,
+        long_description_content_type="text/markdown",
         url='http://github.com/timofurrer/colorful',
         author='Timo Furrer',
         author_email='tuxtimo@gmail.com',
         maintainer='Timo Furrer',
         maintainer_email='tuxtimo@gmail.com',
         include_package_data=True,
-        package_data={'': ['colorful/data/*.txt']},
+        package_data={'': ['colorful/data/*.txt', 'README.md']},
         packages=find_packages(exclude=['*tests*']),
         # install_requires=requirements,
         install_requires=[],
@@ -92,10 +97,10 @@ if __name__ == '__main__':
             'Programming Language :: Python :: 2',
             'Programming Language :: Python :: 2.7',
             'Programming Language :: Python :: 3',
-            'Programming Language :: Python :: 3.3',
             'Programming Language :: Python :: 3.4',
             'Programming Language :: Python :: 3.5',
             'Programming Language :: Python :: 3.6',
+            'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: Implementation',
             'Programming Language :: Python :: Implementation :: CPython',
             'Programming Language :: Python :: Implementation :: PyPy'
