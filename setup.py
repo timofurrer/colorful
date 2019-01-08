@@ -56,7 +56,7 @@ def read_version():
     return finder.version
 
 
-with open("README.md", "r") as desc_file:
+with codecs.open("README.md", "r", encoding='utf-8') as desc_file:
     long_description = desc_file.read()
 
 
