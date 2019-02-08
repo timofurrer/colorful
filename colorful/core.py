@@ -17,7 +17,7 @@ import os
 import sys
 
 from . import ansi
-from . import rgb
+from . import colors
 from . import styles
 from . import terminal
 from .utils import PY2, DEFAULT_ENCODING, UNICODE
@@ -29,7 +29,7 @@ DEFAULT_RGB_TXT_PATH = os.environ.get(
     os.path.join(os.path.dirname(__file__), 'data', 'rgb.txt'))
 
 #: Holds the color names mapped to RGB channels
-COLOR_PALETTE = rgb.parse_rgb_txt_file(path=DEFAULT_RGB_TXT_PATH)
+COLOR_PALETTE = colors.parse_colors(path=DEFAULT_RGB_TXT_PATH)
 
 
 class ColorfulError(Exception):
@@ -333,8 +333,8 @@ class Colorful(object):
 
         if colorpalette is None:  # load default color palette
             colorpalette = COLOR_PALETTE
-        elif isinstance(colorpalette, str):  # we assume it's a path to a X11 rgb.txt
-            colorpalette = rgb.parse_rgb_txt_file(colorpalette)
+        elif isinstance(colorpalette, str):  # we assume it's a path to a color file
+            colorpalette = colors.parse_colors(colorpalette)
 
         #: Holds the color mode to use for this Colorful object.
         self.colormode = colormode
@@ -355,7 +355,10 @@ class Colorful(object):
         """
         Set the colorpalette which should be used
         """
-        self._colorpalette = rgb.sanitize_color_palette(colorpalette)
+        if isinstance(colorpalette, str):  # we assume it's a path to a color file
+            colorpalette = colors.parse_colors(colorpalette)
+
+        self._colorpalette = colors.sanitize_color_palette(colorpalette)
 
     def setup(self, colormode=None, colorpalette=None, extend_colors=False):
         """
@@ -419,7 +422,7 @@ class Colorful(object):
         Update the currently active color palette
         with the given color palette
         """
-        self.colorpalette.update(rgb.sanitize_color_palette(colorpalette))
+        self.colorpalette.update(colors.sanitize_color_palette(colorpalette))
 
     def use_style(self, style_name):
         """

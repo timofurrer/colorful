@@ -17,7 +17,7 @@ import pytest
 # do not overwrite module
 os.environ['COLORFUL_NO_MODULE_OVERWRITE'] = '1'
 
-import colorful.rgb as rgb  # noqa
+import colorful.colors as colors  # noqa
 
 
 @pytest.mark.parametrize('colorpalette, expected', [
@@ -38,4 +38,4 @@ def test_sanitize_color_palette(colorpalette, expected):
     """
     Test sanitizing a color palette
     """
-    assert rgb.sanitize_color_palette(colorpalette) == expected
+    assert colors.sanitize_color_palette(colorpalette) == expected
