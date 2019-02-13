@@ -11,6 +11,7 @@
 """
 
 import os
+import sys
 
 import pytest
 
@@ -20,6 +21,7 @@ os.environ['COLORFUL_NO_MODULE_OVERWRITE'] = '1'
 import colorful.terminal as terminal  # noqa
 
 
+@pytest.mark.skipif(not sys.stdout.isatty(), reason='fails without a tty')
 @pytest.mark.parametrize('env,expected', [
     # test force color settings
     ({'COLORFUL_DISABLE': '1'}, terminal.NO_COLORS),
