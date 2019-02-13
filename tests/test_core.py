@@ -14,6 +14,7 @@
 from __future__ import print_function
 
 import os
+import sys
 
 import pytest
 
@@ -430,6 +431,7 @@ def test_invalid_color_name():
     assert str(exc.value) == expected
 
 
+@pytest.mark.skipif(not sys.stdout.isatty(), reason='fails without a tty')
 @pytest.mark.parametrize('env,expected', [
     ({'COLORFUL_DISABLE': '1'}, terminal.NO_COLORS),
     ({'COLORTERM': 'truecolor'}, terminal.TRUE_COLORS),
@@ -451,6 +453,7 @@ def test_colorful_obj_color_auto_detection(env, expected):
     os.environ = os_env_backup
 
 
+@pytest.mark.skipif(not sys.stdout.isatty(), reason='fails without a tty')
 def test_reading_color_palette(tmpdir):
     """
     Test reading color palette from file
