@@ -163,7 +163,7 @@ color_palette_example = {
 *Note: Depending on the color mode which is used the RGB value will be reduced to fit in the value domain of the color mode.*
 
 The default color palette is the [X11 rgb.txt](https://en.wikipedia.org/wiki/X11_color_names) palette - it's shipped with *colorful*, thus, you don't have to provide your own.
-*colorful* ships with a second built-in color palette called *colornames*.
+*colorful* ships with a second built-in [color palette called *colornames*](https://codepen.io/meodai/full/VMpNdQ/).
 Those colors are from the curated list of the [color-names](https://github.com/meodai/color-names) repository.
 You can use those via the `colorful.setup()` method, like this:
 
