@@ -187,6 +187,7 @@ The file either has to be a txt file like the X11 rgb.txt or a JSON file:
 ]
 ```
 
+#### Custom color palette 
 **colorful** supports to update or replace the default color palette with custom colors. The colors have to be specified as RGB hex or channel values:
 
 ```python
