@@ -25,8 +25,7 @@ __version__ = '0.5.0'
 
 # if we are on Windows we have to init colorama
 if platform.system() == 'Windows':
-    from colorama import init
-    init()
+    os.system('color')
 
 
 class ColorfulModule(types.ModuleType):

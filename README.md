@@ -86,8 +86,6 @@ We recommend to use the latest version released on [PyPI](https://pypi.python.or
 pip install colorful
 ```
 
-*Note: on a Windows system it will install ``colorama`` as a dependency to ensure proper ANSI support.*
-
 **colorful** does not require any special setup in order to be used:
 
 ```python
