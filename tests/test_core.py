@@ -837,3 +837,15 @@ def test_colorfulstring_format_protocol():
     string = colorful.red('No, I am your {0}')
     formatted = string.format(s)
     assert str(formatted) == '\033[31mNo, I am your \033[30mfather\033[39m\033[26m\033[39m'
+
+
+def test_colorfulstring_format_protocol_no_placeholder_when_disabled():
+    """Test that the ColorfulString format doesn't add a placeholder when colorful is disabled"""
+    # given
+    colorful = core.Colorful(colormode=terminal.NO_COLORS)
+
+    # when
+    s = "foo: {}".format(colorful.red("bar"))
+
+    # then
+    assert str(s) == "foo: bar"

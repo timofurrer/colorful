@@ -223,19 +223,29 @@ class ColorfulString(object):
     """
     Represents a colored string
     """
-    def __init__(self, orig_string, styled_string):
+    def __init__(self, orig_string, styled_string, colorful_ctx):
         self.orig_string = orig_string
         self.styled_string = styled_string
+        self.colorful_ctx = colorful_ctx
 
     if PY2:
         def __unicode__(self):
-            return self.styled_string
+            if self.colorful_ctx.colormode == terminal.NO_COLORS:
+                return self.orig_string
+            else:
+                return self.styled_string
 
         def __str__(self):
-            return self.styled_string.encode(DEFAULT_ENCODING)
+            if self.colorful_ctx.colormode == terminal.NO_COLORS:
+                return self.orig_string.encode(DEFAULT_ENCODING)
+            else:
+                return self.styled_string.encode(DEFAULT_ENCODING)
     else:
         def __str__(self):
-            return self.styled_string
+            if self.colorful_ctx.colormode == terminal.NO_COLORS:
+                return self.orig_string
+            else:
+                return self.styled_string
 
     def __len__(self):
         return len(self.orig_string)
@@ -247,11 +257,13 @@ class ColorfulString(object):
         if isinstance(other, ColorfulString):
             return ColorfulString(
                 self.orig_string + other.orig_string,
-                self.styled_string + other.styled_string)
+                self.styled_string + other.styled_string,
+                self.colorful_ctx)
 
         return ColorfulString(
             self.orig_string + other,
-            self.styled_string + other)
+            self.styled_string + other,
+            self.colorful_ctx)
 
     def __iadd__(self, other):
         if isinstance(other, ColorfulString):
@@ -267,7 +279,8 @@ class ColorfulString(object):
         if isinstance(other, ColorfulString):
             return ColorfulString(
                 other.orig_string + self.orig_string,
-                other.styled_string + self.styled_string)
+                other.styled_string + self.styled_string,
+                self.colorful_ctx)
 
         # we return handover the conversion to the
         # object on the left side
@@ -276,9 +289,13 @@ class ColorfulString(object):
     def __mul__(self, other):
         return ColorfulString(
             self.orig_string * other,
-            self.styled_string * other)
+            self.styled_string * other,
+            self.colorful_ctx)
 
     def __format__(self, format_spec):
+        if self.colorful_ctx.colormode == terminal.NO_COLORS:
+            return self.orig_string.__format__(format_spec)
+
         # append nested placeholder to styled string in order to continue the
         # previous styles. If the string already ends with the nest placeholder
         # we don't have to append it again.
@@ -464,7 +481,7 @@ class Colorful(object):
 
         :param str string: the string to use for the ColorfulString
         """
-        return ColorfulString(string, string)
+        return ColorfulString(string, string, self)
 
     def print(self, *objects, **options):
         """
@@ -506,9 +523,10 @@ class Colorful(object):
         """
         Represents a colorful style
         """
-        def __init__(self, style, colormode):
+        def __init__(self, style, colormode, colorful_ctx):
             self.style = style
             self.colormode = colormode
+            self.colorful_ctx = colorful_ctx
 
         def evaluate(self, string, nested=False):
             """
@@ -520,7 +538,8 @@ class Colorful(object):
             """
             return ColorfulString(
                 string,
-                style_string(string, self.style, self.colormode, nested))
+                style_string(string, self.style, self.colormode, nested),
+                self.colorful_ctx)
 
         def __str__(self):
             return self.style[0]
@@ -530,7 +549,7 @@ class Colorful(object):
                 self.style[0] + other.style[0],
                 self.style[1] + other.style[1]
             )
-            return Colorful.ColorfulStyle(new_style, self.colormode)
+            return Colorful.ColorfulStyle(new_style, self.colormode, self.colorful_ctx)
 
         def __call__(self, string, nested=False):
             return self.evaluate(string, nested)
@@ -541,5 +560,5 @@ class Colorful(object):
     def __getattr__(self, name):
         # translate the given name into an ANSI escape code sequence
         style = translate_style(name, self.colormode, self.colorpalette)
-        style_wrapper = self.ColorfulStyle(style, self.colormode)
+        style_wrapper = self.ColorfulStyle(style, self.colormode, self)
         return style_wrapper
