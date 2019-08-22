@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 *Nothing here yet.*
 
+## [v0.5.2]
+## Fixed
+- Expose the path to the built-in `colornames` color palette. Refs #31
+
 ## [v0.5.1]
 ## Fixed
 - Removed placeholder artifacts (`[26m`) when coloring is disabled
@@ -104,7 +108,8 @@ This release is just to fix the PyPI project page.
 
 - Initial release
 
-[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.5.1...HEAD
+[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.5.2...HEAD
+[v0.5.2]: https://github.com/timofurrer/colorful/compare/v0.5.1...v0.5.2
 [v0.5.1]: https://github.com/timofurrer/colorful/compare/v0.5.0...v0.5.1
 [v0.5.0]: https://github.com/timofurrer/colorful/compare/v0.4.5...v0.5.0
 [v0.4.5]: https://github.com/timofurrer/colorful/compare/v0.4.4...v0.4.5
