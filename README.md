@@ -167,7 +167,7 @@ You can use those via the `colorful.setup()` method, like this:
 
 
 ```python
-colorful.setup(colorpalette=colorful.COLORNAMES_COLORS))
+colorful.setup(colorpalette=colorful.COLORNAMES_COLORS)
 ```
 
 If you wish to have another color palette from a file as your default color palette you can set the `COLORFUL_DEFAULT_COLOR_PALETTE` environment variable to this file:
@@ -185,7 +185,7 @@ The file either has to be a txt file like the X11 rgb.txt or a JSON file:
 ]
 ```
 
-#### Custom color palette 
+#### Custom color palette
 **colorful** supports to update or replace the default color palette with custom colors. The colors have to be specified as RGB hex or channel values:
 
 ```python

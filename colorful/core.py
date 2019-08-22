@@ -31,6 +31,9 @@ DEFAULT_RGB_TXT_PATH = os.environ.get(
 #: Holds the color names mapped to RGB channels
 COLOR_PALETTE = colors.parse_colors(path=DEFAULT_RGB_TXT_PATH)
 
+#: Holds the path to the built-in `colornames` color palette file
+COLORNAMES_COLORS_PATH = os.path.join(os.path.dirname(__file__), "data", "colornames.json")
+
 
 class ColorfulError(Exception):
     """
@@ -325,6 +328,9 @@ class Colorful(object):
     ANSI_16_COLORS = terminal.ANSI_16_COLORS
     ANSI_256_COLORS = terminal.ANSI_256_COLORS
     TRUE_COLORS = terminal.TRUE_COLORS
+
+    # expose the `colornames` color palette
+    COLORNAMES_COLORS = COLORNAMES_COLORS_PATH
 
     # expose ANSI escape codes to close colors
     # this is especially useful when using ``str.format()``.
