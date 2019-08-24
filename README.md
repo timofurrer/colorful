@@ -1,6 +1,6 @@
 # colorful
 
-[![Build Status](https://travis-ci.org/timofurrer/colorful.svg?branch=master)](https://travis-ci.org/timofurrer/colorful)
+[![Actions Status](https://github.com/timofurrer/colorful/workflows/Continuous%20Integration/badge.svg)](https://github.com/timofurrer/colorful/actions)
 [![codecov.io](https://codecov.io/github/timofurrer/colorful/coverage.svg?branch=master)](https://codecov.io/github/timofurrer/colorful?branch=master)
 [![PyPI version](https://badge.fury.io/py/colorful.svg)](https://badge.fury.io/py/colorful)
 [![PyPI](https://img.shields.io/pypi/pyversions/colorful.svg)](https://pypi.python.org/pypi/colorful)
