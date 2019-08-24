@@ -36,6 +36,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v1
+      - name: Build Package
+        run: |
+          python setup.py sdist bdist_wheel --universal
       - name: Publish Package on PyPI
         if: startsWith(github.event.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@master
