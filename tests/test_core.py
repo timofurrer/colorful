@@ -849,3 +849,26 @@ def test_colorfulstring_format_protocol_no_placeholder_when_disabled():
 
     # then
     assert str(s) == "foo: bar"
+
+
+@pytest.mark.parametrize("style_a_name, style_b_name, expected_equal", [
+    pytest.param("red", "red", True, id="red == red"),
+    pytest.param("red", "blue", False, id="red != blue"),
+    pytest.param("bold_red", "bold_red", True, id="bold_red == bold_red"),
+    pytest.param("bold_red", "bold_blue", False, id="bold_red == bold_blue"),
+])
+def test_colorfulstyles_support_equals_protocol(style_a_name, style_b_name, expected_equal):
+    """Test that the ColorfulStyle objects support the equals protocol"""
+    # given
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+
+    style_a = getattr(colorful, style_a_name)
+    style_b = getattr(colorful, style_b_name)
+
+    # when
+    actual_equal = style_a == style_b
+    actual_hash_equal = hash(style_a) == hash(style_b)
+
+    # then
+    assert actual_equal == expected_equal
+    assert actual_hash_equal == expected_equal

@@ -563,6 +563,19 @@ class Colorful(object):
         def __or__(self, other):
             return self.evaluate(other)
 
+        def __eq__(self, other):
+            if not isinstance(other, Colorful.ColorfulStyle):
+                return False
+
+            return (
+                self.style == other.style and
+                self.colormode == other.colormode and
+                self.colorful_ctx == other.colorful_ctx
+            )
+
+        def __hash__(self):
+            return hash((self.style, self.colormode, self.colorful_ctx))
+
     def __getattr__(self, name):
         # translate the given name into an ANSI escape code sequence
         style = translate_style(name, self.colormode, self.colorpalette)
