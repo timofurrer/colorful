@@ -47,6 +47,9 @@ CSI = '\033['
 #: Holds the base ANSI escape code
 ANSI_ESCAPE_CODE = '{csi}{{code}}m'.format(csi=CSI)
 
+#: Holds the ANSI escape code to reset
+ANSI_RESET_CODE = ANSI_ESCAPE_CODE.format(code=MODIFIERS["reset"][1])
+
 #: Holds the placeholder for the nest indicators
 NEST_PLACEHOLDER = ANSI_ESCAPE_CODE.format(code=26)
 

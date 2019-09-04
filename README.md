@@ -362,6 +362,16 @@ print(colorful.red('red', nested=True) + ' default color')
 >>> assert len(s) == len(colorful.yellow(s))
 ```
 
+#### Support the [`__getitem__()` protocol](https://docs.python.org/3/reference/datamodel.html#object.__getitem__)
+
+**colorful** tries to supports the `__getitem__()` protocol including [slices](https://docs.python.org/3/library/functions.html#slice) on the styled strings.
+
+However, there are some limitations in the current implementation:
+
+* Slices with negative steps are not supported
+* All ANSI escape codes from the beginning of a string are included until the slice ends - even if they would cancel themselves out.
+* The reset code (`\033[0m`) is always appended to slices and single index characters
+
 ### Temporarily change colorful settings
 
 **colorful** provides a hand full of convenient context managers to change the colorful settings temporarily:

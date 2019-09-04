@@ -872,3 +872,108 @@ def test_colorfulstyles_support_equals_protocol(style_a_name, style_b_name, expe
     # then
     assert actual_equal == expected_equal
     assert actual_hash_equal == expected_equal
+
+
+def test_colorfulstring_only_support_int_and_slice_items():
+    """Test that the Colorful __getitem__ protocol only supports ``int``s and ``slice``s"""
+    # given
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    s = colorful.red("Hello World")
+
+    # then
+    with pytest.raises(TypeError, match="ColorfulString indices must be integers"):
+        # when
+        s["x"]
+
+
+def test_colorfulstring_no_negative_slice_steps():
+    """Test that the Colorful __getitem__ protocol doesn't support negative slicing steps"""
+    # given
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    s = colorful.red("Hello World")
+
+    # then
+    with pytest.raises(
+        NotImplementedError,
+        match="ColorfulString doesn't support negative slicing"
+    ):
+        # when
+        s[0:1:-1]
+
+
+def test_colorfulstring_get_char_at_positive_index():
+    """Test getting single char from ColorfulString at a positive index"""
+    # given
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    s = colorful.red("Hello World")
+
+    # when
+    sliced_s = s[4]
+
+    # then
+    assert str(sliced_s) == "\033[31mo\033[0m"
+
+
+def test_colorfulstring_get_char_at_negative_index():
+    """Test getting single char from ColorfulString at a negative index"""
+    # given
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    s = colorful.red("Hello World")
+
+    # when
+    sliced_s = s[-3]
+
+    # then
+    assert str(sliced_s) == "\033[31mr\033[0m"
+
+
+def test_colorfulstring_slice_string_with_single_color():
+    """Test slicing a ColorfulString containing a single color"""
+    # given
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    s = colorful.red("Hello World")
+
+    # when
+    sliced_s = s[4:7]
+
+    # then
+    assert str(sliced_s) == "\033[31mo W\033[0m"
+
+
+def test_colorfulstring_slice_with_step_in_string_with_single_color():
+    """Test slicing a ColorfulString containing a single color"""
+    # given
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    s = colorful.red("Hello World")
+
+    # when
+    sliced_s = s[2:9:3]
+
+    # then
+    assert str(sliced_s) == "\033[31ml r\033[0m"
+
+
+def test_colorfulstring_slice_string_with_two_colors():
+    """Test slicing a ColorfulString consisting of two colors"""
+    # given
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    s = colorful.red("Hello") + " " + colorful.orange("World")
+
+    # when
+    sliced_s = s[4:7]
+
+    # then
+    assert str(sliced_s) == "\033[31mo\033[39m \033[33mW\033[0m"
+
+
+def test_colorfulstring_slice_with_step_in_string_with_two_colors():
+    """Test slicing a ColorfulString consisting of two colors"""
+    # given
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    s = colorful.red("Hello") + " " + colorful.orange("World")
+
+    # when
+    sliced_s = s[2:9:3]
+
+    # then
+    assert str(sliced_s) == "\033[31ml\033[39m \033[33mr\033[0m"
