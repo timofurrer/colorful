@@ -10,17 +10,14 @@
     :license: MIT, see LICENSE for more details.
 """
 
-from __future__ import print_function
-from __future__ import unicode_literals
+from __future__ import print_function, unicode_literals
 
 import os
+import re
 import sys
 
-from . import ansi
-from . import colors
-from . import styles
-from . import terminal
-from .utils import PY2, DEFAULT_ENCODING, UNICODE
+from . import ansi, colors, styles, terminal
+from .utils import DEFAULT_ENCODING, PY2, UNICODE
 
 #: Holds the name of the env variable which is
 #  used as path to the default rgb.txt file
@@ -312,6 +309,71 @@ class ColorfulString(object):
     def __getattr__(self, name):
         str_method = getattr(self.styled_string, name)
         return str_method
+
+    def __getitem__(self, item):
+        """Support indexing and slicing"""
+        if not isinstance(item, (int, slice)):
+            raise TypeError("ColorfulString indices must be integers")
+
+        if isinstance(item, int):
+            start = item % len(self)
+            stop = start + 1
+            step = 1
+        else:
+            start, stop, step = item.indices(len(self))
+
+        if step < 0:
+            raise NotImplementedError("ColorfulString doesn't support negative slicing")
+
+        sliced_orig_string = self.orig_string[item]
+        sliced_styled_string = ""
+
+        #: Holds the regex pattern to match ANSI escape sequences which are not
+        #  part of the slice
+        ansi_pattern = re.compile(
+            "^" + ansi.ANSI_ESCAPE_CODE.format(code=".*?").replace("[", r"\[")
+        )
+
+        #: Holds the index of the styled resp. the orig string while the slice
+        #  is being consumed.
+        current_styled_string_idx = 0
+        current_orig_string_idx = 0
+
+        #: Holds a counter to indicate how many steps of the ``step``-slice argument
+        #  have to be made in order to consume the next char from the string.
+        step_counter = 0
+        while current_styled_string_idx < len(self.styled_string):
+            ansi_match = ansi_pattern.search(self.styled_string[current_styled_string_idx:])
+            if ansi_match:
+                # consume ANSI escape sequence from the string
+                sliced_styled_string += ansi_match.group(0)
+
+                advance_style_idx = ansi_match.end(0)
+                advance_orig_idx = 0
+            else:
+                if step_counter > 0:
+                    # one-by-one consume the ``step``s.
+                    step_counter -= 1
+                else:
+                    if start <= current_orig_string_idx < stop:
+                        sliced_styled_string += self.orig_string[current_orig_string_idx]
+                        step_counter = step - 1
+
+                advance_style_idx = 1
+                advance_orig_idx = 1
+
+            # advance the counters of the styled and orig strings
+            # according to the consumed characters
+            current_styled_string_idx += advance_style_idx
+            current_orig_string_idx += advance_orig_idx
+
+            if current_orig_string_idx >= stop:
+                # early exit if we discoved to be at the end of the slice
+                break
+
+        # reset all colors and modifiers after the sliced string
+        sliced_styled_string += ansi.ANSI_RESET_CODE
+        return ColorfulString(sliced_orig_string, sliced_styled_string, self.colorful_ctx)
 
 
 class Colorful(object):
