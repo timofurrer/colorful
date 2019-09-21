@@ -40,7 +40,15 @@ class ColorfulError(Exception):
     Exception which is raised for Colorful specific
     usage errors.
     """
-    pass
+
+
+class ColorfulAttributeError(AttributeError, ColorfulError):
+    """
+    Exception which is raised for Colorful specific
+    usage errors raised during ``__getattr__`` calls.
+
+    This is to ensure a correct ``__getattr__`` protocol implementation.
+    """
 
 
 def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
@@ -85,7 +93,7 @@ def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
         end_code = ansi.ANSI_ESCAPE_CODE.format(code=offset + ansi.COLOR_CLOSE_OFFSET)
         return start_code, end_code
 
-    raise ColorfulError('invalid color mode "{0}"'.format(colormode))
+    raise ColorfulAttributeError('invalid color mode "{0}"'.format(colormode))
 
 
 def translate_colorname_to_ansi_code(colorname, offset, colormode, colorpalette):
@@ -105,7 +113,7 @@ def translate_colorname_to_ansi_code(colorname, offset, colormode, colorpalette)
     try:
         red, green, blue = colorpalette[colorname]
     except KeyError:
-        raise ColorfulError('the color "{0}" is unknown. Use a color in your color palette (by default: X11 rgb.txt)'.format(  # noqa
+        raise ColorfulAttributeError('the color "{0}" is unknown. Use a color in your color palette (by default: X11 rgb.txt)'.format(  # noqa
             colorname))
     else:
         return translate_rgb_to_ansi_code(red, green, blue, offset, colormode)
@@ -129,7 +137,7 @@ def resolve_modifier_to_ansi_code(modifiername, colormode):
     try:
         start_code, end_code = ansi.MODIFIERS[modifiername]
     except KeyError:
-        raise ColorfulError('the modifier "{0}" is unknown. Use one of: {1}'.format(
+        raise ColorfulAttributeError('the modifier "{0}" is unknown. Use one of: {1}'.format(
             modifiername, ansi.MODIFIERS.keys()))
     else:
         return ansi.ANSI_ESCAPE_CODE.format(
