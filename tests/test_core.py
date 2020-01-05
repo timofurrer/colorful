@@ -690,7 +690,8 @@ def test_nested_styled_string_with_format():
     assert str(s) == '\033[31mHello \033[34mawesome\033[39m\033[31m world\033[39m'
 
 
-def test_styling_object_which_implements_str_proto():
+@pytest.mark.parametrize('colormode', [terminal.NO_COLORS, terminal.ANSI_8_COLORS])
+def test_styling_object_which_implements_str_proto(colormode):
     """
     Test styling an object which implements the str protocol
     """
@@ -698,7 +699,7 @@ def test_styling_object_which_implements_str_proto():
         def __str__(self):
             return 'I am a dummy object'
 
-    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    colorful = core.Colorful(colormode=colormode)
     assert str(colorful.black(Dummy())) == '\033[30mI am a dummy object\033[39m'
 
 
