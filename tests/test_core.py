@@ -507,6 +507,18 @@ def test_colorful_obj_setup_with_extending_palette():
     assert str(colorful.black) == '\033[38;2;0;0;0m'
 
 
+def test_colorful_obj_setup_with_no_colors():
+    """
+    Test setup switching an existing colorful object to NO_COLORS (disabled)
+    """
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    colorful.setup(colormode=terminal.NO_COLORS)
+
+    assert colorful.colormode == terminal.NO_COLORS
+
+    assert str(colorful.red('color is illusion')) == 'color is illusion'
+
+
 @pytest.mark.parametrize('method_name, colorname, expected', [
     ('use_8_ansi_colors', 'black', '\033[30m'),
     ('use_16_ansi_colors', 'black', '\033[30m'),

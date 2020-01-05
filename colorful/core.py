@@ -403,7 +403,7 @@ class Colorful(object):
                                   color names to it's corresponding RGB value
         :param bool extend_colors: extend the active color palette instead of replacing it
         """
-        if colormode:
+        if colormode is not None:
             self.colormode = colormode
 
         if colorpalette:
