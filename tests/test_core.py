@@ -453,7 +453,6 @@ def test_colorful_obj_color_auto_detection(env, expected):
     os.environ = os_env_backup
 
 
-@pytest.mark.skipif(not sys.stdout.isatty(), reason='fails without a tty')
 def test_reading_color_palette(tmpdir):
     """
     Test reading color palette from file
@@ -464,7 +463,7 @@ def test_reading_color_palette(tmpdir):
 0 0 0 myBlack
 255 255 255      myWhite""")
 
-    colorful = core.Colorful(colorpalette=str(palette_file))
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS, colorpalette=str(palette_file))
     assert str(colorful.myBlack) == '\033[30m'
     assert str(colorful.myWhite) == '\033[37m'
 
