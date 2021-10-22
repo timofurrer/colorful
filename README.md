@@ -54,7 +54,7 @@ MY_COMPANY_PALETTE = {
     'companyOrange': '#f4b942',
     'companyBaige': '#e8dcc5'
 }
-with cf.with_palette(my_company_palette) as c:
+with cf.with_palette(MY_COMPANY_PALETTE) as c:
     print(c.companyOrange_on_companyBaige('Thanks for choosing our product!'))
 
 # use f-string (only Python >= 3.6)
