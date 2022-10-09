@@ -227,8 +227,8 @@ class ColorfulString(object):
     Represents a colored string
     """
     def __init__(self, orig_string, styled_string, colorful_ctx):
-        self.orig_string = orig_string
-        self.styled_string = styled_string
+        self.orig_string = str(orig_string)
+        self.styled_string = str(styled_string)
         self.colorful_ctx = colorful_ctx
 
     def __str__(self):

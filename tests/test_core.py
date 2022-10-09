@@ -846,6 +846,23 @@ def test_colorfulstring_format_protocol_no_placeholder_when_disabled():
     assert str(s) == "foo: bar"
 
 
+def test_underling_type_should_be_stored_as_str():
+    """
+    This test ensures that __str__ is correctly implement
+    if the input is not a str.
+    Otherwise Python complains:
+    TypeError: __str__ returned non-string (type int)
+    """
+    # given
+    colorful = core.Colorful(colormode=terminal.NO_COLORS)
+
+    # when
+    s = "foo: {}".format(str(colorful.red(1)))
+
+    # then
+    assert str(s) == "foo: 1"
+
+
 @pytest.mark.parametrize("style_a_name, style_b_name, expected_equal", [
     pytest.param("red", "red", True, id="red == red"),
     pytest.param("red", "blue", False, id="red != blue"),
