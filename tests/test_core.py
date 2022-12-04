@@ -20,7 +20,6 @@ os.environ['COLORFUL_NO_MODULE_OVERWRITE'] = '1'
 
 import colorful.core as core  # noqa
 import colorful.terminal as terminal  # noqa
-from colorful.utils import UNICODE  # noqa
 
 
 @pytest.mark.parametrize('style_string,expected', [
@@ -783,7 +782,7 @@ def test_unicode_support():
     styled_s = colorful.black(s)
 
     # test basic unicode support
-    assert UNICODE(styled_s) == u'\033[30m🐧🎉🐧\033[39m'
+    assert str(styled_s) == u'\033[30m🐧🎉🐧\033[39m'
 
 
 def test_combining_styles():

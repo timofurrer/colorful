@@ -17,7 +17,6 @@ from . import ansi
 from . import colors
 from . import styles
 from . import terminal
-from .utils import PY2, DEFAULT_ENCODING, UNICODE
 
 #: Holds the name of the env variable which is
 #  used as path to the default rgb.txt file
@@ -215,10 +214,7 @@ def style_string(string, ansi_style, colormode, nested=False):
     ansi_start_code, ansi_end_code = ansi_style
 
     # replace nest placeholders with the current begin style
-    if PY2:
-        if isinstance(string, str):
-            string = string.decode(DEFAULT_ENCODING)
-    string = UNICODE(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
+    string = str(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
 
     return '{start_code}{string}{end_code}{nest_ph}'.format(
             start_code=ansi_start_code,
@@ -236,24 +232,11 @@ class ColorfulString(object):
         self.styled_string = styled_string
         self.colorful_ctx = colorful_ctx
 
-    if PY2:
-        def __unicode__(self):
-            if self.colorful_ctx.colormode == terminal.NO_COLORS:
-                return self.orig_string
-            else:
-                return self.styled_string
-
-        def __str__(self):
-            if self.colorful_ctx.colormode == terminal.NO_COLORS:
-                return self.orig_string.encode(DEFAULT_ENCODING)
-            else:
-                return self.styled_string.encode(DEFAULT_ENCODING)
-    else:
-        def __str__(self):
-            if self.colorful_ctx.colormode == terminal.NO_COLORS:
-                return self.orig_string
-            else:
-                return self.styled_string
+    def __str__(self):
+        if self.colorful_ctx.colormode == terminal.NO_COLORS:
+            return self.orig_string
+        else:
+            return self.styled_string
 
     def __len__(self):
         return len(self.orig_string)
