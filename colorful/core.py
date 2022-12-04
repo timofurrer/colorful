@@ -10,17 +10,12 @@
     :license: MIT, see LICENSE for more details.
 """
 
-from __future__ import print_function
-from __future__ import unicode_literals
-
 import os
-import sys
 
 from . import ansi
 from . import colors
 from . import styles
 from . import terminal
-from .utils import PY2, DEFAULT_ENCODING, UNICODE
 
 #: Holds the name of the env variable which is
 #  used as path to the default rgb.txt file
@@ -218,10 +213,7 @@ def style_string(string, ansi_style, colormode, nested=False):
     ansi_start_code, ansi_end_code = ansi_style
 
     # replace nest placeholders with the current begin style
-    if PY2:
-        if isinstance(string, str):
-            string = string.decode(DEFAULT_ENCODING)
-    string = UNICODE(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
+    string = str(string).replace(ansi.NEST_PLACEHOLDER, ansi_start_code)
 
     return '{start_code}{string}{end_code}{nest_ph}'.format(
             start_code=ansi_start_code,
@@ -235,28 +227,15 @@ class ColorfulString(object):
     Represents a colored string
     """
     def __init__(self, orig_string, styled_string, colorful_ctx):
-        self.orig_string = orig_string
-        self.styled_string = styled_string
+        self.orig_string = str(orig_string)
+        self.styled_string = str(styled_string)
         self.colorful_ctx = colorful_ctx
 
-    if PY2:
-        def __unicode__(self):
-            if self.colorful_ctx.colormode == terminal.NO_COLORS:
-                return self.orig_string
-            else:
-                return self.styled_string
-
-        def __str__(self):
-            if self.colorful_ctx.colormode == terminal.NO_COLORS:
-                return self.orig_string.encode(DEFAULT_ENCODING)
-            else:
-                return self.styled_string.encode(DEFAULT_ENCODING)
-    else:
-        def __str__(self):
-            if self.colorful_ctx.colormode == terminal.NO_COLORS:
-                return self.orig_string
-            else:
-                return self.styled_string
+    def __str__(self):
+        if self.colorful_ctx.colormode == terminal.NO_COLORS:
+            return self.orig_string
+        else:
+            return self.styled_string
 
     def __len__(self):
         return len(self.orig_string)
@@ -497,7 +476,7 @@ class Colorful(object):
         """
         return ColorfulString(string, string, self)
 
-    def print(self, *objects, **options):
+    def print(self, *objects, sep=' ', end='\n', file=None, flush=False):
         """
         Print the given objects to the given file stream.
         See https://docs.python.org/3/library/functions.html#print
@@ -511,27 +490,8 @@ class Colorful(object):
         :param file: the file stream to write to
         :param bool flush: if the stream should be flushed
         """
-        # NOTE: change signature to same as print() built-in function as
-        #       soon as Python 2.7 is not supported anymore.
-        #       If causes problems because of the keyword args after *args
-        allowed_options = {'sep', 'end', 'file', 'flush'}
-        given_options = set(options.keys())
-        if not given_options.issubset(allowed_options):
-            raise TypeError('Colorful.print() got unexpected keyword arguments: {0}'.format(
-                ', '.join(given_options.difference(allowed_options))))
-
-        sep = options.get('sep', ' ')
-        end = options.get('end', '\n')
-        file = options.get('file', sys.stdout)
-        flush = options.get('flush', False)
-
         styled_objects = [self.format(o) for o in objects]
-        print(*styled_objects, sep=sep, end=end, file=file)
-
-        # NOTE: if Python 2.7 support is dropped we can directly forward the
-        #       flush keyword argument to the print() function.
-        if flush:
-            file.flush()
+        print(*styled_objects, sep=sep, end=end, file=file, flush=flush)
 
     class ColorfulStyle(object):
         """

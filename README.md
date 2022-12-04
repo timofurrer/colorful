@@ -79,7 +79,7 @@ print(cf.red('你好'))
 
 ## Usage
 
-**colorful** supports all major Python versions: *2.7*, *3.4*, *3.5*, *3.6* and *3.7*. <br>
+**colorful** supports all major Python versions: *3.5*, *3.6* and *3.7*, *3.8*, *3.9*, *3.10*, *3.11*. <br>
 We recommend to use the latest version released on [PyPI](https://pypi.python.org/pypi/colorful):
 
 ```bash
@@ -317,8 +317,6 @@ cf.print('{c.red}I am red{c.reset}', end='', file=open('log.txt', 'a+'))
 ```
 
 The `cf.print()` method accepts the same arguments as the Python 3.X [built-in print()](https://docs.python.org/3/library/functions.html#print) function.
-
-*Note: for Python 2 you have to import the print function: `from __future__ import print_function`.*
 
 #### (5) Style a string with [`str.format()`](https://docs.python.org/3.6/library/stdtypes.html#str.format)
 

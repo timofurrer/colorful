@@ -10,21 +10,6 @@
     :license: MIT, see LICENSE for more details.
 """
 import re
-import sys
-
-PY2 = sys.version_info.major == 2
-
-if PY2:
-    UNICODE = unicode  # noqa
-else:
-    UNICODE = str
-
-# Catch error in case sys.stdout was patched with an object that doesn't provide
-# the 'encoding' attribute.
-try:
-    DEFAULT_ENCODING = sys.stdout.encoding or 'utf-8'
-except AttributeError:
-    DEFAULT_ENCODING = 'utf-8'
 
 
 def hex_to_rgb(value):

@@ -8,15 +8,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 8
       matrix:
-        python-version: [2.7, 3.5, 3.6, 3.7]
+        python-version: [3.7, 3.8, 3.9, "3.10", 3.11]
         os: [ubuntu-latest, windows-latest, macOS-latest]
+        include:
+          - os: ubuntu-18.04
+            python-version: 3.5
+          - os: ubuntu-18.04
+            python-version: 3.6
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: Setup build and test environment
@@ -29,7 +34,7 @@ jobs:
       - name: Lint with flake8
         run: |
           pip install flake8
-          flake8 --show-source src/ tests/
+          flake8 --show-source colorful/ tests/
       - name: Test with pytest
         run: |
           coverage run --parallel -m pytest
@@ -41,7 +46,7 @@ jobs:
       - name: Upload coverage to Codecov
         # codecov only runs on Linux
         if: startsWith(matrix.os, 'ubuntu-')
-        uses: codecov/codecov-action@v1.0.0
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.xml
@@ -53,12 +58,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-      - name: Set up Python 3.7
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.11
         if: startsWith(github.event.ref, 'refs/tags')
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.7
+          python-version: 3.11
       - name: Build Package
         if: startsWith(github.event.ref, 'refs/tags')
         run: |
@@ -66,7 +71,7 @@ jobs:
           python setup.py sdist bdist_wheel --universal
       - name: Publish Package on PyPI
         if: startsWith(github.event.ref, 'refs/tags')
-        uses: pypa/gh-action-pypi-publish@master
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.pypi_token }}

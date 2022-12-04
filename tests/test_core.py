@@ -10,9 +10,6 @@
     :license: MIT, see LICENSE for more details.
 """
 
-# NOTE: only used for Colorful.print()
-from __future__ import print_function
-
 import os
 import sys
 
@@ -23,7 +20,6 @@ os.environ['COLORFUL_NO_MODULE_OVERWRITE'] = '1'
 
 import colorful.core as core  # noqa
 import colorful.terminal as terminal  # noqa
-from colorful.utils import UNICODE  # noqa
 
 
 @pytest.mark.parametrize('style_string,expected', [
@@ -617,18 +613,6 @@ def test_colorful_direct_print(capsys):
     assert err == ''
 
 
-def test_colorful_print_wrong_argument():
-    """
-    Test calling the colorful.print method with wrong arguments
-    """
-    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
-
-    with pytest.raises(TypeError) as exc:
-        colorful.print('Never printed because of argument error', foo=42)
-
-    assert str(exc.value) == 'Colorful.print() got unexpected keyword arguments: foo'
-
-
 @pytest.mark.parametrize('method_name, expected', [
     ('bold', 'No, I am your father'),
     ('struckthrough', 'No, I am your father'),
@@ -786,7 +770,7 @@ def test_unicode_support():
     styled_s = colorful.black(s)
 
     # test basic unicode support
-    assert UNICODE(styled_s) == u'\033[30m🐧🎉🐧\033[39m'
+    assert str(styled_s) == u'\033[30m🐧🎉🐧\033[39m'
 
 
 def test_combining_styles():
@@ -860,6 +844,23 @@ def test_colorfulstring_format_protocol_no_placeholder_when_disabled():
 
     # then
     assert str(s) == "foo: bar"
+
+
+def test_underling_type_should_be_stored_as_str():
+    """
+    This test ensures that __str__ is correctly implement
+    if the input is not a str.
+    Otherwise Python complains:
+    TypeError: __str__ returned non-string (type int)
+    """
+    # given
+    colorful = core.Colorful(colormode=terminal.NO_COLORS)
+
+    # when
+    s = "foo: {}".format(str(colorful.red(1)))
+
+    # then
+    assert str(s) == "foo: 1"
 
 
 @pytest.mark.parametrize("style_a_name, style_b_name, expected_equal", [
