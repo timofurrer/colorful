@@ -613,18 +613,6 @@ def test_colorful_direct_print(capsys):
     assert err == ''
 
 
-def test_colorful_print_wrong_argument():
-    """
-    Test calling the colorful.print method with wrong arguments
-    """
-    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
-
-    with pytest.raises(TypeError) as exc:
-        colorful.print('Never printed because of argument error', foo=42)
-
-    assert str(exc.value) == 'Colorful.print() got unexpected keyword arguments: foo'
-
-
 @pytest.mark.parametrize('method_name, expected', [
     ('bold', 'No, I am your father'),
     ('struckthrough', 'No, I am your father'),
