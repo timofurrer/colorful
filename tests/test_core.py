@@ -10,9 +10,6 @@
     :license: MIT, see LICENSE for more details.
 """
 
-# NOTE: only used for Colorful.print()
-from __future__ import print_function
-
 import os
 import sys
 

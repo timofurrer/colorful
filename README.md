@@ -318,8 +318,6 @@ cf.print('{c.red}I am red{c.reset}', end='', file=open('log.txt', 'a+'))
 
 The `cf.print()` method accepts the same arguments as the Python 3.X [built-in print()](https://docs.python.org/3/library/functions.html#print) function.
 
-*Note: for Python 2 you have to import the print function: `from __future__ import print_function`.*
-
 #### (5) Style a string with [`str.format()`](https://docs.python.org/3.6/library/stdtypes.html#str.format)
 
 ```python
