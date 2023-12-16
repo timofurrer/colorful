@@ -14,7 +14,7 @@ import ast
 import os
 import sys
 import codecs
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 # These python versions are explicitly not supported
 # by colorful. This is mostly because of the incompatiblities
@@ -81,7 +81,7 @@ if __name__ == '__main__':
         maintainer_email='tuxtimo@gmail.com',
         include_package_data=True,
         package_data={'': ['colorful/data/*.txt', 'colorful/data/*.json', 'README.md']},
-        packages=find_packages(exclude=['*tests*']),
+        packages=find_namespace_packages(exclude=['*tests*','*examples*']),
         install_requires=requirements,
         classifiers=[
             'Development Status :: 5 - Production/Stable',
