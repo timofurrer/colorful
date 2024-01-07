@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 *Nothing here yet.*
 
+## [v0.5.6]
+- Fix PEP420 Implicit name space thanks @MocioF
+- Test Python 3.12 support
+
 ## [v0.5.5]
 ## Fixed
 - Fix `setup(colormode=NO_COLORS)`
@@ -123,7 +127,8 @@ This release is just to fix the PyPI project page.
 
 - Initial release
 
-[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.5.5...HEAD
+[Unreleased]: https://github.com/timofurrer/colorful/compare/v0.5.6...HEAD
+[v0.5.5]: https://github.com/timofurrer/colorful/compare/v0.5.5...v0.5.6
 [v0.5.5]: https://github.com/timofurrer/colorful/compare/v0.5.4...v0.5.5
 [v0.5.4]: https://github.com/timofurrer/colorful/compare/v0.5.3...v0.5.4
 [v0.5.3]: https://github.com/timofurrer/colorful/compare/v0.5.2...v0.5.3
