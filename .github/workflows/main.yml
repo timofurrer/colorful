@@ -10,18 +10,18 @@ jobs:
       fail-fast: false
       max-parallel: 8
       matrix:
-        python-version: [3.7, 3.8, 3.9, "3.10", 3.11]
+        python-version: [3.7, 3.8, 3.9, "3.10", 3.11, 3.12]
         os: [ubuntu-latest, windows-latest, macOS-latest]
         include:
-          - os: ubuntu-18.04
+          - os: ubuntu-20.04
             python-version: 3.5
-          - os: ubuntu-18.04
+          - os: ubuntu-20.04
             python-version: 3.6
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
       - name: Setup build and test environment
@@ -58,12 +58,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python 3.11
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
         if: startsWith(github.event.ref, 'refs/tags')
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: 3.12
       - name: Build Package
         if: startsWith(github.event.ref, 'refs/tags')
         run: |
