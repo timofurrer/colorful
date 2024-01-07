@@ -79,7 +79,7 @@ print(cf.red('你好'))
 
 ## Usage
 
-**colorful** supports all major Python versions: *3.5*, *3.6* and *3.7*, *3.8*, *3.9*, *3.10*, *3.11*. <br>
+**colorful** supports all major Python versions: *3.5*, *3.6* and *3.7*, *3.8*, *3.9*, *3.10*, *3.11*, *3.12*. <br>
 We recommend to use the latest version released on [PyPI](https://pypi.python.org/pypi/colorful):
 
 ```bash
