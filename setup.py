@@ -40,7 +40,11 @@ class VersionFinder(ast.NodeVisitor):
     def visit_Assign(self, node):
         try:
             if node.targets[0].id == '__version__':
-                self.version = node.value.s
+                try:
+                    # Python 3.8+
+                    self.version = node.value.value
+                except AttributeError:
+                    self.version = node.value.s
         except:
             pass
 
