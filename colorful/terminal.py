@@ -45,7 +45,7 @@ def detect_color_support(env):  # noqa
         return TRUE_COLORS
 
     # if we are not a tty
-    if not sys.stdout.isatty():
+    if hasattr(sys.stdout, 'isatty') and not sys.stdout.isatty():
         return NO_COLORS
 
     colorterm_env = env.get('COLORTERM')
