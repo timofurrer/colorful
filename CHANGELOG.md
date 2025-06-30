@@ -6,7 +6,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 *Nothing here yet.*
 
+## [v0.5.7]
+## Fixed
+- Read version from ast.Constant instead of ast.Str thanks @carlwgeorge
+- fix: DualOutput object has no attribute isatty thanks @HollowMan6
+- Test Python 3.13 support
+- Unsupported Python versions 3.4, 3.5, 3.6 are not tested anymore
+
+
 ## [v0.5.6]
+## Fixed
 - Fix PEP420 Implicit name space thanks @MocioF
 - Test Python 3.12 support
 
