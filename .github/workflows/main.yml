@@ -10,13 +10,11 @@ jobs:
       fail-fast: false
       max-parallel: 8
       matrix:
-        python-version: [3.7, 3.8, 3.9, "3.10", 3.11, 3.12]
+        python-version: [3.8, 3.9, "3.10", 3.11, 3.12, 3.13]
         os: [ubuntu-latest, windows-latest, macOS-latest]
         include:
-          - os: ubuntu-20.04
-            python-version: 3.5
-          - os: ubuntu-20.04
-            python-version: 3.6
+          - os: ubuntu-22.04
+            python-version: 3.7
 
     steps:
       - uses: actions/checkout@v4
@@ -44,12 +42,10 @@ jobs:
           coverage report
           coverage xml
       - name: Upload coverage to Codecov
-        # codecov only runs on Linux
-        if: startsWith(matrix.os, 'ubuntu-')
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
+          files: ./coverage.xml
           flags: unittests
           name: codecov-umbrella
 
