@@ -685,7 +685,8 @@ def test_nested_styled_string_with_format():
     assert str(s) == '\033[31mHello \033[34mawesome\033[39m\033[31m world\033[39m'
 
 
-def test_styling_object_which_implements_str_proto():
+@pytest.mark.parametrize('colormode', [terminal.NO_COLORS, terminal.ANSI_8_COLORS])
+def test_styling_object_which_implements_str_proto(colormode):
     """
     Test styling an object which implements the str protocol
     """
@@ -693,8 +694,31 @@ def test_styling_object_which_implements_str_proto():
         def __str__(self):
             return 'I am a dummy object'
 
-    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    colorful = core.Colorful(colormode=colormode)
     assert str(colorful.black(Dummy())) == '\033[30mI am a dummy object\033[39m'
+
+
+@pytest.mark.parametrize('colormode', [terminal.NO_COLORS, terminal.ANSI_8_COLORS])
+def test_styling_and_adding_numbers(colormode):
+    """
+    Test addition of styled objects that come from numbers.
+
+    A lot of the test_str_behavior things break, but numbers, addition,
+    and NO_COLORS is a relatively likely case and gives unexpected results
+    without throwing an exception.
+    """
+    colorful = core.Colorful(colormode=colormode)
+    n_left = 6543
+    n_right = 1234
+
+    added = colorful.black(n_left) + colorful.black(n_right)
+    # because __format__ and __str__ use different code paths, we might still
+    # get a str out of this without exception even if the str() test case erred.
+    s_added = "{}".format(added)
+
+    assert str(n_left) in s_added
+    assert str(n_right) in s_added
+    assert len(s_added) >= len(str(n_left)) + len(str(n_right))
 
 
 def test_str_behavior_for_colorfulstring():
