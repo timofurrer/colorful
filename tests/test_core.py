@@ -687,7 +687,7 @@ def test_styling_object_which_implements_str_proto():
     """
     Test styling an object which implements the str protocol
     """
-    class Dummy(object):
+    class Dummy():
         def __str__(self):
             return 'I am a dummy object'
 

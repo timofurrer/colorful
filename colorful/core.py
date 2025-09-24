@@ -220,7 +220,7 @@ def style_string(string, ansi_style, colormode, nested=False):
             nest_ph=ansi.NEST_PLACEHOLDER if nested else '')
 
 
-class ColorfulString(object):
+class ColorfulString():
     """
     Represents a colored string
     """
@@ -299,7 +299,7 @@ class ColorfulString(object):
         return str_method
 
 
-class Colorful(object):
+class Colorful():
     """
     Provides methods to style strings for terminal
     output.
@@ -491,7 +491,7 @@ class Colorful(object):
         styled_objects = [self.format(o) for o in objects]
         print(*styled_objects, sep=sep, end=end, file=file, flush=flush)
 
-    class ColorfulStyle(object):
+    class ColorfulStyle():
         """
         Represents a colorful style
         """
