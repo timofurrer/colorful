@@ -32,7 +32,7 @@ class ColorfulModule(types.ModuleType):
     this module.
     """
     def __init__(self, colorful, *args):
-        super(ColorfulModule, self).__init__(*args)
+        super().__init__(*args)
         self.colorful = colorful
 
     @contextmanager

@@ -602,7 +602,7 @@ def test_colorful_direct_print(capsys):
     """
     colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
 
-    expected = u'\033[3m\033[31mNo, I am your father\033[23m\033[39m\n'
+    expected = '\033[3m\033[31mNo, I am your father\033[23m\033[39m\n'
 
     colorful.print('{c.italic_red}No, I am your father{c.no_italic}{c.close_fg_color}', flush=True)
 
@@ -669,7 +669,7 @@ def test_nested_styled_string():
     s = colorful.red('Hello') + colorful.blue(' World')
     assert str(s) == '\033[31mHello\033[39m\033[34m World\033[39m'
 
-    s = colorful.red('Hello {0} world'.format(colorful.blue('awesome', nested=True)))
+    s = colorful.red('Hello {} world'.format(colorful.blue('awesome', nested=True)))
     assert str(s) == '\033[31mHello \033[34mawesome\033[39m\033[31m world\033[39m'
 
 
@@ -679,7 +679,7 @@ def test_nested_styled_string_with_format():
     """
     colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
 
-    s = colorful.red('Hello {0} world'.format(colorful.blue('awesome')))
+    s = colorful.red('Hello {} world'.format(colorful.blue('awesome')))
     assert str(s) == '\033[31mHello \033[34mawesome\033[39m\033[31m world\033[39m'
 
 
@@ -764,11 +764,11 @@ def test_unicode_support():
     """
     colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
 
-    s = u'🐧🎉🐧'
+    s = '🐧🎉🐧'
     styled_s = colorful.black(s)
 
     # test basic unicode support
-    assert str(styled_s) == u'\033[30m🐧🎉🐧\033[39m'
+    assert str(styled_s) == '\033[30m🐧🎉🐧\033[39m'
 
 
 def test_combining_styles():
@@ -824,7 +824,7 @@ def test_colorfulstring_format_protocol():
     colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
     s = colorful.black('father')
 
-    string = 'No, I am your {0}'.format(s)
+    string = 'No, I am your {}'.format(s)
     assert string == 'No, I am your \033[30mfather\033[39m\033[26m'
 
     string = colorful.red('No, I am your {0}')

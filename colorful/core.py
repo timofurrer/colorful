@@ -86,7 +86,7 @@ def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
         end_code = ansi.ANSI_ESCAPE_CODE.format(code=offset + ansi.COLOR_CLOSE_OFFSET)
         return start_code, end_code
 
-    raise ColorfulAttributeError('invalid color mode "{0}"'.format(colormode))
+    raise ColorfulAttributeError('invalid color mode "{}"'.format(colormode))
 
 
 def translate_colorname_to_ansi_code(colorname, offset, colormode, colorpalette):
@@ -106,7 +106,7 @@ def translate_colorname_to_ansi_code(colorname, offset, colormode, colorpalette)
     try:
         red, green, blue = colorpalette[colorname]
     except KeyError:
-        raise ColorfulAttributeError('the color "{0}" is unknown. Use a color in your color palette (by default: X11 rgb.txt)'.format(  # noqa
+        raise ColorfulAttributeError('the color "{}" is unknown. Use a color in your color palette (by default: X11 rgb.txt)'.format(  # noqa
             colorname))
     else:
         return translate_rgb_to_ansi_code(red, green, blue, offset, colormode)
@@ -130,7 +130,7 @@ def resolve_modifier_to_ansi_code(modifiername, colormode):
     try:
         start_code, end_code = ansi.MODIFIERS[modifiername]
     except KeyError:
-        raise ColorfulAttributeError('the modifier "{0}" is unknown. Use one of: {1}'.format(
+        raise ColorfulAttributeError('the modifier "{}" is unknown. Use one of: {}'.format(
             modifiername, ansi.MODIFIERS.keys()))
     else:
         return ansi.ANSI_ESCAPE_CODE.format(
@@ -441,7 +441,7 @@ class Colorful():
         try:
             style = getattr(styles, style_name.upper())
         except AttributeError:
-            raise ColorfulError('the style "{0}" is undefined'.format(
+            raise ColorfulError('the style "{}" is undefined'.format(
                 style_name))
         else:
             self.colorpalette = style

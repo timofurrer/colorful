@@ -23,7 +23,7 @@ EXPL_NOT_SUPPORTED_VERSIONS = ((3, 0), (3, 1), (3, 2), (3, 3))
 
 if sys.version_info[0:2] in EXPL_NOT_SUPPORTED_VERSIONS:
     raise SystemExit("colorful does explicitly not support the following python versions "
-                     "due to big incompatibilities: {0}".format(EXPL_NOT_SUPPORTED_VERSIONS))
+                     "due to big incompatibilities: {}".format(EXPL_NOT_SUPPORTED_VERSIONS))
 
 
 #: Holds the root dir for the project.
