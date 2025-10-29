@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 *Nothing here yet.*
 
+## [v0.5.8]
+## Fixed
+- Test Python 3.14 support
+- Drop Python 2 support
+
 ## [v0.5.7]
 ## Fixed
 - Read version from ast.Constant instead of ast.Str thanks @carlwgeorge
