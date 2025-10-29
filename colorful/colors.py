@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
-
 """
-    colorful
-    ~~~~~~~~
+colorful
+~~~~~~~~
 
-    Terminal string styling done right, in Python.
+Terminal string styling done right, in Python.
 
-    :copyright: (c) 2017 by Timo Furrer <tuxtimo@gmail.com>
-    :license: MIT, see LICENSE for more details.
+:copyright: (c) 2017 by Timo Furrer <tuxtimo@gmail.com>
+:license: MIT, see LICENSE for more details.
 """
 
 import json
@@ -41,7 +39,7 @@ def parse_rgb_txt_file(path):
     #: Holds the generated color dict
     color_dict = {}
 
-    with open(path, 'r') as rgb_txt:
+    with open(path) as rgb_txt:
         for line in rgb_txt:
             line = line.strip()
             if not line or line.startswith('!'):
@@ -64,7 +62,7 @@ def parse_json_color_file(path):
 
     :param str path: the path to the JSON color file
     """
-    with open(path, "r") as color_file:
+    with open(path) as color_file:
         color_list = json.load(color_file)
 
     # transform raw color list into color dict

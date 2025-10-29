@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
-
 """
-    colorful
-    ~~~~~~~~
+colorful
+~~~~~~~~
 
-    Terminal string styling done right, in Python.
+Terminal string styling done right, in Python.
 
-    :copyright: (c) 2017 by Timo Furrer <tuxtimo@gmail.com>
-    :license: MIT, see LICENSE for more details.
+:copyright: (c) 2017 by Timo Furrer <tuxtimo@gmail.com>
+:license: MIT, see LICENSE for more details.
 """
 
 import ast
@@ -25,7 +23,7 @@ EXPL_NOT_SUPPORTED_VERSIONS = ((3, 0), (3, 1), (3, 2), (3, 3))
 
 if sys.version_info[0:2] in EXPL_NOT_SUPPORTED_VERSIONS:
     raise SystemExit("colorful does explicitly not support the following python versions "
-                     "due to big incompatibilities: {0}".format(EXPL_NOT_SUPPORTED_VERSIONS))
+                     "due to big incompatibilities: {}".format(EXPL_NOT_SUPPORTED_VERSIONS))
 
 
 #: Holds the root dir for the project.
@@ -107,6 +105,7 @@ if __name__ == '__main__':
             'Programming Language :: Python :: 3.11',
             'Programming Language :: Python :: 3.12',
             'Programming Language :: Python :: 3.13',
+            'Programming Language :: Python :: 3.14',
             'Programming Language :: Python :: Implementation',
             'Programming Language :: Python :: Implementation :: CPython',
             'Programming Language :: Python :: Implementation :: PyPy'

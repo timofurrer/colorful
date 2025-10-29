@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
-
 """
-    colorful
-    ~~~~~~~~
+colorful
+~~~~~~~~
 
-    Terminal string styling done right, in Python.
+Terminal string styling done right, in Python.
 
-    :copyright: (c) 2017 by Timo Furrer <tuxtimo@gmail.com>
-    :license: MIT, see LICENSE for more details.
+:copyright: (c) 2017 by Timo Furrer <tuxtimo@gmail.com>
+:license: MIT, see LICENSE for more details.
 """
 
 import os
@@ -88,7 +86,7 @@ def translate_rgb_to_ansi_code(red, green, blue, offset, colormode):
         end_code = ansi.ANSI_ESCAPE_CODE.format(code=offset + ansi.COLOR_CLOSE_OFFSET)
         return start_code, end_code
 
-    raise ColorfulAttributeError('invalid color mode "{0}"'.format(colormode))
+    raise ColorfulAttributeError('invalid color mode "{}"'.format(colormode))
 
 
 def translate_colorname_to_ansi_code(colorname, offset, colormode, colorpalette):
@@ -108,7 +106,7 @@ def translate_colorname_to_ansi_code(colorname, offset, colormode, colorpalette)
     try:
         red, green, blue = colorpalette[colorname]
     except KeyError:
-        raise ColorfulAttributeError('the color "{0}" is unknown. Use a color in your color palette (by default: X11 rgb.txt)'.format(  # noqa
+        raise ColorfulAttributeError('the color "{}" is unknown. Use a color in your color palette (by default: X11 rgb.txt)'.format(  # noqa
             colorname))
     else:
         return translate_rgb_to_ansi_code(red, green, blue, offset, colormode)
@@ -132,7 +130,7 @@ def resolve_modifier_to_ansi_code(modifiername, colormode):
     try:
         start_code, end_code = ansi.MODIFIERS[modifiername]
     except KeyError:
-        raise ColorfulAttributeError('the modifier "{0}" is unknown. Use one of: {1}'.format(
+        raise ColorfulAttributeError('the modifier "{}" is unknown. Use one of: {}'.format(
             modifiername, ansi.MODIFIERS.keys()))
     else:
         return ansi.ANSI_ESCAPE_CODE.format(
@@ -222,7 +220,7 @@ def style_string(string, ansi_style, colormode, nested=False):
             nest_ph=ansi.NEST_PLACEHOLDER if nested else '')
 
 
-class ColorfulString(object):
+class ColorfulString():
     """
     Represents a colored string
     """
@@ -301,7 +299,7 @@ class ColorfulString(object):
         return str_method
 
 
-class Colorful(object):
+class Colorful():
     """
     Provides methods to style strings for terminal
     output.
@@ -443,7 +441,7 @@ class Colorful(object):
         try:
             style = getattr(styles, style_name.upper())
         except AttributeError:
-            raise ColorfulError('the style "{0}" is undefined'.format(
+            raise ColorfulError('the style "{}" is undefined'.format(
                 style_name))
         else:
             self.colorpalette = style
@@ -493,7 +491,7 @@ class Colorful(object):
         styled_objects = [self.format(o) for o in objects]
         print(*styled_objects, sep=sep, end=end, file=file, flush=flush)
 
-    class ColorfulStyle(object):
+    class ColorfulStyle():
         """
         Represents a colorful style
         """
