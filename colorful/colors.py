@@ -62,7 +62,7 @@ def parse_json_color_file(path):
 
     :param str path: the path to the JSON color file
     """
-    with open(path) as color_file:
+    with open(path, encoding='utf-8') as color_file:
         color_list = json.load(color_file)
 
     # transform raw color list into color dict

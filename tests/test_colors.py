@@ -8,6 +8,7 @@ Terminal string styling done right, in Python.
 :license: MIT, see LICENSE for more details.
 """
 
+from functools import partial
 import os
 
 import pytest
@@ -37,3 +38,11 @@ def test_sanitize_color_palette(colorpalette, expected):
     Test sanitizing a color palette
     """
     assert colors.sanitize_color_palette(colorpalette) == expected
+
+
+def test_read_utf8_json_palette(tmpdir, monkeypatch):
+    path = tmpdir.join('colors.json')
+    path.write_binary('[{"name":"café","hex":"#402010"}]'.encode('utf-8'))
+    monkeypatch.setattr(colors, 'open', partial(open, encoding='ascii'), raising=False)
+
+    assert colors.parse_colors(str(path)) == {'café': '#402010'}
