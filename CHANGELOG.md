@@ -4,7 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-*Nothing here yet.*
+## Fixed
+- Align styled strings by their visible width when formatting with a field width.
 
 ## [v0.5.8]
 ## Fixed

@@ -9,6 +9,7 @@ Terminal string styling done right, in Python.
 """
 
 import os
+import re
 
 from . import ansi
 from . import colors
@@ -292,6 +293,13 @@ class ColorfulString():
         else:
             styled_string = '{orig_str}{nest_ph}'.format(
                 orig_str=self.styled_string, nest_ph=ansi.NEST_PLACEHOLDER)
+        if format_spec:
+            width_spec = re.fullmatch(r'((?:.[<>^]|[<>^])?0?)(\d+)(s?)', format_spec, re.DOTALL)
+            if width_spec:
+                prefix, width, suffix = width_spec.groups()
+                # ANSI styles and the nesting placeholder occupy no columns.
+                hidden = sum(len(code) for code in re.findall(r'\033\[[0-9;]*m', styled_string))
+                format_spec = '{}{}{}'.format(prefix, int(width) + hidden, suffix)
         return styled_string.__format__(format_spec)
 
     def __getattr__(self, name):

@@ -832,6 +832,13 @@ def test_colorfulstring_format_protocol():
     assert str(formatted) == '\033[31mNo, I am your \033[30mfather\033[39m\033[26m\033[39m'
 
 
+@pytest.mark.parametrize('spec', ['8', '>8', '.<8s', '*^8', '2', '>1'])
+def test_colorfulstring_format_width(spec):
+    colorful = core.Colorful(colormode=terminal.ANSI_8_COLORS)
+    styled = colorful.red('abc')
+    assert format(styled, spec) == format('abc', spec).replace('abc', format(styled))
+
+
 def test_colorfulstring_format_protocol_no_placeholder_when_disabled():
     """Test that the ColorfulString format doesn't add a placeholder when colorful is disabled"""
     # given
